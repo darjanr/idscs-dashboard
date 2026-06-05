@@ -1,3 +1,9 @@
+## 2026-06-05 15:28 — Darjan Radenković
+> update setup-iva.sh — includes auto-pull and end-of-day reminder
+
+## 2026-06-05 15:13 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-05 15:13 — Darjan Radenković
 > add WORKFLOW.md and setup-iva.sh for collaborator onboarding
 
