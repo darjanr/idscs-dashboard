@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import KancelaariiExplorer from "../components/KancelaariiExplorer";
+import OfficeMap from "../components/OfficeMap";
+import { t } from "../i18n";
+import rows from "../../public/data/kancelarii.json";
+import coords from "../../public/data/office_coords.json";
+import profiles from "../../public/data/mp_profiles.json";
+
+const lang = "mk";
+---
+
+<Layout title={t(lang, "offices.title")} lang={lang}>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">{t(lang, "offices.title")}</h1>
+    <p class="text-gray-500 mt-1">{t(lang, "offices.subtitle")}</p>
+  </div>
+  <div class="mb-6">
+    <OfficeMap offices={coords} client:load />
+  </div>
+  <KancelaariiExplorer rows={rows} profiles={profiles} lang={lang} client:load />
+</Layout>

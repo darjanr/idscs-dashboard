@@ -1,0 +1,116 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { t } from "../i18n";
+import meta from "../../public/data/meta.json";
+
+const lang = "mk";
+
+const sources = [
+  {
+    name: "Пратенички прашања 2024–2028",
+    format: "JSON",
+    portal: "https://opendata.sobranie.mk",
+    lastUpdated: meta.sources.questions.lastPortalUpdate,
+    records: meta.sources.questions.records,
+    notes: [
+      "Датумите се во .NET legacy формат /Date(ms)/ — конвертирани во ISO-8601.",
+      `${168} записи (26%) немаат назначена седница — прашањата сè уште не се распоредени.`,
+      "91 записи немаат назначена институција — адресирани до независни тела.",
+      "5 записи со статус 'Одговорено' имаат празен одговор — ограничување на изворните податоци.",
+    ],
+  },
+  {
+    name: "Мојот пратеник — Извештај бр. 32 (јан–јун 2025)",
+    format: "XLSX",
+    portal: "https://opendata.sobranie.mk",
+    lastUpdated: meta.sources.mymp.lastPortalUpdate,
+    records: meta.sources.mymp.records,
+    notes: [
+      "Периодичен извештај, не е освежуван од ноември 2025.",
+      "XLSX датотеката користи тројна хедер структура со интерни кодови.",
+      "Парсерот ги мапира хедерите по вредност, не по позиција — за отпорност на промени во XLSX структурата.",
+    ],
+  },
+  {
+    name: "Канцеларии за контакт со граѓани",
+    format: "XLSX",
+    portal: "https://opendata.sobranie.mk",
+    lastUpdated: meta.sources.kancelarii.lastPortalUpdate,
+    records: meta.sources.kancelarii.records,
+    notes: [
+      "Опфаќа 46 пратеници (не сите 120) — само оние со активни канцеларии.",
+      "Формат: tidy/long — секоја категорија е засебен ред.",
+      "UUID идентификаторот се користи за поврзување со другите датасети.",
+    ],
+  },
+];
+---
+
+<Layout title={t(lang, "methodology.title")} lang={lang}>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">{t(lang, "methodology.title")}</h1>
+    <p class="text-gray-500 mt-1">{t(lang, "methodology.subtitle")}</p>
+  </div>
+
+  <div class="space-y-8 max-w-3xl">
+    {sources.map(s => (
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="flex flex-wrap items-start justify-between gap-2 mb-4">
+          <div>
+            <h2 class="font-semibold text-gray-900 text-lg">{s.name}</h2>
+            <p class="text-sm text-gray-500 mt-0.5">Формат: {s.format} · {s.records} записи</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-gray-400">Последно освежување на порталот</p>
+            <p class="text-sm font-semibold text-gray-700">{s.lastUpdated}</p>
+          </div>
+        </div>
+        <ul class="space-y-2">
+          {s.notes.map(note => (
+            <li class="flex gap-2 text-sm text-gray-600">
+              <span class="text-gray-400 shrink-0">→</span>
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+        <a
+          href={s.portal}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block mt-4 text-sm text-teal-600 hover:text-teal-800 underline"
+        >
+          {t(lang, "common.source")}: {s.portal}
+        </a>
+      </div>
+    ))}
+
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <h2 class="font-semibold text-gray-900 text-lg mb-4">Поврзување на датасети</h2>
+      <p class="text-sm text-gray-600 mb-3">
+        Трите датасети користат различни формати на имиња на пратеници. Употребен е алгоритам за нормализација
+        на имиња (реверзирање на ПРЕЗИМЕ ИМЕ → Ime Prezime, fuzzy matching) со кој е постигнато
+        93% совпаѓање меѓу Канцелариите и МојотПратеник.
+        Канцелариите содржат UUID идентификатор кој се користи како примарен клуч за поврзување.
+      </p>
+      <p class="text-sm text-gray-600">
+        Профилот на пратеник ги обединува сите три датасети и покажува каде постојат, а каде недостасуваат податоци.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <h2 class="font-semibold text-gray-900 text-lg mb-4">Процес на освежување</h2>
+      <p class="text-sm text-gray-600 mb-3">
+        Dashboard-от не користи live feed. Податоците се освежуваат рачно или преку автоматизирана скрипта
+        2–3 пати до март 2027. При секое освежување:
+      </p>
+      <ol class="space-y-1 text-sm text-gray-600 list-decimal list-inside">
+        <li>Скриптата <code class="bg-gray-100 px-1 rounded">fetch_data.py</code> ги преземa новите датотеки од CKAN API.</li>
+        <li>Скриптата <code class="bg-gray-100 px-1 rounded">scripts/process.py</code> ги обработува и генерира чисти JSON датотеки.</li>
+        <li>Системот автоматски го прегради и распоредува dashboard-от.</li>
+      </ol>
+      <p class="text-sm text-gray-400 mt-4">
+        Dashboard последно обработен: {new Date(meta.lastProcessed).toLocaleDateString("mk-MK", { dateStyle: "long" })}
+      </p>
+    </div>
+  </div>
+</Layout>

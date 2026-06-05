@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import { getLangFromURL, type Lang } from "../i18n";
+
+interface Props {
+  title: string;
+  lang?: Lang;
+}
+
+const { title, lang: langProp } = Astro.props;
+const lang: Lang = langProp ?? getLangFromURL(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang === "al" ? "sq" : "mk"}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={title} />
+    <title>{title} — Собрание Отворени Податоци</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="bg-gray-50 text-gray-900 min-h-screen">
+    <a href="#main" class="skip-link">Прескокни на содржината</a>
+    <Nav lang={lang} />
+    {Astro.slots.has('hero') && <slot name="hero" />}
+    <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <slot />
+    </main>
+    <footer class="mt-16 border-t border-gray-200 py-8 text-center text-sm text-gray-500">
+      <p>
+        Податоците се преземени од
+        <a
+          href="https://opendata.sobranie.mk"
+          class="underline hover:text-gray-900"
+          target="_blank"
+          rel="noopener noreferrer"
+        >opendata.sobranie.mk</a>.
+        Изработено за <strong>ИДСЦС</strong> — отворен изворен код.
+      </p>
+    </footer>
+  </body>
+</html>

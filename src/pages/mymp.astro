@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MyMPExplorer from "../components/MyMPExplorer";
+import { t } from "../i18n";
+import mps from "../../public/data/mymp.json";
+
+const lang = "mk";
+---
+
+<Layout title={t(lang, "mymp.title")} lang={lang}>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">{t(lang, "mymp.title")}</h1>
+    <p class="text-gray-500 mt-1">{t(lang, "mymp.subtitle")}</p>
+  </div>
+  <MyMPExplorer mps={mps} lang={lang} client:load />
+</Layout>
