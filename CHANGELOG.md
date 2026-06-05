@@ -1,3 +1,9 @@
+## 2026-06-05 15:13 — Darjan Radenković
+> add WORKFLOW.md and setup-iva.sh for collaborator onboarding
+
+## 2026-06-05 15:10 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-05 15:10 — Darjan Radenković
 > chore: remove test line from CLAUDE.md
 
