@@ -63,7 +63,22 @@ else
   echo "✓ reports-grand already exists, skipping"
 fi
 
-# ── 5. Set up automatic daily sync and end-of-day reminder ────────────────
+# ── 5. Create credentials folder ──────────────────────────────────────────
+echo ""
+echo "Creating secure credentials folder..."
+
+mkdir -p ~/.credentials/reports-grand
+chmod 700 ~/.credentials
+chmod 700 ~/.credentials/reports-grand
+
+echo "✓ Credentials folder ready at: ~/.credentials/reports-grand"
+echo ""
+echo "  ⚠️  Ask Darjan to send you 6 token files via Signal."
+echo "  Put them in: ~/.credentials/reports-grand/"
+echo "  (ga4_key.json, ga4_token.json, oauth_client.json,"
+echo "   mailchimp_token.json, meta_token.json, pages_token.json)"
+
+# ── 6. Set up automatic daily sync and end-of-day reminder ────────────────
 echo ""
 echo "Setting up automatic reminders..."
 
