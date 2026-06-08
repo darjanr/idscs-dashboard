@@ -13,14 +13,24 @@ echo "  Setting up your git identity..."
 echo "======================================"
 echo ""
 
-# ── 1. Check git is installed ──────────────────────────────────────────────
+# ── 1. Install Command Line Tools if git is missing ───────────────────────
 if ! command -v git &>/dev/null; then
-  echo "Git is not installed."
-  echo "Please install it from: https://git-scm.com/download/mac"
-  echo "Then run this script again."
+  echo "Installing developer tools (git)..."
+  echo "A popup will appear — click Install (NOT Get Xcode)."
+  echo "This installs only the small tools package (~1GB), not the full Xcode."
+  echo ""
+  xcode-select --install 2>/dev/null
+  echo ""
+  echo "Waiting for installation to finish..."
+  echo "Press Enter here once the popup says 'Software installed'."
+  read -r
+fi
+
+if ! command -v git &>/dev/null; then
+  echo "Git still not found — please complete the installation and run this script again."
   exit 1
 fi
-echo "✓ Git is installed"
+echo "✓ Git is ready"
 
 # ── 2. Set your name and email so commits show as you ─────────────────────
 echo ""
