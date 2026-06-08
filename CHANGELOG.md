@@ -1,3 +1,9 @@
+## 2026-06-08 10:05 — Darjan Radenković
+> rewrite setup-iva.sh for zip-based onboarding — connect to GitHub, set identity, install automation
+
+## 2026-06-08 09:36 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-08 09:36 — Darjan Radenković
 > add credentials setup step to setup-iva.sh
 
