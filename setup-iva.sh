@@ -51,16 +51,25 @@ cd "$PROJECTS_DIR/reports-grand" 2>/dev/null && \
   git remote set-url origin https://github.com/darjanr/reports-grand.git 2>/dev/null && \
   echo "✓ reports-grand connected"
 
-# ── 4. Set up credentials folder ──────────────────────────────────────────
+# ── 4. Move credentials to secure location ────────────────────────────────
 echo ""
-echo "Setting up credentials folder..."
-mkdir -p ~/.credentials/reports-grand
-chmod 700 ~/.credentials
-chmod 700 ~/.credentials/reports-grand
-echo "✓ Credentials folder ready at: ~/.credentials/reports-grand"
-echo ""
-echo "  ⚠️  Darjan sent you a separate zip with 6 token files."
-echo "  Unzip it and move the files into: ~/.credentials/reports-grand/"
+echo "Setting up credentials..."
+
+CREDS_SOURCE="$PROJECTS_DIR/_credentials"
+CREDS_DEST="$HOME/.credentials/reports-grand"
+
+mkdir -p "$CREDS_DEST"
+chmod 700 "$HOME/.credentials"
+chmod 700 "$CREDS_DEST"
+
+if [ -d "$CREDS_SOURCE" ]; then
+  mv "$CREDS_SOURCE/"*.json "$CREDS_DEST/"
+  chmod 600 "$CREDS_DEST/"*.json
+  rm -rf "$CREDS_SOURCE"
+  echo "✓ Credentials moved to ~/.credentials/reports-grand/"
+else
+  echo "⚠️  No credentials found in the zip — ask Darjan to resend."
+fi
 
 # ── 5. Set up daily auto-pull and end-of-day reminder ─────────────────────
 echo ""
@@ -171,10 +180,6 @@ echo "  ✓ Git identity set"
 echo "  ✓ Projects connected to GitHub"
 echo "  ✓ Daily auto-pull at 09:00"
 echo "  ✓ End-of-day reminder at 17:30"
-echo ""
-echo "  Still to do:"
-echo "  → Move the 6 token files from Darjan's zip"
-echo "    into: ~/.credentials/reports-grand/"
 echo ""
 echo "  Read WORKFLOW.md in any project folder"
 echo "  for daily commands."
