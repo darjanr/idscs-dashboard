@@ -1,3 +1,9 @@
+## 2026-06-08 09:36 — Darjan Radenković
+> add credentials setup step to setup-iva.sh
+
+## 2026-06-05 15:28 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-05 15:28 — Darjan Radenković
 > update setup-iva.sh — includes auto-pull and end-of-day reminder
 
