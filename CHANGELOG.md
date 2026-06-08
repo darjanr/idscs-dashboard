@@ -1,3 +1,9 @@
+## 2026-06-08 11:12 — Darjan Radenković
+> fix: install Command Line Tools instead of prompting for full Xcode
+
+## 2026-06-08 10:08 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-08 10:08 — Darjan Radenković
 > single zip onboarding — setup-iva.sh auto-moves credentials from zip
 
