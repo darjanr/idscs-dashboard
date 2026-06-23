@@ -1,3 +1,9 @@
+## 2026-06-23 18:17 — Darjan Radenkovic
+> Active-120 data model, branding, content updates, chart downloads, prod config
+
+## 2026-06-08 11:12 — Darjan Radenković
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-08 11:12 — Darjan Radenković
 > fix: install Command Line Tools instead of prompting for full Xcode
 
