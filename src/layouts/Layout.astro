@@ -10,6 +10,15 @@ interface Props {
 
 const { title, lang: langProp } = Astro.props;
 const lang: Lang = langProp ?? getLangFromURL(Astro.url);
+
+// Partner logos for the footer strip, in the order required by the visibility guidelines.
+const partnerLogos = [
+  { src: "/logos/civicus.png", alt: "CIVICUS" },
+  { src: "/logos/metamorphosis.png", alt: "Metamorphosis Foundation" },
+  { src: "/logos/techsoup.png", alt: "TechSoup" },
+  { src: "/logos/digital-activism.png", alt: "Digital Activism Program" },
+  { src: "/logos/idscs.png", alt: "Институт за демократија — Социетас Цивилис, Скопје" },
+];
 ---
 
 <!doctype html>
@@ -28,17 +37,35 @@ const lang: Lang = langProp ?? getLangFromURL(Astro.url);
     <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <slot />
     </main>
-    <footer class="mt-16 border-t border-gray-200 py-8 text-center text-sm text-gray-500">
-      <p>
-        Податоците се преземени од
-        <a
-          href="https://opendata.sobranie.mk"
-          class="underline hover:text-gray-900"
-          target="_blank"
-          rel="noopener noreferrer"
-        >opendata.sobranie.mk</a>.
-        Изработено за <strong>ИДСЦС</strong> — отворен изворен код.
-      </p>
+    <footer class="mt-16 border-t border-gray-200 bg-white">
+      <!-- Partner logos -->
+      <div class="max-w-5xl mx-auto px-4 pt-10 pb-8">
+        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
+          {partnerLogos.map(logo => (
+            <div class="flex items-center justify-center h-10">
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                class="max-h-10 w-auto object-contain"
+                style="max-width: 150px;"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="border-t border-gray-100 py-6 text-center text-sm text-gray-500">
+        <p class="max-w-3xl mx-auto px-4 leading-relaxed">
+          Податоците се преземени од
+          <a
+            href="https://opendata.sobranie.mk"
+            class="underline hover:text-gray-900"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Порталот за отворени податоци на Собранието на Република Северна Македонија</a>,
+          во формата и содржината во која тие се објавени од Собранието.
+        </p>
+      </div>
     </footer>
   </body>
 </html>

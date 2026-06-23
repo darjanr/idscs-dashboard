@@ -6,6 +6,7 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import ChartDownload from "./ChartDownload";
 
 interface Row {
   mpId: string;
@@ -72,8 +73,13 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
   // By MP (casesAll) — full list for ranklist
   const byMP = useMemo(() => {
     const counts: Record<string, { name: string; party: string; total: number }> = {};
+    // Seed every office-holder (so the count reflects all offices, even those
+    // with zero recorded cases), then fill in case totals.
+    filtered.forEach(r => {
+      if (!counts[r.mpName]) counts[r.mpName] = { name: r.mpName, party: r.party, total: 0 };
+    });
     filtered.filter(r => r.subcategory === "casesAll").forEach(r => {
-      counts[r.mpName] = { name: r.mpName, party: r.party, total: r.total };
+      counts[r.mpName].total = r.total;
     });
     return Object.values(counts).sort((a, b) => b.total - a.total);
   }, [filtered]);
@@ -228,7 +234,17 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
 
       {/* By case type — horizontal bar */}
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h2 className="font-semibold text-gray-800 mb-5">{t(lang, "offices.chartByType")}</h2>
+        <div className="flex items-start justify-between mb-5">
+          <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByType")}</h2>
+          <ChartDownload
+            chartId="chart-cases-by-type"
+            csv={{ headers: [t(lang, "offices.chartByType"), t(lang, "offices.kpiCases")],
+                   rows: byCaseType.map(d => [d.name, d.value]) }}
+            filename="slucai-po-tip"
+            lang={lang}
+          />
+        </div>
+        <div id="chart-cases-by-type">
         <ResponsiveContainer width="100%" height={Math.max(200, byCaseType.length * 36)}>
           <BarChart data={byCaseType} layout="vertical" margin={{ left: 8, right: 24, top: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
@@ -240,6 +256,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        </div>
       </div>
 
       {/* By party — logo ranklist */}

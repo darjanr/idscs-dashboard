@@ -6,12 +6,14 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import ChartDownload from "./ChartDownload";
 
 interface Question {
   id: string;
   date: string | null;
   session: number | null;
   fromMP: string;
+  mpActive?: boolean;
   party?: string;
   partyLogo?: string | null;
   mpPhoto?: string | null;
@@ -85,6 +87,8 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
   const [filterStatus, setFilterStatus] = useState("all");
   const [selected, setSelected] = useState<Question | null>(null);
   const [page, setPage] = useState(0);
+  const [mpPage, setMpPage] = useState(0);
+  const MP_PAGE_SIZE = 15;
   const PAGE_SIZE = 20;
 
   const allMPs = useMemo(() =>
@@ -108,18 +112,21 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const pageSlice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
-  // Top 15 MPs — photo + party + count
-  const top15MPs = useMemo(() => {
+  // MPs ranked by number of questions. Scoped to the active assembly; questions
+  // from MPs who have since left remain in the record but not in MP rankings.
+  const mpsByQuestions = useMemo(() => {
     const counts: Record<string, { count: number; photo?: string | null; party?: string }> = {};
     questions.forEach(q => {
+      if (q.mpActive === false) return;
       if (!counts[q.fromMP]) counts[q.fromMP] = { count: 0, photo: q.mpPhoto, party: q.party };
       counts[q.fromMP].count++;
     });
     return Object.entries(counts)
       .sort((a, b) => b[1].count - a[1].count)
-      .slice(0, 15)
       .map(([name, data]) => ({ name, ...data }));
   }, [questions]);
+
+  const visibleMPs = mpsByQuestions.slice(mpPage * MP_PAGE_SIZE, (mpPage + 1) * MP_PAGE_SIZE);
 
   // Institution answered vs pending (top 12 by volume)
   const byInst = useMemo(() => {
@@ -226,10 +233,14 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top 15 MPs */}
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-          <h2 className="font-semibold text-gray-800 mb-5">{t(lang, "questions.chartByMP")}</h2>
+          <div className="flex items-baseline justify-between mb-5">
+            <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartByMP")}</h2>
+            <span className="text-xs text-gray-400">{mpsByQuestions.length} {t(lang, "mymp.kpiMPs").toLowerCase()}</span>
+          </div>
           <div className="space-y-3">
-            {top15MPs.map((mp, i) => {
-              const max = top15MPs[0].count;
+            {visibleMPs.map((mp, idx) => {
+              const i = mpPage * MP_PAGE_SIZE + idx;
+              const max = mpsByQuestions[0].count;
               const pct = max > 0 ? (mp.count / max) * 100 : 0;
               return (
                 <div key={mp.name} className="flex items-center gap-3">
@@ -267,6 +278,23 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
               );
             })}
           </div>
+          {mpsByQuestions.length > MP_PAGE_SIZE && (
+            <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+              <button
+                onClick={() => setMpPage(p => Math.max(0, p - 1))}
+                disabled={mpPage === 0}
+                className="text-sm px-3 py-1.5 rounded-lg border border-gray-300 disabled:opacity-40 hover:bg-gray-50"
+              >←</button>
+              <span className="text-xs text-gray-400">
+                {mpPage * MP_PAGE_SIZE + 1}–{Math.min((mpPage + 1) * MP_PAGE_SIZE, mpsByQuestions.length)} {t(lang, "common.of")} {mpsByQuestions.length}
+              </span>
+              <button
+                onClick={() => setMpPage(p => Math.min(Math.ceil(mpsByQuestions.length / MP_PAGE_SIZE) - 1, p + 1))}
+                disabled={(mpPage + 1) * MP_PAGE_SIZE >= mpsByQuestions.length}
+                className="text-sm px-3 py-1.5 rounded-lg border border-gray-300 disabled:opacity-40 hover:bg-gray-50"
+              >→</button>
+            </div>
+          )}
         </div>
 
         {/* Institution answer rate */}
@@ -297,7 +325,17 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
 
       {/* Row 2: Answered vs Pending stacked bar — full width */}
       <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-        <h2 className="font-semibold text-gray-800 mb-4">{t(lang, "questions.chartAnsweredVsPending")}</h2>
+        <div className="flex items-start justify-between mb-4">
+          <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartAnsweredVsPending")}</h2>
+          <ChartDownload
+            chartId="chart-answered-pending"
+            csv={{ headers: [t(lang, "questions.tableTo"), t(lang, "common.answered"), t(lang, "common.pending")],
+                   rows: byInst.map(d => [d.name, d.answered, d.pending]) }}
+            filename="prasanja-po-institucija"
+            lang={lang}
+          />
+        </div>
+        <div id="chart-answered-pending">
         <ResponsiveContainer width="100%" height={380}>
           <BarChart data={byInst} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
@@ -309,6 +347,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
+        </div>
       </div>
 
       {/* Row 3: Questions by party — full width, 2-col internal grid for many parties */}
@@ -356,7 +395,17 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
 
       {/* Row 4: Timeline — full width */}
       <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-        <h2 className="font-semibold text-gray-800 mb-4">{t(lang, "questions.chartTimeline")}</h2>
+        <div className="flex items-start justify-between mb-4">
+          <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartTimeline")}</h2>
+          <ChartDownload
+            chartId="chart-timeline"
+            csv={{ headers: [t(lang, "common.sessions"), t(lang, "questions.kpiTotal")],
+                   rows: bySession.map(d => [d.session, d.count]) }}
+            filename="prasanja-po-sednica"
+            lang={lang}
+          />
+        </div>
+        <div id="chart-timeline">
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={bySession}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -366,6 +415,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <Line type="monotone" dataKey="count" stroke={NAVY} strokeWidth={2} dot={{ r: 3, fill: NAVY }} />
           </LineChart>
         </ResponsiveContainer>
+        </div>
       </div>
 
       {/* Filters + table */}

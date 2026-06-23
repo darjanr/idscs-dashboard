@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import "leaflet/dist/leaflet.css";
 
 interface Office {
   id: number;
@@ -20,15 +21,8 @@ export default function OfficeMap({ offices }: Props) {
     if (!mapRef.current || mapInstance.current) return;
 
     import("leaflet").then(L => {
-      // Fix default marker icons (Leaflet + bundlers issue)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (L.Icon.Default.prototype as any)._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-      });
-
+      // Markers below use a custom divIcon, so Leaflet's default PNG marker icons
+      // are never needed — no external image dependency.
       const map = L.map(mapRef.current!).setView([41.6, 21.7], 8);
       mapInstance.current = map;
 
@@ -64,9 +58,8 @@ export default function OfficeMap({ offices }: Props) {
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       <div className="px-5 pt-5 pb-3">
         <h2 className="font-semibold text-gray-800">Локации на канцеларии</h2>
-        <p className="text-sm text-gray-400 mt-0.5">{offices.length} канцеларии низ Македонија</p>
+        <p className="text-sm text-gray-400 mt-0.5">{offices.length} лоцирани канцеларии на мапата</p>
       </div>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       <div ref={mapRef} style={{ height: "380px", width: "100%" }} />
     </div>
   );

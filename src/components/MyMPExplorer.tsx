@@ -7,6 +7,7 @@ interface MP {
   name: string;
   photo?: string | null;
   party?: string;
+  hasData: boolean;
   attendance: number;
   excused: number;
   unexcused: number;
@@ -38,19 +39,25 @@ type SortKey = "composite" | "attendance" | "discussions" | "questions" | "laws"
 
 export default function MyMPExplorer({ mps, lang }: Props) {
   const [search, setSearch] = useState("");
-  const [chartSortBy, setChartSortBy] = useState<SortKey>("attendance");
+  const [chartSortBy, setChartSortBy] = useState<SortKey>("discussions");
   const [tableSortBy, setTableSortBy] = useState<SortKey>("attendance");
   const [tableSortDir, setTableSortDir] = useState<"asc" | "desc">("desc");
   const [showZeroOnly, setShowZeroOnly] = useState(false);
   const [selectedMP, setSelectedMP] = useState<MP | null>(null);
 
+  // Activity report covers Jan–Jun 2025. MPs seated after that period (replacements
+  // for those who joined the government) carry hasData=false — exclude them from
+  // period stats and rankings so their absence isn't misread as inactivity.
+  const withData = useMemo(() => mps.filter(m => m.hasData), [mps]);
+  const newlySeated = mps.length - withData.length;
+
   // Composite activity score: each metric normalised 0–1, laws weighted higher
   const scoreMap = useMemo(() => {
-    const max = (fn: (m: MP) => number) => Math.max(...mps.map(fn), 1);
+    const max = (fn: (m: MP) => number) => Math.max(...withData.map(fn), 1);
     const mA = max(m => m.attendance), mD = max(m => m.discussions),
           mQ = max(m => m.questions), mL = max(m => m.laws),
           mAm = max(m => m.amendments), mC = max(m => m.committeesAsMember);
-    return new Map(mps.map(m => [m.name,
+    return new Map<string, number>(withData.map(m => [m.name,
       m.attendance / mA * 0.5 +
       m.discussions / mD +
       m.questions / mQ +
@@ -58,7 +65,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       m.amendments / mAm +
       m.committeesAsMember / mC * 0.5
     ]));
-  }, [mps]);
+  }, [withData]);
 
   // Score normalised to 0–100 for display
   function displayScore(m: MP): number {
@@ -94,26 +101,28 @@ export default function MyMPExplorer({ mps, lang }: Props) {
         ? (scoreMap.get(b.name) ?? 0) - (scoreMap.get(a.name) ?? 0)
         : b[tableSortBy] - a[tableSortBy]
     );
-    return tableSortDir === "asc" ? sorted.reverse() : sorted;
+    const dir = tableSortDir === "asc" ? sorted.reverse() : sorted;
+    // MPs who joined after the report period (no data) always sink to the bottom.
+    return [...dir].sort((a, b) => Number(b.hasData) - Number(a.hasData));
   }
 
   const top5 = useMemo(() =>
-    [...mps].sort((a, b) => (scoreMap.get(b.name) ?? 0) - (scoreMap.get(a.name) ?? 0)).slice(0, 5),
-    [mps, scoreMap]);
+    [...withData].sort((a, b) => (scoreMap.get(b.name) ?? 0) - (scoreMap.get(a.name) ?? 0)).slice(0, 5),
+    [withData, scoreMap]);
 
   const top15 = useMemo(() =>
-    sortedByChart([...mps]).slice(0, 15),
-    [mps, chartSortBy]);
+    sortedByChart([...withData]).slice(0, 15),
+    [withData, chartSortBy]);
 
   const filtered = useMemo(() => {
     let list = mps;
     if (search) list = list.filter(m => m.name.toLowerCase().includes(search.toLowerCase()));
-    if (showZeroOnly) list = list.filter(m => m.questions === 0);
+    if (showZeroOnly) list = list.filter(m => m.hasData && m.questions === 0);
     return sortedByTable(list);
   }, [mps, search, tableSortBy, tableSortDir, showZeroOnly, scoreMap]);
 
-  const zeroQuestions = mps.filter(m => m.questions === 0).length;
-  const avgAttendance = Math.round(mps.reduce((s, m) => s + m.attendance, 0) / mps.length);
+  const zeroQuestions = withData.filter(m => m.questions === 0).length;
+  const avgAttendance = Math.round(withData.reduce((s, m) => s + m.attendance, 0) / withData.length);
 
   const COL_LABEL: Record<SortKey, string> = {
     composite:          "Вкупна активност",
@@ -125,7 +134,8 @@ export default function MyMPExplorer({ mps, lang }: Props) {
     committeesAsMember: t(lang, "mymp.colCommittees"),
   };
 
-  const sortOptions: SortKey[] = ["attendance", "discussions", "questions", "laws", "amendments", "committeesAsMember"];
+  // Attendance is near-identical across the top performers, so it goes last.
+  const sortOptions: SortKey[] = ["discussions", "questions", "laws", "amendments", "committeesAsMember", "attendance"];
 
   function SortIcon({ col }: { col: SortKey }) {
     if (tableSortBy !== col) return <span className="ml-1 text-gray-300 font-normal">↕</span>;
@@ -134,12 +144,12 @@ export default function MyMPExplorer({ mps, lang }: Props) {
 
   const TABLE_COLS: SortKey[] = ["attendance", "discussions", "questions", "laws", "amendments", "committeesAsMember"];
   const CHIP_LABELS: { key: keyof MP; label: string }[] = [
-    { key: "attendance", label: t(lang, "mymp.colAttendance") },
     { key: "discussions", label: t(lang, "mymp.colDiscussions") },
     { key: "questions", label: t(lang, "mymp.colQuestions") },
     { key: "laws", label: t(lang, "mymp.colLaws") },
     { key: "amendments", label: t(lang, "mymp.colAmendments") },
     { key: "committeesAsMember", label: t(lang, "mymp.colCommittees") },
+    { key: "attendance", label: t(lang, "mymp.colAttendance") },
   ];
 
   function downloadCSV() {
@@ -163,6 +173,9 @@ export default function MyMPExplorer({ mps, lang }: Props) {
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <p className="text-sm text-gray-500 font-medium">{t(lang, "mymp.kpiMPs")}</p>
           <p className="text-3xl font-bold text-gray-900 mt-1">{mps.length}</p>
+          {newlySeated > 0 && (
+            <p className="text-xs text-gray-400 mt-1">{newlySeated} {t(lang, "mymp.newlySeatedNote")}</p>
+          )}
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <p className="text-sm text-gray-500 font-medium">{t(lang, "mymp.kpiAvgAttendance")}</p>
@@ -270,7 +283,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
           {zeroQuestions} од {mps.length} пратеници не поставиле ниту едно прашање во периодот јануари–јуни 2025.
         </p>
         <div className="flex flex-wrap gap-2">
-          {mps.filter(m => m.questions === 0).map(m => (
+          {withData.filter(m => m.questions === 0).map(m => (
             <button
               key={m.name}
               onClick={() => setSelectedMP(m)}
@@ -327,18 +340,26 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                   onKeyDown={e => e.key === "Enter" && setSelectedMP(m)}
                 >
                   <td className="px-4 py-3 font-medium text-gray-900">{m.name}</td>
-                  <td className="px-4 py-3 text-right text-gray-700">
-                    <span className="flex items-center justify-end gap-1">
-                      {m.attendance}<span className="text-xs text-gray-400">/{TOTAL_SESSIONS}</span>
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right text-gray-700">{m.discussions}</td>
-                  <td className="px-4 py-3 text-right">
-                    <span className={m.questions === 0 ? "text-amber-600 font-semibold" : "text-gray-700"}>{m.questions}</span>
-                  </td>
-                  <td className="px-4 py-3 text-right text-gray-700">{m.laws}</td>
-                  <td className="px-4 py-3 text-right text-gray-700">{m.amendments}</td>
-                  <td className="px-4 py-3 text-right text-gray-700">{m.committeesAsMember}</td>
+                  {m.hasData ? (
+                    <>
+                      <td className="px-4 py-3 text-right text-gray-700">
+                        <span className="flex items-center justify-end gap-1">
+                          {m.attendance}<span className="text-xs text-gray-400">/{TOTAL_SESSIONS}</span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right text-gray-700">{m.discussions}</td>
+                      <td className="px-4 py-3 text-right">
+                        <span className={m.questions === 0 ? "text-amber-600 font-semibold" : "text-gray-700"}>{m.questions}</span>
+                      </td>
+                      <td className="px-4 py-3 text-right text-gray-700">{m.laws}</td>
+                      <td className="px-4 py-3 text-right text-gray-700">{m.amendments}</td>
+                      <td className="px-4 py-3 text-right text-gray-700">{m.committeesAsMember}</td>
+                    </>
+                  ) : (
+                    <td className="px-4 py-3 text-center text-xs text-gray-400 italic" colSpan={6}>
+                      {t(lang, "mymp.noPeriodData")}
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

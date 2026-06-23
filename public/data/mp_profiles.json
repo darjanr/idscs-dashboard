@@ -1,6 +1,8 @@
 [
   {
+    "uuid": "2ebe550f-0ac2-4fc5-8bbb-4e0c907c8abd",
     "name": "Ѓорѓија Сајкоски",
+    "nameAl": "Gjorgjia Sajkoski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631173546.png",
@@ -24,31 +26,9 @@
     "office": null
   },
   {
-    "name": "Јане Мицевски",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630224001.png",
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 51,
-      "excused": 5,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 25,
-      "committeesAsMember": 0,
-      "attendanceMember": 2,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "e18575d5-db02-49ab-80d2-325f2df08599",
     "name": "Јован Јаулески",
+    "nameAl": "Jovan Jauleski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631692699.png",
@@ -99,7 +79,9 @@
     "office": null
   },
   {
+    "uuid": "ae6b5db0-5bcf-40a9-aa24-c2e69b5214d2",
     "name": "Јован Митрески",
+    "nameAl": "Jovan Mitreski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630175555.png",
@@ -172,7 +154,9 @@
     "office": null
   },
   {
+    "uuid": "aeba14a8-f9e5-4b09-b7f4-c7869804ec2c",
     "name": "Јована Мојсоска",
+    "nameAl": "Jovana Mojsoska",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630913110.png",
@@ -253,7 +237,9 @@
     "office": null
   },
   {
+    "uuid": "432d4042-9792-4fdf-8b2a-a613f62c9baa",
     "name": "Јованка Тренчевска",
+    "nameAl": "Jovanka Trençevska",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631229709.png",
@@ -343,7 +329,9 @@
     }
   },
   {
+    "uuid": "fe6b416d-cc4c-4047-b352-a5e8c4181a3c",
     "name": "Јулија Тушевска",
+    "nameAl": "Julija Tushevska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631797798.png",
@@ -381,7 +369,9 @@
     }
   },
   {
+    "uuid": "61180a64-9e4f-4758-a507-002678b0d1f2",
     "name": "Љупчо Николовски",
+    "nameAl": "Lupço Nikollovski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630758809.png",
@@ -450,7 +440,9 @@
     "office": null
   },
   {
+    "uuid": "c2b74224-981e-4c7f-877b-be971bd29a51",
     "name": "Љупчо Пренџов",
+    "nameAl": "Lupço Prendzov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631315467.png",
@@ -523,31 +515,9 @@
     "office": null
   },
   {
-    "name": "Адили Валбона Емеини",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 16,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 1,
-      "proposedLaws": 0,
-      "amendments": 8,
-      "committeesAsMember": 0,
-      "attendanceMember": 1,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "85048fa9-e61b-4eb1-be26-8d537cb1d7c4",
     "name": "Аднан Азизи",
+    "nameAl": "Adnan Azizi",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631000567.png",
@@ -571,7 +541,9 @@
     "office": null
   },
   {
+    "uuid": "874ed2b3-028b-4853-9d67-09eb6b72edd3",
     "name": "Александар Јамалов",
+    "nameAl": "Aleksandar Jamallov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629948771.png",
@@ -604,7 +576,9 @@
     }
   },
   {
+    "uuid": "914bff80-4c19-4675-ace4-cb0c7a08f688",
     "name": "Александар Велјановски",
+    "nameAl": "Aleksandar Veljanovski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630140232.png",
@@ -628,58 +602,9 @@
     "office": null
   },
   {
-    "name": "Александар Николоски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 3,
-      "answered": 3,
-      "topInstitutions": [
-        {
-          "institution": "Претседател на Владата на Република Северна Македонија",
-          "count": 3
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "7811fe1e-add8-47cc-a9dd-0a27b70968be",
-          "date": "2026-03-16",
-          "question": "Колкав е растот на БДП и како Владата ја оценува неговата улога во зајакнување на економската стабилност и подобрување на животниот стандард на граѓаните?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "eb71c2a7-f4aa-44f4-949e-b4f6579de231",
-          "date": "2026-03-16",
-          "question": "Која е вашата порака во однос на напорите на Владата за сузбивање на криминалот и корупцијата?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "2b1eda1d-e307-481d-8d03-a49af2e50d49",
-          "date": "2026-03-16",
-          "question": "Колкав процент изнесува зголемувањето на платите на здравствените работници во јавните здравствени установи и каква е индицијата на Владата за нивното понатамошно системско унапредување?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "8f8e1f43-656d-48e5-90fe-0a65fa9e1d68",
     "name": "Александра Николовска",
+    "nameAl": "Aleksandra Nikolovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1766335221648.png",
@@ -716,21 +641,13 @@
         }
       ]
     },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
+    "activity": null,
     "office": null
   },
   {
+    "uuid": "941c5a06-34cb-4cb1-955a-25344a8f3a48",
     "name": "Али Ахмети",
+    "nameAl": "Ali Ahmeti",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630153799.png",
@@ -754,7 +671,9 @@
     "office": null
   },
   {
+    "uuid": "b0688e81-82f8-4d41-bcfd-23ed8d9a27d9",
     "name": "Амар Мециновиќ",
+    "nameAl": "Amar Mecinoviq",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630801194.png",
@@ -835,7 +754,9 @@
     "office": null
   },
   {
+    "uuid": "211dda83-2d72-4c54-9a40-75b9f8ab0155",
     "name": "Ангелинка Петкова",
+    "nameAl": "Angelinka Petkova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629992511.png",
@@ -871,7 +792,9 @@
     }
   },
   {
+    "uuid": "f66f1d74-95ad-4df7-8586-17bfdb169228",
     "name": "Антонијо Милошоски",
+    "nameAl": "Antonio Miloshoski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631400465.png",
@@ -952,7 +875,9 @@
     "office": null
   },
   {
+    "uuid": "b4fe592a-b83e-492b-b791-08876efd46da",
     "name": "Арбана Пашоли",
+    "nameAl": "Arbana Pasholi",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631238945.png",
@@ -1043,7 +968,9 @@
     }
   },
   {
+    "uuid": "844cc6b4-6299-4f8e-bc99-daa48cb23a23",
     "name": "Африм Гаши",
+    "nameAl": "Afrim Gashi",
     "party": "Алтернатива",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742755581241.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1742743993897.png",
@@ -1067,7 +994,9 @@
     "office": null
   },
   {
+    "uuid": "a36bcb3c-9e41-4f19-931a-01db0d31a877",
     "name": "Беким Ќоку",
+    "nameAl": null,
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": null,
@@ -1091,181 +1020,9 @@
     "office": null
   },
   {
-    "name": "Беким Сали",
-    "party": "Движење БЕСА",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631865145.png",
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 38,
-      "excused": 18,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 65,
-      "committeesAsMember": 5,
-      "attendanceMember": 12,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
-    "name": "Бети Стаменкоска Трајкоска",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631652359.png",
-    "questions": {
-      "total": 6,
-      "answered": 6,
-      "topInstitutions": [
-        {
-          "institution": "Претседател на Владата на Република Северна Македонија",
-          "count": 5
-        },
-        {
-          "institution": "Министерство за образование и наука",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "4ca9925a-7f15-45cc-a1be-2945bdc3a0df",
-          "date": "2025-04-16",
-          "question": "До каде е работата на надлежните да го испитаат случајот, дали имате информација до каде е случајот со ова фамозно богатење не Левица и нејзините припадници.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "918a1491-dbe7-478f-8e8a-0b1fcd7dc554",
-          "date": "2025-04-16",
-          "question": "Колку пари се обезбедија од Буџетот за ова покачување и дали се има во план ова покачување да продолжи со што би се подобрил животниот стандард на граѓаните.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "3d70b691-781e-4b62-b595-05a9ce373406",
-          "date": "2025-04-16",
-          "question": "Колку пари се обезбедија од Буџетот за ова покачување и дали се има во план ова покачување да продолжи со што би се подобрил животниот стандард на граѓаните.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "e03ddb23-b674-4722-a801-a61af87f543b",
-          "date": "2025-02-19",
-          "question": "Какви се вашите планови во иднина за спроведување на најавената концепција за промени во средното образование.",
-          "toInstitution": "Министерство за образование и наука",
-          "status": "Одговорено"
-        },
-        {
-          "id": "4578e635-3158-4cd3-ace2-72bf0059ad9b",
-          "date": "2025-02-19",
-          "question": "Колку инвестиции има до сега од почетокот на годината и за што точно е инвестицијата на турската компанија „Казанџик Холдинг“ од една милијарда евра инвестиции во енергетиката",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 50,
-      "excused": 6,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 1,
-      "committeesAsMember": 4,
-      "attendanceMember": 23,
-      "period": "Jan–Jun 2025"
-    },
-    "office": {
-      "totalCases": 0,
-      "totalMeetings": 3,
-      "totalEvents": 9,
-      "totalInitiatives": 0,
-      "casesByType": {}
-    }
-  },
-  {
-    "name": "Бети Стаменкоска-трајкоска",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631652359.png",
-    "questions": {
-      "total": 6,
-      "answered": 6,
-      "topInstitutions": [
-        {
-          "institution": "Претседател на Владата на Република Северна Македонија",
-          "count": 5
-        },
-        {
-          "institution": "Министерство за образование и наука",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "4ca9925a-7f15-45cc-a1be-2945bdc3a0df",
-          "date": "2025-04-16",
-          "question": "До каде е работата на надлежните да го испитаат случајот, дали имате информација до каде е случајот со ова фамозно богатење не Левица и нејзините припадници.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "918a1491-dbe7-478f-8e8a-0b1fcd7dc554",
-          "date": "2025-04-16",
-          "question": "Колку пари се обезбедија од Буџетот за ова покачување и дали се има во план ова покачување да продолжи со што би се подобрил животниот стандард на граѓаните.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "3d70b691-781e-4b62-b595-05a9ce373406",
-          "date": "2025-04-16",
-          "question": "Колку пари се обезбедија од Буџетот за ова покачување и дали се има во план ова покачување да продолжи со што би се подобрил животниот стандард на граѓаните.",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "e03ddb23-b674-4722-a801-a61af87f543b",
-          "date": "2025-02-19",
-          "question": "Какви се вашите планови во иднина за спроведување на најавената концепција за промени во средното образование.",
-          "toInstitution": "Министерство за образование и наука",
-          "status": "Одговорено"
-        },
-        {
-          "id": "4578e635-3158-4cd3-ace2-72bf0059ad9b",
-          "date": "2025-02-19",
-          "question": "Колку инвестиции има до сега од почетокот на годината и за што точно е инвестицијата на турската компанија „Казанџик Холдинг“ од една милијарда евра инвестиции во енергетиката",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 50,
-      "excused": 6,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 1,
-      "committeesAsMember": 4,
-      "attendanceMember": 23,
-      "period": "Jan–Jun 2025"
-    },
-    "office": {
-      "totalCases": 0,
-      "totalMeetings": 3,
-      "totalEvents": 9,
-      "totalInitiatives": 0,
-      "casesByType": {}
-    }
-  },
-  {
+    "uuid": "fbaa186c-c6c8-4cd9-b6eb-adf825eb618e",
     "name": "Бејџан Иљас",
+    "nameAl": "Bejxhan Iljas",
     "party": "Независни пратеници",
     "partyLogo": null,
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631954616.png",
@@ -1302,75 +1059,9 @@
     "office": null
   },
   {
-    "name": "Билјана Кузманоска",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631029345.png",
-    "questions": {
-      "total": 3,
-      "answered": 3,
-      "topInstitutions": [
-        {
-          "institution": "Претседател на Владата на Република Северна Македонија",
-          "count": 3
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "f152fa07-363b-46b7-83cc-61d6d8b1d7c3",
-          "date": "2026-01-20",
-          "question": "Како го коментирате сознанието за пронајдените 350 илјади евра кај судијата, дали верувате во исказите дека наводно тоа се пари од неговите родители од продадена нива?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "ccf3b807-c0bb-42ff-9770-1560b6a2105c",
-          "date": "2026-01-20",
-          "question": "Каков е планот и која е динамиката на развој односно како ќе се распределат новите автобуси?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "125dc5ff-5cda-45c3-98e7-09ac4c206d39",
-          "date": "2026-01-20",
-          "question": "Кој е вашиот став по однос на постапката на господинот Зијадин Села кој поднесе претставка до Уставниот суд да го оспори Законот за прекршоци?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 53,
-      "excused": 3,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 14,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": {
-      "totalCases": 46,
-      "totalMeetings": 48,
-      "totalEvents": 0,
-      "totalInitiatives": 0,
-      "casesByType": {
-        "Домување": 1,
-        "Животна средина": 4,
-        "Здравствена заштита": 3,
-        "Иницијативи за развој на заедницата": 1,
-        "Образование": 9,
-        "Пристап до јавни услуги": 3,
-        "Работен однос и права од работен однос": 8,
-        "Социјални услуги": 2,
-        "Транспорт и инфраструктура": 14,
-        "Финансии и буџет": 1
-      }
-    }
-  },
-  {
+    "uuid": "89420888-9c73-4b73-afe5-9ac6cf05bdc7",
     "name": "Бисера Костадиновска Стојчевска",
+    "nameAl": "Bisera Kostadinovska Stojçevska",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629668381.png",
@@ -1459,96 +1150,9 @@
     }
   },
   {
-    "name": "Бисера Костадиновска-стојчевска",
-    "party": "Социјалдемократски сојуз на Македонија",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629668381.png",
-    "questions": {
-      "total": 21,
-      "answered": 18,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за култура и туризам",
-          "count": 12
-        },
-        {
-          "institution": "Министерство за животна средина и просторно планирање",
-          "count": 3
-        },
-        {
-          "institution": "Министерство за образование и наука",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за здравство",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за јавна администрација",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "453e692c-f1a4-4088-85c7-5a0fae6190fe",
-          "date": "2026-03-16",
-          "question": "Дали вработените во култура ќе ја земат мартовската плата по Упатството што денес пак го пративте, потпишано само од Вас, или по Општиот колективен договор, согласно член 14 став 1?",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        },
-        {
-          "id": "13a739cb-d09c-48fe-a15a-5409db6e2e01",
-          "date": "2026-03-16",
-          "question": "Кој е еден стратешки закон кој што сте го сработиле за скоро две години?",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        },
-        {
-          "id": "b290b66d-5ff0-4366-a1ff-1a1c4e6fae2f",
-          "date": "2026-03-16",
-          "question": "Како планирате и што планирате да направите за да го заштитите Курбиново со дваесет илјади денари, за 2026 година?",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        },
-        {
-          "id": "5f271732-c177-4e78-a6bd-f7b1f5f52393",
-          "date": "2026-02-25",
-          "question": "Колкав е Буџетот за капитални инвестиции и тековно одржување за 2026 година?",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        },
-        {
-          "id": "8f308fb6-78d8-4b85-81f0-ae77ef35ddd3",
-          "date": "2026-02-25",
-          "question": "Колку вработувања се предвидени за културните установи за 2026 година?",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 27,
-      "excused": 29,
-      "unexcused": 0,
-      "discussions": 3,
-      "proposedLaws": 0,
-      "amendments": 26,
-      "committeesAsMember": 2,
-      "attendanceMember": 3,
-      "period": "Jan–Jun 2025"
-    },
-    "office": {
-      "totalCases": 1,
-      "totalMeetings": 0,
-      "totalEvents": 0,
-      "totalInitiatives": 0,
-      "casesByType": {
-        "Животна средина": 1
-      }
-    }
-  },
-  {
+    "uuid": "0707e76d-dc5c-40c9-859c-54031e5f4236",
     "name": "Бисерка Златеска",
+    "nameAl": "Biserka Zlateska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631420410.png",
@@ -1587,7 +1191,9 @@
     }
   },
   {
+    "uuid": "0770b2f6-913f-45c6-843b-b0dec266c595",
     "name": "Биљана Кузманоска",
+    "nameAl": "Biljana Kuzmanovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631029345.png",
@@ -1655,7 +1261,9 @@
     }
   },
   {
+    "uuid": "798d31b8-3bee-43e2-9826-f2d6cc3934db",
     "name": "Благица Ласовска",
+    "nameAl": "Blagica Lasovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631817052.png",
@@ -1714,7 +1322,9 @@
     }
   },
   {
+    "uuid": "e9ad8fc1-b0d6-40d8-8278-807e25604e74",
     "name": "Благој Бочварски",
+    "nameAl": "Blagoj Boçvarski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631703823.png",
@@ -1805,7 +1415,9 @@
     }
   },
   {
+    "uuid": "324c4112-4c7d-4a40-97ad-d307cc72b0dc",
     "name": "Блерим Беџети",
+    "nameAl": "Blerim Bexheti",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631856923.png",
@@ -1886,7 +1498,9 @@
     "office": null
   },
   {
+    "uuid": "e4d7ac59-498a-48f8-ae37-e7f918d1279c",
     "name": "Бобан Карапејовски",
+    "nameAl": "Boban Karapejovski",
     "party": "Движење ЗНАМ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745173798.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631583359.png",
@@ -1910,31 +1524,9 @@
     "office": null
   },
   {
-    "name": "Бобан Николовски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 1,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "4d879247-f523-4402-a10a-e6308ed80ab5",
     "name": "Борислав Крмов",
+    "nameAl": "Borislav Krmov",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630899079.png",
@@ -2011,7 +1603,9 @@
     }
   },
   {
+    "uuid": "b33b4731-0cb8-41c0-91a0-b75df146579a",
     "name": "Борче Цветков",
+    "nameAl": "Borçe Cvetkov",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631711645.png",
@@ -2081,7 +1675,9 @@
     }
   },
   {
+    "uuid": "34154387-3590-4fc8-9bf2-8e9cf8e2c709",
     "name": "Бојан Стојаноски",
+    "nameAl": "Bojan Stojanoski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630855757.png",
@@ -2160,7 +1756,9 @@
     }
   },
   {
+    "uuid": "85e39b43-56e1-494f-8faf-b73548b1fd92",
     "name": "Бране Петрушевски",
+    "nameAl": "Brane Petrushevski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631557166.png",
@@ -2184,7 +1782,9 @@
     "office": null
   },
   {
+    "uuid": "927b1981-2920-4884-9f13-a080df7cbc64",
     "name": "Валентина Марчевска",
+    "nameAl": "Valentina Marchevska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631566163.png",
@@ -2208,7 +1808,9 @@
     "office": null
   },
   {
+    "uuid": "14501065-8c0d-417f-b84a-08f2bc0cf935",
     "name": "Ваљбона Адили-Емини",
+    "nameAl": "Valbona Adili-Emini",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1766335237895.png",
@@ -2231,11 +1833,49 @@
         }
       ]
     },
-    "activity": null,
+    "activity": {
+      "attendance": 16,
+      "excused": 0,
+      "unexcused": 0,
+      "discussions": 1,
+      "proposedLaws": 0,
+      "amendments": 8,
+      "committeesAsMember": 0,
+      "attendanceMember": 1,
+      "period": "Jan–Jun 2025"
+    },
     "office": null
   },
   {
+    "uuid": "01a04a42-f90d-4696-843a-80364a607fb3",
+    "name": "Велика Стојкова Серафимовска",
+    "nameAl": "Velika Stojkova Serafimovska",
+    "party": "ВМРО-ДПМНЕ",
+    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
+    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631591274.png",
+    "questions": {
+      "total": 0,
+      "answered": 0,
+      "topInstitutions": [],
+      "recentQuestions": []
+    },
+    "activity": {
+      "attendance": 49,
+      "excused": 7,
+      "unexcused": 0,
+      "discussions": 4,
+      "proposedLaws": 0,
+      "amendments": 1,
+      "committeesAsMember": 4,
+      "attendanceMember": 24,
+      "period": "Jan–Jun 2025"
+    },
+    "office": null
+  },
+  {
+    "uuid": "a47a3a15-9f13-4ba6-afd0-53db79fc2f02",
     "name": "Венко Филипче",
+    "nameAl": "Venko Filipçe",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629936948.png",
@@ -2304,7 +1944,9 @@
     "office": null
   },
   {
+    "uuid": "6eb3b696-729b-41b0-90e1-25d922f0da2a",
     "name": "Весна Ѓорѓиева",
+    "nameAl": "Vesna Gjorgieva",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631881251.png",
@@ -2340,7 +1982,9 @@
     }
   },
   {
+    "uuid": "73a1ff48-92d0-43a7-8983-00f2e42015b1",
     "name": "Весна Бендевска",
+    "nameAl": "Vesna Bendevska",
     "party": "Движење ЗНАМ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745173798.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631889504.png",
@@ -2364,31 +2008,9 @@
     "office": null
   },
   {
-    "name": "Владо Мисајловски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "dc4f3a95-1a78-4ff2-bdde-9614660b1b2a",
     "name": "Горан Мисовски",
+    "nameAl": "Goran Misovski",
     "party": "Нова социјалдемократска партија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745415766.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631469405.png",
@@ -2443,7 +2065,9 @@
     "office": null
   },
   {
+    "uuid": "57dca588-9f61-4aa5-bea6-52ce1077afeb",
     "name": "Грација Бакраческа",
+    "nameAl": "Gracija Bakraçevska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631635088.png",
@@ -2467,7 +2091,9 @@
     "office": null
   },
   {
+    "uuid": "67f0c0fd-90f4-44cd-82e4-e664577520b8",
     "name": "Даниел Стојчевски",
+    "nameAl": "Daniel Stojçevski",
     "party": "Движење ЗНАМ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745173798.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631848715.png",
@@ -2504,7 +2130,9 @@
     "office": null
   },
   {
+    "uuid": "0c5ab2a4-2f70-40c7-b0a5-c97dd3414cdd",
     "name": "Даниела Белимова",
+    "nameAl": "Daniela Belimova",
     "party": "Движење ЗНАМ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745173798.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631352547.png",
@@ -2528,7 +2156,9 @@
     "office": null
   },
   {
+    "uuid": "1aafbd8a-3c38-4a89-887d-65779a63c827",
     "name": "Даниела Николова",
+    "nameAl": "Daniela Nikollova",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631674706.png",
@@ -2611,7 +2241,9 @@
     }
   },
   {
+    "uuid": "b5876298-e1a8-41bb-8860-dc82dc079f0c",
     "name": "Даниела Христова",
+    "nameAl": "Daniela Hristova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631663940.png",
@@ -2671,7 +2303,9 @@
     }
   },
   {
+    "uuid": "c8b8df51-1a19-4ee5-9bf8-aa6ae3ec3c87",
     "name": "Дафина Стојаноска",
+    "nameAl": "Dafina Stojanoska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631643410.png",
@@ -2706,74 +2340,9 @@
     }
   },
   {
-    "name": "Дејан Проданоски",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629912363.png",
-    "questions": {
-      "total": 3,
-      "answered": 3,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за финансии",
-          "count": 3
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "13ccb324-254f-4d5f-b71d-f3acc4124ad5",
-          "date": "2025-05-19",
-          "question": "Каква е состојбата со реализацијата на капиталните инвестиции",
-          "toInstitution": "Министерство за финансии",
-          "status": "Одговорено"
-        },
-        {
-          "id": "5f887ac0-07ba-4bad-a3eb-4bff76558e07",
-          "date": "2025-05-19",
-          "question": "Дали Владата ќе опстои на ваквата определба и во наредниот период, имајќи ги во предвид најавените инвестиции во големи инфраструктурни проекти и дали ќе може да се обезбеди на економскиот раст, согласно ова што е како економски индикатори",
-          "toInstitution": "Министерство за финансии",
-          "status": "Одговорено"
-        },
-        {
-          "id": "b3fb4ba0-ed99-47f3-9fcd-b65264430e44",
-          "date": "2025-05-19",
-          "question": "За кои стоки се однесува намалувањето и што ќе значи тоа за компаниите а   вие како министер за финансии треба да ни појасните на што се однесува ова и во која насока би одела оваа мерка.",
-          "toInstitution": "Министерство за финансии",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 56,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 12,
-      "committeesAsMember": 1,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": {
-      "totalCases": 18,
-      "totalMeetings": 20,
-      "totalEvents": 0,
-      "totalInitiatives": 0,
-      "casesByType": {
-        "Актуелно законодавство и владини политики": 1,
-        "Домување": 1,
-        "Животна средина": 3,
-        "Здравствена заштита": 3,
-        "Образование": 1,
-        "Пристап до јавни услуги": 3,
-        "Работен однос и права од работен однос": 2,
-        "Социјални услуги": 1,
-        "Транспорт и инфраструктура": 3
-      }
-    }
-  },
-  {
+    "uuid": "4eeadcc4-4b7b-4708-ae9b-1ebf1c0a25f9",
     "name": "Димитар Апасиев",
+    "nameAl": "Dimitar Apasiev",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630003545.png",
@@ -2850,7 +2419,9 @@
     "office": null
   },
   {
+    "uuid": "a3a2e982-fff7-435e-a22e-3a7827427fa2",
     "name": "Димитар Ковачевски",
+    "nameAl": "Dimitar Kovaçevski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630884955.png",
@@ -2923,7 +2494,9 @@
     "office": null
   },
   {
+    "uuid": "a764a372-f430-4605-b765-f791c0516dc3",
     "name": "Дијана Илиевска",
+    "nameAl": "Dijana Ilievska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631945817.png",
@@ -2963,7 +2536,9 @@
     }
   },
   {
+    "uuid": "b2939842-a650-47b6-a23f-d9f60955f666",
     "name": "Дијана Тоска",
+    "nameAl": "Diana Toska",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631161125.png",
@@ -3044,7 +2619,9 @@
     "office": null
   },
   {
+    "uuid": "b476504d-d64a-449a-8988-4252b19aeaf4",
     "name": "Драган Ковачки",
+    "nameAl": "Dragan Kovaçki",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630729041.png",
@@ -3107,7 +2684,9 @@
     }
   },
   {
+    "uuid": "7e5f1ebb-e447-4c2a-996e-74d360b62c94",
     "name": "Драган Недељковиќ",
+    "nameAl": "Dragan Nedeljkoviq",
     "party": "Демократска партија на Србите",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742756140325.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631504121.png",
@@ -3131,7 +2710,9 @@
     "office": null
   },
   {
+    "uuid": "28842ed9-39d6-4fe8-8d89-abcb1e670872",
     "name": "Драгана Арсова",
+    "nameAl": "Dragana Arsova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631438747.png",
@@ -3198,7 +2779,9 @@
     }
   },
   {
+    "uuid": "df0fc136-a700-4c30-b75c-a8ea38bf0754",
     "name": "Драгана Бојковска",
+    "nameAl": "Dragana Bojkovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631782334.png",
@@ -3276,7 +2859,9 @@
     }
   },
   {
+    "uuid": "7431eb82-a742-416e-aca2-e2379c76945b",
     "name": "Душко Иванов",
+    "nameAl": "Dusko Ivanov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631599636.png",
@@ -3300,7 +2885,9 @@
     "office": null
   },
   {
+    "uuid": "f07d6fb2-ed31-48d6-863c-0acaacd69a32",
     "name": "Ели Панова",
+    "nameAl": "Eli Panova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631328625.png",
@@ -3338,7 +2925,9 @@
     }
   },
   {
+    "uuid": "b214f1ed-f45b-4198-a4df-bcb5b7b343f6",
     "name": "Елми Азири",
+    "nameAl": "Elmi Aziri",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631002485.png",
@@ -3419,7 +3008,9 @@
     "office": null
   },
   {
+    "uuid": "ca75c598-4034-43ba-8c27-5d0a74a15d7c",
     "name": "Емил Спасовски",
+    "nameAl": "Emil Spasovski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630825929.png",
@@ -3443,7 +3034,9 @@
     "office": null
   },
   {
+    "uuid": "9255dd17-c11f-4a3f-adb0-c17a9ddce273",
     "name": "Емилија Ангелова",
+    "nameAl": "Emilija Angelova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631390032.png",
@@ -3518,88 +3111,9 @@
     }
   },
   {
-    "name": "Ељми Азири",
-    "party": "Алијанса за Албанците",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631002485.png",
-    "questions": {
-      "total": 8,
-      "answered": 7,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за економија и труд",
-          "count": 3
-        },
-        {
-          "institution": "Министерство за финансии",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за јавна администрација",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за здравство",
-          "count": 1
-        },
-        {
-          "institution": "Независно тело",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "0f9c762e-78b8-41aa-a821-0da306025303",
-          "date": "2025-06-26",
-          "question": "Дали ќе бидат електронските фактори и на албански јазик или вашето молчење значи согласност со непочитување и во овие финансиски институции",
-          "toInstitution": "Министерство за економија и труд",
-          "status": "Доставено"
-        },
-        {
-          "id": "aabc120a-b0f1-46e5-a796-553b05d710d7",
-          "date": "2025-06-26",
-          "question": "Кои компании земале субвенциониран кредит од страна на Владата, зошто тоа не е јавно и кога тоа ќе биде објавено",
-          "toInstitution": "Министерство за економија и труд",
-          "status": "Одговорено"
-        },
-        {
-          "id": "3a812ccf-12e8-44a8-b423-bd6f4ddac0f2",
-          "date": "2025-06-19",
-          "question": "Дали е економски исплатлив проектот за брзата пруга Табановце - Гевгелија?",
-          "toInstitution": "Министерство за финансии",
-          "status": "Одговорено"
-        },
-        {
-          "id": "76947e70-d69c-4560-ae9e-1fa59831d654",
-          "date": "2025-06-19",
-          "question": "Зошто Законот за правична застапеност го праќате во Венецијанската комисија без да го видат пратениците?",
-          "toInstitution": "Министерство за јавна администрација",
-          "status": "Одговорено"
-        },
-        {
-          "id": "0072c682-86bf-43ca-b1a5-aaecd091805b",
-          "date": "2025-06-19",
-          "question": "Дали треба јавноста и пратениците да знаат кој земал таков кредит односно кои се тие фирми што добиле кредит",
-          "toInstitution": "Министерство за економија и труд",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 40,
-      "excused": 16,
-      "unexcused": 0,
-      "discussions": 8,
-      "proposedLaws": 0,
-      "amendments": 26,
-      "committeesAsMember": 3,
-      "attendanceMember": 9,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "302b2fc1-d61f-4dfa-9dde-53a7cf70f9d5",
     "name": "Жаклина Пешевска",
+    "nameAl": "Zhaklina Peshevska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631452557.png",
@@ -3636,7 +3150,9 @@
     }
   },
   {
+    "uuid": "ba818452-df8d-44c6-9e9d-1ebcf4c8bfbd",
     "name": "Жан Дрвошанов",
+    "nameAl": "Zhan Drvoshanov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631264559.png",
@@ -3674,7 +3190,25 @@
     }
   },
   {
+    "uuid": "340e40be-b02f-4697-b6cc-885af9fb12b4",
+    "name": "Зеќирја Таири",
+    "nameAl": null,
+    "party": "Движење БЕСА",
+    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
+    "photo": null,
+    "questions": {
+      "total": 0,
+      "answered": 0,
+      "topInstitutions": [],
+      "recentQuestions": []
+    },
+    "activity": null,
+    "office": null
+  },
+  {
+    "uuid": "3b48a972-2591-48a9-a9b7-bf3fb4b92b18",
     "name": "Зиадин Села",
+    "nameAl": "Zijadin Sela",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630192249.png",
@@ -3698,7 +3232,9 @@
     "office": null
   },
   {
+    "uuid": "c25191ba-81d5-4512-92e3-f5dfb3d20625",
     "name": "Златко Пенков",
+    "nameAl": "Zlatko Penkov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630876791.png",
@@ -3722,7 +3258,9 @@
     "office": null
   },
   {
+    "uuid": "689280e7-65e7-4f18-84e7-72d682d69328",
     "name": "Зоран Коцевски",
+    "nameAl": "Zoran Koçevski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631372276.png",
@@ -3760,7 +3298,9 @@
     }
   },
   {
+    "uuid": "9fc1abb7-36e8-4068-89f4-d6e71143e95c",
     "name": "Зоранчо Јованчев",
+    "nameAl": "Zoranço Jovançev",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629781835.png",
@@ -3794,55 +3334,9 @@
     }
   },
   {
-    "name": "Иван Живковски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 1,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
-    "name": "Иван Стоилковик",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "783b0ff6-4999-473f-b83c-ae85d63faa5d",
     "name": "Иванка Василевска",
+    "nameAl": "Ivanka Vasilevska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630021097.png",
@@ -3886,7 +3380,9 @@
     "office": null
   },
   {
+    "uuid": "9486ec8b-db1a-4b1c-b3a1-700b18f400c3",
     "name": "Игор Здравковски",
+    "nameAl": "Igor Zdravkovski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631538143.png",
@@ -3941,7 +3437,9 @@
     }
   },
   {
+    "uuid": "f7469b3e-d913-4dd9-a724-e2d3b2578df7",
     "name": "Илир Демири",
+    "nameAl": "Ilir Demiri",
     "party": "Независни пратеници",
     "partyLogo": null,
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630278279.png",
@@ -3992,7 +3490,9 @@
     "office": null
   },
   {
+    "uuid": "2f38be70-d1cb-42da-bfe8-f9532a6ca4e3",
     "name": "Илир Хасани",
+    "nameAl": "Ilir Hasani",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631247510.png",
@@ -4073,7 +3573,9 @@
     "office": null
   },
   {
+    "uuid": "e7cab679-2e49-4869-9a3a-5e4cde1f2321",
     "name": "Илире Даути",
+    "nameAl": "Ilire Dauti",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631272575.png",
@@ -4154,7 +3656,9 @@
     "office": null
   },
   {
+    "uuid": "9926c31e-cd53-409b-abae-d85daba4153f",
     "name": "Имрлије Салиу-Фетаи",
+    "nameAl": "Imrlije Saliu-Fetai",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630817448.png",
@@ -4231,7 +3735,9 @@
     "office": null
   },
   {
-    "name": "Исмаил Јаховски",
+    "uuid": "16330bfc-7fcd-42ec-a344-21f46f413b00",
+    "name": "Исмаил Јахоски",
+    "nameAl": "Ismail Jahoski",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630868003.png",
@@ -4255,7 +3761,9 @@
     "office": null
   },
   {
+    "uuid": "60cfbf64-4e3c-4f6e-aade-dc7eb55c1ccf",
     "name": "Калтрина Беќири",
+    "nameAl": "Kaltrina Beqiri",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630035574.png",
@@ -4292,7 +3800,9 @@
     "office": null
   },
   {
+    "uuid": "39384921-c56a-47cb-be01-8366e455460e",
     "name": "Каролина Насковска",
+    "nameAl": "Karolina Naskovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631257089.png",
@@ -4329,7 +3839,9 @@
     }
   },
   {
+    "uuid": "2184c0cf-a5fb-4788-a6d1-656706160b12",
     "name": "Катерина Димитровска",
+    "nameAl": "Katerina Dimitrovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1766335251258.png",
@@ -4359,7 +3871,9 @@
     }
   },
   {
+    "uuid": "70e539da-80fd-422e-a89d-1769e70d7295",
     "name": "Кире Божиновски",
+    "nameAl": "Kire Bozhinovski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631922369.png",
@@ -4402,31 +3916,9 @@
     }
   },
   {
-    "name": "Кочовска Гордана Димитриевска",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "0b5fa0c7-0394-4696-9793-7ab8b54e2958",
     "name": "Лидија Петкоска",
+    "nameAl": "Lidija Petkoska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631825992.png",
@@ -4479,31 +3971,9 @@
     }
   },
   {
-    "name": "Лупчо Димовски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "bb7a18c2-5e45-4e3f-a0c9-ea64e97d5616",
     "name": "Малиша Станковиќ",
+    "nameAl": "Malisha Stankoviq",
     "party": "Социјалистичка партија на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742755349571.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630892958.png",
@@ -4551,31 +4021,9 @@
     "office": null
   },
   {
-    "name": "Марија Митева",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "9072cacd-b14d-4770-ba6b-497fb03fb824",
     "name": "Марија Петрушевска",
+    "nameAl": "Marija Petruševska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630048972.png",
@@ -4640,7 +4088,25 @@
     }
   },
   {
+    "uuid": "4aab4f5c-c3f2-4673-9175-7d79316f4edf",
+    "name": "Мартин Стојановски",
+    "nameAl": "Martin Stojanovski",
+    "party": "ВМРО-ДПМНЕ",
+    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
+    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1766335147612.png",
+    "questions": {
+      "total": 0,
+      "answered": 0,
+      "topInstitutions": [],
+      "recentQuestions": []
+    },
+    "activity": null,
+    "office": null
+  },
+  {
+    "uuid": "8fb7a6b2-266a-4a61-a459-bf2bd3c80c3d",
     "name": "Мевмед Џафери",
+    "nameAl": "Mevmed Xhaferi",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631135068.png",
@@ -4670,7 +4136,9 @@
     }
   },
   {
-    "name": "Мендух Тачи",
+    "uuid": "0906c11b-5dff-4acc-bcc2-ae5df30413c4",
+    "name": "Мендух Таќи",
+    "nameAl": "Menduh Taçi",
     "party": "Демократска партија на Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745347708.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631836119.png",
@@ -4694,7 +4162,9 @@
     "office": null
   },
   {
+    "uuid": "d0289df4-5ca9-4b88-8170-e2a5600ea4bf",
     "name": "Мерита Колчи Коџаџику",
+    "nameAl": "Merita Kolçi Kodxhaxhiku",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630767948.png",
@@ -4738,75 +4208,9 @@
     "office": null
   },
   {
-    "name": "Мерита Колчи-коџаџику",
-    "party": "Движење БЕСА",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630767948.png",
-    "questions": {
-      "total": 2,
-      "answered": 2,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за животна средина и просторно планирање",
-          "count": 2
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "221fc94b-252a-49bf-a156-01258450cef8",
-          "date": "2025-06-19",
-          "question": "Кои десет проекти ќе бидат предвидени со најголема вредност, во која општина и кој ќе биде износот?",
-          "toInstitution": "Министерство за животна средина и просторно планирање",
-          "status": "Одговорено"
-        },
-        {
-          "id": "99afaf61-7586-4738-a6d0-8e6034f538ca",
-          "date": "2025-06-19",
-          "question": "Moжете ли како Влада да потврдите дека финансирањето на капиталните финансии во општини каде што мнозинство се Албанци ќе биде постојана политика и ќе биде пракса и во иднина?",
-          "toInstitution": "Министерство за животна средина и просторно планирање",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 50,
-      "excused": 6,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 11,
-      "committeesAsMember": 2,
-      "attendanceMember": 31,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
-    "name": "Меџити Изет",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "f34282e4-242f-4fc2-a945-f953a52d3524",
     "name": "Миле Лефков",
+    "nameAl": "Mile Lefkov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631529605.png",
@@ -4842,7 +4246,9 @@
     }
   },
   {
+    "uuid": "2751e637-1d69-47a0-ac88-33d7db5ff407",
     "name": "Миле Талевски",
+    "nameAl": "Mile Talevski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631381898.png",
@@ -4915,8 +4321,10 @@
     "office": null
   },
   {
+    "uuid": "9df82808-bc0b-4e90-8630-7aee2aa37728",
     "name": "Миле Цеков",
-    "party": "Движење ЗНАМ",
+    "nameAl": "Mile Cekov",
+    "party": "Независни пратеници",
     "partyLogo": null,
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631487913.png",
     "questions": {
@@ -4948,7 +4356,9 @@
     }
   },
   {
+    "uuid": "8e3860d4-f687-41d1-bf89-294e8661ba8c",
     "name": "Мимоза Муса",
+    "nameAl": "Mimoza Musa",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631933628.png",
@@ -4996,7 +4406,9 @@
     "office": null
   },
   {
+    "uuid": "83823c9b-d0d8-4daf-bba2-53f1968d6c00",
     "name": "Митко Трајчулески",
+    "nameAl": "Mitko Trajçuleski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631873433.png",
@@ -5077,7 +4489,25 @@
     "office": null
   },
   {
+    "uuid": "3946609b-1463-495e-9429-a8113ec2bc14",
+    "name": "Мито Андонов",
+    "nameAl": "Mito Andonov",
+    "party": "ВМРО-ДПМНЕ",
+    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
+    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1766335196834.png",
+    "questions": {
+      "total": 0,
+      "answered": 0,
+      "topInstitutions": [],
+      "recentQuestions": []
+    },
+    "activity": null,
+    "office": null
+  },
+  {
+    "uuid": "f3c5b6c0-4a16-48e3-8448-1d208e9b0494",
     "name": "Моника Зајкова",
+    "nameAl": "Monika Zajkova",
     "party": "Либерално-демократска партија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742755732124.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630946399.png",
@@ -5158,7 +4588,9 @@
     "office": null
   },
   {
+    "uuid": "231cee5c-635a-4d59-85de-78d6e0702bb4",
     "name": "Моника Трајанова",
+    "nameAl": "Monika Trajanova",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631513401.png",
@@ -5198,7 +4630,9 @@
     }
   },
   {
+    "uuid": "cb2652d8-8c88-4f76-85af-86162a1ce4cd",
     "name": "Муса Џафери",
+    "nameAl": "Musa Xhaferi",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631520890.png",
@@ -5222,7 +4656,9 @@
     "office": null
   },
   {
+    "uuid": "7fdab43a-4775-4707-8a71-3545a8984ccd",
     "name": "Никола Коњановски",
+    "nameAl": "Nikolla Konjanovski",
     "party": "Социјалистичка партија на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742755349571.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629719614.png",
@@ -5261,7 +4697,9 @@
     }
   },
   {
+    "uuid": "8ab0bf32-0f84-49e6-a292-2009e667d96a",
     "name": "Никола Мицевски",
+    "nameAl": "Nikolla Micevski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630983806.png",
@@ -5315,7 +4753,9 @@
     }
   },
   {
+    "uuid": "d3cad8ca-1239-4f63-94b8-26d5b5a22e85",
     "name": "Олга Лозановска",
+    "nameAl": "Olga Lozanovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630921764.png",
@@ -5339,7 +4779,9 @@
     "office": null
   },
   {
+    "uuid": "0513e93e-867e-4799-b32a-9c7fb299350b",
     "name": "Оливер Спасовски",
+    "nameAl": "Oliver Spasovski",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631904569.png",
@@ -5420,7 +4862,9 @@
     "office": null
   },
   {
+    "uuid": "8f30dc1e-9fb9-4eda-9441-8a4b18084ac4",
     "name": "Павле Арсоски",
+    "nameAl": "Pavle Arsoski",
     "party": "Движење ЗНАМ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745173798.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629802526.png",
@@ -5468,7 +4912,9 @@
     "office": null
   },
   {
+    "uuid": "be9746c7-9df6-4247-8812-91f8b5235b27",
     "name": "Петар Марков",
+    "nameAl": "Petar Markov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631143418.png",
@@ -5506,7 +4952,9 @@
     }
   },
   {
+    "uuid": "aaace993-2fd8-45c9-b76c-e4d20297aaa6",
     "name": "Петар Ристески",
+    "nameAl": "Petar Risteski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630074506.png",
@@ -5545,7 +4993,9 @@
     }
   },
   {
+    "uuid": "032d951c-f2a9-4c41-9cbb-9534e9b893a3",
     "name": "Пеце Милевски",
+    "nameAl": "Pece Milevski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630971279.png",
@@ -5579,7 +5029,9 @@
     }
   },
   {
+    "uuid": "e15bc4b6-e7ab-4760-a27b-65ef7a04a3f0",
     "name": "Рашела Мизрахи",
+    "nameAl": "Rashela Mizrahi",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631200697.png",
@@ -5603,7 +5055,9 @@
     "office": null
   },
   {
+    "uuid": "512d3441-3be8-4d3f-946b-8d51296141ab",
     "name": "Реџеп Исмаил",
+    "nameAl": "Rexhep Ismail",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631618000.png",
@@ -5684,7 +5138,9 @@
     "office": null
   },
   {
+    "uuid": "d13f0c7e-3023-4acf-949b-47c64c73950e",
     "name": "Рина Ајдари",
+    "nameAl": "Rina Ajdari",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631789891.png",
@@ -5765,7 +5221,9 @@
     "office": null
   },
   {
+    "uuid": "2ef2cb02-132d-4fee-a474-a2e3dfcfdcee",
     "name": "Ријад Шаќири",
+    "nameAl": "Rijad Shaqiri",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630258140.png",
@@ -5846,28 +5304,17 @@
     "office": null
   },
   {
+    "uuid": "b23493ea-f5cb-4448-bb79-0f93d718bf67",
     "name": "Садик Сулејмани",
+    "nameAl": "Sadik Sulejmani",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631181629.png",
     "questions": {
-      "total": 1,
-      "answered": 1,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за култура и туризам",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "d4603be0-46ad-4d42-b7a2-62a48495e4b8",
-          "date": "2025-02-19",
-          "question": "Кои чекори се превземени за зачувувањето на културното наследство. конкретно во врска со Базиликата во село Радолишта во Струга.",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        }
-      ]
+      "total": 0,
+      "answered": 0,
+      "topInstitutions": [],
+      "recentQuestions": []
     },
     "activity": {
       "attendance": 38,
@@ -5883,7 +5330,9 @@
     "office": null
   },
   {
+    "uuid": "3a2fda36-963d-499c-8725-912374fe3117",
     "name": "Садула Дураки",
+    "nameAl": "Sadulla Duraki",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630739704.png",
@@ -5907,7 +5356,9 @@
     "office": null
   },
   {
+    "uuid": "14023e2e-7f68-4dfc-979b-58d04dec9280",
     "name": "Сали Мурати",
+    "nameAl": "Sali Murati",
     "party": "Движење на Турците на Македонија за правда и демократија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742756002802.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631189339.png",
@@ -5997,44 +5448,9 @@
     }
   },
   {
-    "name": "Салим Сулејмани",
-    "party": "Алијанса за Албанците",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631477286.png",
-    "questions": {
-      "total": 1,
-      "answered": 1,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за култура и туризам",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "d4603be0-46ad-4d42-b7a2-62a48495e4b8",
-          "date": "2025-02-19",
-          "question": "Кои чекори се превземени за зачувувањето на културното наследство. конкретно во врска со Базиликата во село Радолишта во Струга.",
-          "toInstitution": "Министерство за култура и туризам",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 37,
-      "excused": 3,
-      "unexcused": 0,
-      "discussions": 1,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 2,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "0547cdc5-93b9-45c0-8334-e26837bc3296",
     "name": "Саранда Имери-Стафаи",
+    "nameAl": "Saranda Imeri-Stafai",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630209135.png",
@@ -6093,66 +5509,9 @@
     "office": null
   },
   {
-    "name": "Саранда Имери-стафаи",
-    "party": "Движење БЕСА",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630209135.png",
-    "questions": {
-      "total": 3,
-      "answered": 3,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за образование и наука",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за животна средина и просторно планирање",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за енергетика, рударство и минерални суровини",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "28708496-584d-4e22-b206-95a58d6db4b4",
-          "date": "2026-03-16",
-          "question": "Кога  ќе заврши реконструкција на објектот во кој учениците од Куманово ја следат наставата од 2002 година  , за да можат да учат во услови какви што заслужуваат?",
-          "toInstitution": "Министерство за образование и наука",
-          "status": "Одговорено"
-        },
-        {
-          "id": "841f1f20-af5e-4267-b12e-bf4e1463e0f2",
-          "date": "2026-03-16",
-          "question": "Какви планови има Министерството за животна средина и просторно планирање за да се модернизира  депонијата во Русино?",
-          "toInstitution": "Министерство за животна средина и просторно планирање",
-          "status": "Одговорено"
-        },
-        {
-          "id": "2d8d9716-b081-472c-bfd5-2354d7d3676a",
-          "date": "2026-03-16",
-          "question": "Што има преземено Министерството за енергетика и инспекторатот кој функционира во склоп на ова министерство за проблематиката во врска со каменоломот кај село Чегране?",
-          "toInstitution": "Министерство за енергетика, рударство и минерални суровини",
-          "status": "Одговорено"
-        }
-      ]
-    },
-    "activity": {
-      "attendance": 34,
-      "excused": 22,
-      "unexcused": 0,
-      "discussions": 1,
-      "proposedLaws": 0,
-      "amendments": 11,
-      "committeesAsMember": 1,
-      "attendanceMember": 12,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "b4df441b-158c-46cd-9a58-c5a45ac456ed",
     "name": "Сашко Јанчев",
+    "nameAl": "Sashko Jançev",
     "party": "Левица",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744810581.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630242899.png",
@@ -6244,7 +5603,9 @@
     }
   },
   {
+    "uuid": "863aa733-d1fa-4375-8e10-810cb633fee1",
     "name": "Сашо Донев",
+    "nameAl": "Sasho Donev",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631897438.png",
@@ -6268,7 +5629,9 @@
     "office": null
   },
   {
+    "uuid": "c631da70-88de-459f-b178-011a436c55a0",
     "name": "Сања Лукаревска",
+    "nameAl": "Sanja Lukarevska",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631574601.png",
@@ -6349,31 +5712,9 @@
     "office": null
   },
   {
-    "name": "Серафимовска Велика Стојкова",
-    "party": "ВМРО-ДПМНЕ",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631591274.png",
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 49,
-      "excused": 7,
-      "unexcused": 0,
-      "discussions": 4,
-      "proposedLaws": 0,
-      "amendments": 1,
-      "committeesAsMember": 4,
-      "attendanceMember": 24,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "8f08517f-ad0d-42eb-a19f-da0fbc77e1d9",
     "name": "Сергеј Попов",
+    "nameAl": "Sergej Popov",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630712747.png",
@@ -6424,7 +5765,9 @@
     "office": null
   },
   {
+    "uuid": "3743c3bf-8fc7-4732-a11b-bb6e71ea6ad8",
     "name": "Силвана Ангелевска",
+    "nameAl": "Silvana Angellovska",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630792259.png",
@@ -6489,31 +5832,9 @@
     "office": null
   },
   {
-    "name": "Синиша Стојаноски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "f2770699-8261-462a-a253-bf508f9dbee8",
     "name": "Скендер Реџепи",
+    "nameAl": "Skender Rexhepi",
     "party": "Движење „Попули“",
     "partyLogo": null,
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631150782.png",
@@ -6578,7 +5899,9 @@
     "office": null
   },
   {
+    "uuid": "0274faa7-c8d0-4039-82bc-28798346ac14",
     "name": "Славјанка Петровска",
+    "nameAl": "Slavjanka Petrovska",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630750368.png",
@@ -6659,7 +5982,9 @@
     "office": null
   },
   {
+    "uuid": "f5d781c7-03a2-48ec-8022-27aeffe7a783",
     "name": "Соња Мираковска",
+    "nameAl": "Sonja Mirakovska",
     "party": "Нова социјалдемократска партија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742745415766.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631805139.png",
@@ -6732,7 +6057,9 @@
     "office": null
   },
   {
+    "uuid": "e1ead9d2-7a0e-4478-9fc7-34581e2937ee",
     "name": "Талат Џафери",
+    "nameAl": "Talat Xhaferi",
     "party": "Демократска унија за интеграција",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744538466.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631219796.png",
@@ -6780,7 +6107,9 @@
     "office": null
   },
   {
+    "uuid": "3748f387-eed3-4a53-8863-a99d333d0d24",
     "name": "Тони Јаревски",
+    "nameAl": "Toni Jarevski",
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744428872.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629977913.png",
@@ -6828,7 +6157,9 @@
     "office": null
   },
   {
+    "uuid": "ad79f297-143f-403f-8586-83f4f7646d22",
     "name": "Фатмир Битиќи",
+    "nameAl": "Fatmir Bytyçi",
     "party": "Социјалдемократски сојуз на Македонија",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744340843.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631495369.png",
@@ -6909,55 +6240,9 @@
     "office": null
   },
   {
-    "name": "Фатмир Лимани",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
-    "name": "Фериде Feride Haxiu Хаџиу",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 41,
-      "excused": 15,
-      "unexcused": 0,
-      "discussions": 1,
-      "proposedLaws": 0,
-      "amendments": 11,
-      "committeesAsMember": 2,
-      "attendanceMember": 4,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
+    "uuid": "214ce1eb-b2d2-43f4-b473-7a39737529cc",
     "name": "Фериде Хаџиу",
+    "nameAl": "Feride Hadjiu",
     "party": "Движење БЕСА",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741631460886.png",
@@ -6998,88 +6283,23 @@
         }
       ]
     },
-    "activity": null,
-    "office": null
-  },
-  {
-    "name": "Фетаи Имрлије Салиу",
-    "party": "Движење БЕСА",
-    "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744900778.png",
-    "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741630817448.png",
-    "questions": {
-      "total": 6,
-      "answered": 6,
-      "topInstitutions": [
-        {
-          "institution": "Министерство за образование и наука",
-          "count": 3
-        },
-        {
-          "institution": "Претседател на Владата на Република Северна Македонија",
-          "count": 1
-        },
-        {
-          "institution": "Независно тело",
-          "count": 1
-        },
-        {
-          "institution": "Министерство за енергетика, рударство и минерални суровини",
-          "count": 1
-        }
-      ],
-      "recentQuestions": [
-        {
-          "id": "cb805e7a-73ec-4c69-a3b3-26e5e2b78cc0",
-          "date": "2025-11-20",
-          "question": "Каква е вистината за дуалното образование и како се развива во училиштата на албански јазик и дали може да обезбедиме јавни податоци од Министерството за образование кој е бројот на паралелки, професии и класови во овие одделенија, какви се соработките со компаниите во албанските општини и кои се конкретните мерки кои треба да се преземат за да се надмине ова со кои се соочуваат учениците каде што наставата се одвива на албански јазик?",
-          "toInstitution": "Министерство за образование и наука",
-          "status": "Одговорено"
-        },
-        {
-          "id": "3d227b3a-f2d4-41d0-8bd4-01cacdd8dbe4",
-          "date": "2025-11-20",
-          "question": "Дали Министерството за образование има детални статистички податоци, која е реалната ситуација на учениците од основните и средните училишта кои стагнираат во пишувањето и читањето и ако ги имате овие податоци, дали се предвидени конкретни мерки кои се поврзани со дополнителни часови, дополнителна настава за да се надмине оваа пречка?",
-          "toInstitution": "Министерство за образование и наука",
-          "status": "Одговорено"
-        },
-        {
-          "id": "9b3d4309-d482-4a37-894a-115ff0fbc0bf",
-          "date": "2025-11-20",
-          "question": "Кои се тие индикатори и мерливи резултати кои ја позицираат нашата земја подобро од другите земји од Балканот во интегративниот процес и кои се чекорите кои Влада сака да ги преземе за надминување на овие политички блокади кои ја попречуваат нашата земја да навлезе во реалните фази за преговори во Европската Унија?",
-          "toInstitution": "Претседател на Владата на Република Северна Македонија",
-          "status": "Одговорено"
-        },
-        {
-          "id": "f7ea0020-5262-494f-b51c-3f172fb398df",
-          "date": "2024-10-21",
-          "question": "Какви мерки ќе преземете за да се одбегне понатамошното губење на овие фондови или ќе продолжите да се соочувате со поразите од губење на средствата од ИПА фондовите како во минатите влади.",
-          "toInstitution": null,
-          "status": "Одговорено"
-        },
-        {
-          "id": "c407cf33-2c73-416a-999f-c5cb6204f3a3",
-          "date": "2024-10-21",
-          "question": "Што ќе преземете во однос на  долгогодишниот проблем со еколошката катастрофа од компанијата Лика Комерц во Чегране",
-          "toInstitution": "Министерство за енергетика, рударство и минерални суровини",
-          "status": "Одговорено"
-        }
-      ]
-    },
     "activity": {
-      "attendance": 52,
-      "excused": 4,
+      "attendance": 41,
+      "excused": 15,
       "unexcused": 0,
-      "discussions": 3,
+      "discussions": 1,
       "proposedLaws": 0,
-      "amendments": 12,
-      "committeesAsMember": 3,
-      "attendanceMember": 2,
+      "amendments": 11,
+      "committeesAsMember": 2,
+      "attendanceMember": 4,
       "period": "Jan–Jun 2025"
     },
     "office": null
   },
   {
+    "uuid": "1e35461b-b6e7-4e97-85f7-b903adaae11d",
     "name": "Халил Снопче",
+    "nameAl": "Halil Snopçe",
     "party": "Алијанса за Албанците",
     "partyLogo": "https://kancelarii.sobranie.mk/uploads/party-icons/party_1742744729391.png",
     "photo": "https://kancelarii.sobranie.mk/uploads/mp-pictures/mp_picture_1741629924836.png",
@@ -7155,30 +6375,6 @@
       "amendments": 0,
       "committeesAsMember": 1,
       "attendanceMember": 6,
-      "period": "Jan–Jun 2025"
-    },
-    "office": null
-  },
-  {
-    "name": "Христијан Мицкоски",
-    "party": "",
-    "partyLogo": null,
-    "photo": null,
-    "questions": {
-      "total": 0,
-      "answered": 0,
-      "topInstitutions": [],
-      "recentQuestions": []
-    },
-    "activity": {
-      "attendance": 0,
-      "excused": 0,
-      "unexcused": 0,
-      "discussions": 0,
-      "proposedLaws": 0,
-      "amendments": 0,
-      "committeesAsMember": 0,
-      "attendanceMember": 0,
       "period": "Jan–Jun 2025"
     },
     "office": null

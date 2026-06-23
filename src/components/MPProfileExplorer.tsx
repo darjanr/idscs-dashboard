@@ -96,7 +96,9 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
   }
 
   const filtered = useMemo(() => {
-    let list = profiles.filter(p => p.questions.total > 0 || p.activity || p.office);
+    // Show the full active assembly (120) — including MPs seated after the report
+    // period who have no activity/office data yet.
+    let list = [...profiles];
     if (filterParty !== "all") list = list.filter(p => p.party === filterParty);
     if (search) list = list.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
     if (sortBy === "name") return list.sort((a, b) => a.name.localeCompare(b.name));

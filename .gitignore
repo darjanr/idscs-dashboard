@@ -20,6 +20,13 @@ pnpm-debug.log*
 # raw datasets — fetched by fetch_data.py, not committed
 raw/
 
+# python cache
+__pycache__/
+*.pyc
+
+# raw design source assets (derived logos/illustration live in public/)
+new resources/
+
 # macOS-specific files
 .DS_Store
 

@@ -1,5 +1,6 @@
 {
-  "lastProcessed": "2026-05-16T06:57:53.546187+00:00",
+  "lastProcessed": "2026-06-23T15:41:57.913872+00:00",
+  "activeAssembly": 120,
   "sources": {
     "questions": {
       "lastPortalUpdate": "2026-05-10",
@@ -7,7 +8,7 @@
     },
     "mymp": {
       "lastPortalUpdate": "2025-11-11",
-      "records": 133,
+      "records": 116,
       "period": "Jan–Jun 2025"
     },
     "kancelarii": {

@@ -2,15 +2,21 @@
 """
 process.py — transforms raw downloaded datasets into clean JSON for the dashboard.
 
-Input:  ../raw/*.json and ../raw/*.xlsx  (fetched by fetch_data.py in the planning folder)
-Output: ../public/data/questions.json
+Single source of truth for "who is an MP" is the ACTIVE ASSEMBLY of 120 members,
+fetched from kancelarii.sobranie.mk/api/mps where statusId == True. Every MP-level
+output (mymp.json, mp_profiles.json) is scoped to those 120. The questions record is
+kept complete (657) but each question is tagged with the matched MP and an active flag.
+
+Input:  ../raw/*.json and ../raw/*.xlsx  (fetched by fetch_data.py)
+Output: ../public/data/mps_active.json   (the canonical 120-MP roster)
+        ../public/data/questions.json
         ../public/data/mymp.json
         ../public/data/kancelarii.json
         ../public/data/mp_profiles.json
         ../public/data/meta.json
 
 Run:
-    pip3 install pandas openpyxl rapidfuzz
+    pip3 install pandas openpyxl rapidfuzz requests
     python3 scripts/process.py
 """
 
@@ -24,26 +30,33 @@ from pathlib import Path
 
 import pandas as pd
 import requests
-from rapidfuzz import process as fuzz_process, fuzz
 
 KANCELARII_API = "https://kancelarii.sobranie.mk"
 PHOTO_BASE = f"{KANCELARII_API}/uploads/mp-pictures/"
 HEADERS = {"User-Agent": "idscs-dashboard/1.0"}
 
 # ---------------------------------------------------------------------------
-# Paths
+# Paths  — read raw from the repo's own raw/ folder (reproducible build)
 # ---------------------------------------------------------------------------
 
 ROOT = Path(__file__).resolve().parent.parent
-RAW = ROOT.parent / "IDSCS MP" / "raw"   # sibling planning folder has the raw data
+RAW = ROOT / "raw"
 PUBLIC_DATA = ROOT / "public" / "data"
 PUBLIC_DATA.mkdir(parents=True, exist_ok=True)
 
 # ---------------------------------------------------------------------------
-# Helpers
+# Name normalisation + fuzzy matching
 # ---------------------------------------------------------------------------
 
 _DOTNET_RE = re.compile(r"^/Date\((\d+)\)/$")
+_LATIN_RE = re.compile(r"[a-z]")
+
+# Conservative punctuation folding only. Letter-level spelling variants
+# (Таќи/Тачи, Биљана/Билјана, Јахоски/Јаховски) are handled by the explicit
+# NAME_OVERRIDES table + a high-threshold fuzzy fallback, NOT by lossy letter
+# folding — with only 120 names, aggressive folds risk collapsing two distinct
+# MPs onto the same key.
+_FOLD = [("-", " "), ("/", " ")]
 
 
 def parse_dotnet_date(value: str | None) -> str | None:
@@ -56,114 +69,132 @@ def parse_dotnet_date(value: str | None) -> str | None:
     return datetime.fromtimestamp(ms / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
 
 
-def normalise_name(name: str) -> str:
-    """Lowercase + strip accents for fuzzy comparison."""
-    name = name.strip()
-    nfkd = unicodedata.normalize("NFKD", name)
-    return "".join(c for c in nfkd if not unicodedata.combining(c)).lower()
+def norm_name(name: str | None) -> str:
+    """Aggressive, order-independent normalisation key for cross-dataset name joins.
 
-
-def mymp_raw_to_firstname_last(raw: str) -> str:
+    Lowercase, strip accents, fold Cyrillic digraphs, drop Latin transliteration
+    tokens (Albanian names are stored as 'МУРАТИ САЛИ/MURATI SALI'), then sort the
+    remaining tokens so 'LASTNAME FIRSTNAME' and 'Firstname Lastname' compare equal.
     """
-    'МУРАТИ САЛИ/MURATI SALI' -> 'Сали Мурати'
-    'АНГЕЛЕВСКА СИЛВАНА'       -> 'Силвана Ангелевска'
-    """
-    mk_part = raw.split("/")[0].strip()
-    parts = mk_part.split()
-    if len(parts) >= 2:
-        # LASTNAME FIRSTNAME... -> Firstname... Lastname
-        return " ".join(p.capitalize() for p in parts[1:]) + " " + parts[0].capitalize()
-    return mk_part.capitalize()
+    if not name:
+        return ""
+    s = str(name).strip().lower()
+    nfkd = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in nfkd if not unicodedata.combining(c))
+    for a, b in _FOLD:
+        s = s.replace(a, b)
+    toks = [t for t in s.split() if t and not _LATIN_RE.search(t)]
+    return " ".join(sorted(toks))
 
 
-def build_name_index(names: list[str]) -> dict[str, str]:
-    """Return {normalised -> original} for fast lookup."""
-    return {normalise_name(n): n for n in names}
+# Manual overrides for residual hard cases (MyMP raw spelling -> roster MK fullName).
+# Kept explicit + auditable; the build warns loudly if any active MP stays unmatched,
+# so a future data refresh that breaks a match is caught rather than silently dropped.
+NAME_OVERRIDES: dict[str, str] = {
+    "ЕМЕИНИ АДИЛИ ВАЛБОНА /VALBONA ADILI EMINI": "Ваљбона Адили-Емини",
+    "ЈАХОВСКИ ИСМАИЛ": "Исмаил Јахоски",
+    "КУЗМАНОСКА БИЛЈАНА": "Биљана Кузманоска",
+    "ТАЧИ МЕНДУХ/THAÇI MENDUH": "Мендух Таќи",
+    "АЗИРИ ЕЉМИ/ AZIRI ELMI": "Елми Азири",
+}
 
 
-def fuzzy_match(query: str, index: dict[str, str], threshold: int = 82) -> str | None:
-    norm_query = normalise_name(query)
-    if norm_query in index:
-        return index[norm_query]
-    result = fuzz_process.extractOne(
-        norm_query, list(index.keys()), scorer=fuzz.token_sort_ratio
-    )
-    if result and result[1] >= threshold:
-        return index[result[0]]
-    return None
+class RosterMatcher:
+    """Resolves an arbitrary MP name string to an active-roster UUID."""
+
+    def __init__(self, active: list[dict]):
+        self.by_uuid = {m["uuid"]: m for m in active}
+        self._keys: dict[str, str] = {}          # norm key -> uuid
+        for m in active:
+            for nm in (m["name"], m.get("nameAl"), m.get("nameEn")):
+                k = norm_name(nm)
+                if k:
+                    self._keys.setdefault(k, m["uuid"])
+        # Resolve overrides (roster fullName -> uuid) into norm-key shortcuts
+        name_to_uuid = {m["name"]: m["uuid"] for m in active}
+        self._override_uuid: dict[str, str] = {}
+        for raw, full in NAME_OVERRIDES.items():
+            uuid = name_to_uuid.get(full)
+            if uuid:
+                self._override_uuid[norm_name(raw)] = uuid
+
+    def resolve(self, raw: str | None) -> str | None:
+        """Deterministic: exact normalised key, then explicit override.
+
+        No fuzzy fallback — with only 120 names, fuzzy produces real cross-person
+        false positives (e.g. minister 'Николоски Александар' → 'Александра
+        Николовска' at 88%). Genuine spelling variants go in NAME_OVERRIDES; the
+        build warns on any unmatched row so new variants are caught explicitly.
+        """
+        if not raw:
+            return None
+        k = norm_name(raw)
+        return self._override_uuid.get(k) or self._keys.get(k)
 
 
 # ---------------------------------------------------------------------------
-# 0. Fetch MP photos + office coordinates from kancelarii.sobranie.mk API
+# 0. Active roster + party + office data from kancelarii.sobranie.mk API
 # ---------------------------------------------------------------------------
 
 def fetch_parties() -> dict[int, dict]:
-    """Returns {party_id -> {name, logo_url}}"""
     try:
-        r = requests.get(f"{KANCELARII_API}/api/parties", headers=HEADERS, timeout=20)
+        r = requests.get(f"{KANCELARII_API}/api/parties", headers=HEADERS, timeout=25)
         r.raise_for_status()
-        data = r.json()
-        result = {}
-        for party in data:
-            icon_path = party.get("iconPath") or ""
-            result[party["id"]] = {
-                "name": (party.get("name") or "").strip(),
-                "logo": f"{KANCELARII_API}/{icon_path}" if icon_path else None,
+        out = {}
+        for p in r.json():
+            icon = p.get("iconPath") or ""
+            out[p["id"]] = {
+                "name": (p.get("name") or "").strip(),
+                "logo": f"{KANCELARII_API}/{icon}" if icon else None,
             }
-        return result
+        return out
     except Exception as e:
         print(f"  ! Could not fetch parties: {e}")
         return {}
 
 
-def fetch_mp_data(party_index: dict[int, dict]) -> tuple[dict[str, str], dict[str, str], dict[str, str | None]]:
-    """Returns ({name -> photo_url}, {name -> party_name}, {name -> party_logo_url})"""
-    try:
-        r = requests.get(f"{KANCELARII_API}/api/mps", headers=HEADERS, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        photos: dict[str, str] = {}
-        party_names: dict[str, str] = {}
-        party_logos: dict[str, str | None] = {}
-        for mp in data:
-            name = (mp.get("fullName") or "").strip()
-            if not name:
-                continue
-            pic = mp.get("picturePath") or ""
-            if pic:
-                photos[name] = f"{PHOTO_BASE}{pic.split('/')[-1]}"
-            party_id = mp.get("partyId")
-            if party_id and party_id in party_index:
-                party_names[name] = party_index[party_id]["name"]
-                party_logos[name] = party_index[party_id]["logo"]
-        return photos, party_names, party_logos
-    except Exception as e:
-        print(f"  ! Could not fetch MP data: {e}")
-        return {}, {}, {}
+def fetch_active_roster(parties: dict[int, dict]) -> list[dict]:
+    """The canonical active assembly — statusId == True (120 members)."""
+    r = requests.get(f"{KANCELARII_API}/api/mps", headers=HEADERS, timeout=25)
+    r.raise_for_status()
+    roster = []
+    for m in r.json():
+        if not m.get("statusId"):
+            continue  # inactive / replaced — not part of the active assembly
+        uuid = (m.get("parliamentUserId") or "").lower()
+        if not uuid:
+            continue
+        pic = m.get("picturePath") or ""
+        party = parties.get(m.get("partyId") or -1, {})
+        roster.append({
+            "uuid": uuid,
+            "id": m.get("id"),
+            "name": (m.get("fullName") or "").strip(),
+            "nameAl": (m.get("fullNameAl") or "").strip() or None,
+            "nameEn": (m.get("fullNameEn") or "").strip() or None,
+            "party": party.get("name") or "",
+            "partyLogo": party.get("logo"),
+            "photo": f"{PHOTO_BASE}{pic.split('/')[-1]}" if pic else None,
+            "officeId": m.get("officeId"),
+        })
+    return roster
 
 
 def fetch_office_coordinates() -> list[dict]:
-    """Returns list of {id, address, lat, lon}"""
     try:
-        r = requests.get(f"{KANCELARII_API}/api/offices", headers=HEADERS, timeout=20)
+        r = requests.get(f"{KANCELARII_API}/api/offices", headers=HEADERS, timeout=25)
         r.raise_for_status()
-        data = r.json()
-        result = []
-        for office in data:
-            coords = (office.get("coordinates") or "").strip()
+        out = []
+        for o in r.json():
+            coords = (o.get("coordinates") or "").strip()
             if coords and "," in coords:
-                parts = coords.split(",")
                 try:
-                    lat, lon = float(parts[0].strip()), float(parts[1].strip())
-                    result.append({
-                        "id": office["id"],
-                        "address": (office.get("address") or "").strip(),
-                        "lat": lat,
-                        "lon": lon,
-                    })
+                    lat, lon = (float(x.strip()) for x in coords.split(",")[:2])
+                    out.append({"id": o["id"], "address": (o.get("address") or "").strip(),
+                                "lat": lat, "lon": lon})
                 except ValueError:
                     pass
-        return result
+        return out
     except Exception as e:
         print(f"  ! Could not fetch office coordinates: {e}")
         return []
@@ -174,21 +205,25 @@ def fetch_office_coordinates() -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def process_questions() -> list[dict]:
-    path = RAW / "pratenicki_prasanja_2024-2028.json"
-    with open(path, encoding="utf-8") as f:
+    with open(RAW / "pratenicki_prasanja_2024-2028.json", encoding="utf-8") as f:
         raw = json.load(f)
+
+    def _norm_qa(s: str) -> str:
+        # Collapse whitespace and drop trailing punctuation so near-identical
+        # copies (e.g. answer ends with '.' where question ends with '?') match.
+        s = re.sub(r"\s+", " ", s or "").strip()
+        return re.sub(r"[\s\.\?\!,;:]+$", "", s)
 
     records = []
     for r in raw:
-        date_str = parse_dotnet_date(r.get("SittingDate"))
         answer = r.get("ShortAnswer", "").strip()
         question = r.get("ShortQuestion", "").strip()
-        # Flag answer copies (data quality issue at source)
-        answer_is_copy = answer == question and bool(answer)
-
+        # An answer is a "copy" when it merely repeats the question text (the
+        # source marks the question answered but pastes the question back).
+        answer_is_copy = bool(answer) and _norm_qa(answer) == _norm_qa(question)
         records.append({
             "id": r["Id"],
-            "date": date_str,
+            "date": parse_dotnet_date(r.get("SittingDate")),
             "session": r.get("SittingNumber"),
             "fromMP": r.get("FromMP", "").strip(),
             "toInstitution": (r.get("ToInstitution") or "").strip() or None,
@@ -199,136 +234,143 @@ def process_questions() -> list[dict]:
             "answerIsCopy": answer_is_copy,
         })
 
-    # Sort by date desc, nulls last
     records.sort(key=lambda r: (r["date"] is not None, r["date"] or "", r["session"] or 0), reverse=True)
     return records
 
 
 # ---------------------------------------------------------------------------
-# 2. MyMP
+# 2. MyMP  — parse by header CODE name, never absolute column index
 # ---------------------------------------------------------------------------
 
-MYMP_COLS = {
-    0:  "mp_name_raw",
-    1:  "ie",
-    2:  "attendance",
-    3:  "excused",
-    4:  "unexcused",
-    5:  "discussions",
-    6:  "replies",
-    7:  "procedural",
-    8:  "committee_discussions",
-    9:  "laws",
-    10: "amendments",
-    11: "col11",
-    12: "col12",
-    13: "proposed_laws",
-    14: "amendments2",
-    15: "questions",
-    16: "committees_member",
-    17: "sessions_held_member",
-    18: "attendance_member",
-    19: "committees_deputy",
-    20: "sessions_held_deputy",
-    21: "attendance_deputy",
-    22: "mandate",
-    23: "photo",
-    24: "full_name",
+# Row 4 of the sheet holds short internal codes. Map each code to a metric.
+MYMP_CODE_METRIC = {
+    "pris": "attendance",
+    "opr": "excused",
+    # unexcused has a blank/numeric header (literally 0); located as the column
+    # immediately after 'opr' (see locate_unexcused_col).
+    "izla1": "discussions",
+    "izla2": "replies",
+    "izla3": "procedural",
+    "izla4": "committeeDiscussions",
+    "g11": "laws",
+    "g12": "amendments",
+    "przak": "proposedLaws",
+    "aman": "amendments2",
+    "pras1": "questions",
+    "kom1": "committeesAsMember",
+    "kom2": "sessionsHeldMember",
+    "kom3": "attendanceMember",
+    "kom11": "committeesAsDeputy",
+    "kom22": "sessionsHeldDeputy",
+    "kom33": "attendanceDeputy",
 }
+NAME_CODE = "Презиме и Име"
 
 
-def process_mymp() -> tuple[list[dict], dict[str, str]]:
-    """Returns (records, {normalised_name -> canonical_firstname_last})"""
+def process_mymp(matcher: RosterMatcher) -> dict[str, dict]:
+    """Returns {roster_uuid -> activity dict} for matched active MPs.
+
+    Logs any MyMP row that fails to match the active roster (expected: the frozen
+    ministers + departed/replaced members, which are intentionally excluded).
+    """
     path = RAW / "moj-pratenik-jan-juni-2025.xlsx"
-    df = pd.read_excel(path, header=3, sheet_name="IE 1").iloc[:, :25]
-    df.columns = list(MYMP_COLS.values())
-    df = df[df["mp_name_raw"].notna() & (df["mp_name_raw"] != "Презиме и Име")].copy()
+    df = pd.read_excel(path, header=3, sheet_name="IE 1")
+    cols = list(df.columns)
 
-    records = []
-    name_index: dict[str, str] = {}
+    if NAME_CODE not in cols:
+        raise RuntimeError(f"MyMP: expected header '{NAME_CODE}' not found — sheet layout changed.")
+    # Locate the unexcused column by name-anchor (column right after 'opr').
+    unexcused_col = cols[cols.index("opr") + 1] if "opr" in cols else None
 
+    df = df[df[NAME_CODE].notna() & (df[NAME_CODE] != NAME_CODE)].copy()
+
+    def iv(row, col) -> int:
+        if col is None or col not in row:
+            return 0
+        v = row[col]
+        try:
+            return int(v) if pd.notna(v) else 0
+        except (ValueError, TypeError):
+            return 0
+
+    by_uuid: dict[str, dict] = {}
+    unmatched: list[str] = []
     for _, row in df.iterrows():
-        raw_name = str(row["mp_name_raw"]).strip()
-        canonical = mymp_raw_to_firstname_last(raw_name)
-        name_index[normalise_name(canonical)] = canonical
+        raw_name = str(row[NAME_CODE]).strip()
+        uuid = matcher.resolve(raw_name)
+        if not uuid:
+            unmatched.append(raw_name)
+            continue
 
-        def iv(col: str) -> int:
-            v = row.get(col)
-            try:
-                return int(v) if pd.notna(v) else 0
-            except (ValueError, TypeError):
-                return 0
-
-        records.append({
-            "name": canonical,
+        metrics = {metric: iv(row, code) for code, metric in MYMP_CODE_METRIC.items()
+                   if code in cols}
+        rec = {
             "nameRaw": raw_name,
-            "attendance": iv("attendance"),
-            "excused": iv("excused"),
-            "unexcused": iv("unexcused"),
-            "discussions": iv("discussions"),
-            "replies": iv("replies"),
-            "procedural": iv("procedural"),
-            "committeeDiscussions": iv("committee_discussions"),
-            "laws": iv("laws"),
-            "amendments": iv("amendments") + iv("amendments2"),
-            "proposedLaws": iv("proposed_laws"),
-            "questions": iv("questions"),
-            "committeesAsMember": iv("committees_member"),
-            "sessionsHeldMember": iv("sessions_held_member"),
-            "attendanceMember": iv("attendance_member"),
-            "committeesAsDeputy": iv("committees_deputy"),
-            "sessionsHeldDeputy": iv("sessions_held_deputy"),
-            "attendanceDeputy": iv("attendance_deputy"),
-        })
+            "attendance": metrics.get("attendance", 0),
+            "excused": metrics.get("excused", 0),
+            "unexcused": iv(row, unexcused_col),
+            "discussions": metrics.get("discussions", 0),
+            "replies": metrics.get("replies", 0),
+            "procedural": metrics.get("procedural", 0),
+            "committeeDiscussions": metrics.get("committeeDiscussions", 0),
+            "laws": metrics.get("laws", 0),
+            "amendments": metrics.get("amendments", 0) + metrics.get("amendments2", 0),
+            "proposedLaws": metrics.get("proposedLaws", 0),
+            "questions": metrics.get("questions", 0),
+            "committeesAsMember": metrics.get("committeesAsMember", 0),
+            "sessionsHeldMember": metrics.get("sessionsHeldMember", 0),
+            "attendanceMember": metrics.get("attendanceMember", 0),
+            "committeesAsDeputy": metrics.get("committeesAsDeputy", 0),
+            "sessionsHeldDeputy": metrics.get("sessionsHeldDeputy", 0),
+            "attendanceDeputy": metrics.get("attendanceDeputy", 0),
+        }
+        by_uuid[uuid] = rec
 
-    records.sort(key=lambda r: r["name"])
-    return records, name_index
+    if unmatched:
+        print(f"    · {len(unmatched)} MyMP rows excluded (not in active assembly): "
+              + ", ".join(sorted(unmatched)))
+    return by_uuid
 
 
 # ---------------------------------------------------------------------------
-# 3. Канцеларии
+# 3. Канцеларии  — joined to roster by UUID (Идентификатор на пратеник)
 # ---------------------------------------------------------------------------
 
-def process_kancelarii() -> tuple[list[dict], dict[str, dict]]:
-    """Returns (flat records for charts, {canonical_name -> summary dict})"""
-    path = RAW / "kancelarii.xlsx"
-    df = pd.read_excel(path)
-
-    # Rename columns to English keys
+def process_kancelarii(matcher: RosterMatcher) -> tuple[list[dict], dict[str, dict]]:
+    """Returns (flat records, {roster_uuid -> summary})."""
+    df = pd.read_excel(RAW / "kancelarii.xlsx")
     df.columns = ["mp_id", "mp_name", "party", "mandate", "category", "subcategory", "total"]
 
     records = []
-    mp_summaries: dict[str, dict] = {}
-
+    summaries: dict[str, dict] = {}
     for _, row in df.iterrows():
+        mp_uuid = str(row["mp_id"]).strip().lower()
         name = str(row["mp_name"]).strip()
+        val = int(row["total"]) if pd.notna(row["total"]) else 0
+        cat = str(row["category"]).strip()
+        sub = str(row["subcategory"]).strip()
+
+        # Prefer the canonical roster name where the UUID is active.
+        roster = matcher.by_uuid.get(mp_uuid)
+        display_name = roster["name"] if roster else name
+
         records.append({
-            "mpId": str(row["mp_id"]).strip(),
-            "mpName": name,
+            "mpId": mp_uuid,
+            "mpName": display_name,
+            "mpActive": roster is not None,
             "party": str(row["party"]).strip(),
             "mandate": str(row["mandate"]).strip(),
-            "category": str(row["category"]).strip(),
-            "subcategory": str(row["subcategory"]).strip(),
-            "total": int(row["total"]) if pd.notna(row["total"]) else 0,
+            "category": cat,
+            "subcategory": sub,
+            "total": val,
         })
 
-        # Build per-MP summary for profile join
-        if name not in mp_summaries:
-            mp_summaries[name] = {
-                "mpId": str(row["mp_id"]).strip(),
-                "mpName": name,
-                "party": str(row["party"]).strip(),
-                "totalCases": 0,
-                "totalMeetings": 0,
-                "totalEvents": 0,
-                "totalInitiatives": 0,
-                "casesByType": {},
-            }
-        s = mp_summaries[name]
-        sub = str(row["subcategory"]).strip()
-        cat = str(row["category"]).strip()
-        val = int(row["total"]) if pd.notna(row["total"]) else 0
-
+        s = summaries.setdefault(mp_uuid, {
+            "mpId": mp_uuid, "mpName": display_name,
+            "party": str(row["party"]).strip(),
+            "totalCases": 0, "totalMeetings": 0, "totalEvents": 0,
+            "totalInitiatives": 0, "casesByType": {},
+        })
         if sub == "casesAll":
             s["totalCases"] += val
         elif sub == "meetingsAll":
@@ -340,122 +382,12 @@ def process_kancelarii() -> tuple[list[dict], dict[str, dict]]:
         elif cat == "cases by case category":
             s["casesByType"][sub] = s["casesByType"].get(sub, 0) + val
 
-    return records, mp_summaries
+    return records, summaries
 
 
 # ---------------------------------------------------------------------------
-# 4. MP Profiles (cross-dataset join)
+# 4. MP Profiles  — roster-driven (exactly the active 120)
 # ---------------------------------------------------------------------------
-
-def build_profiles(
-    questions: list[dict],
-    mymp_records: list[dict],
-    mymp_name_index: dict[str, str],
-    kancelarii_summaries: dict[str, dict],
-    photo_index: dict[str, str],
-    api_party_names: dict[str, str],
-    api_party_logos: dict[str, str | None],
-) -> list[dict]:
-
-    # Index questions by MP name
-    q_by_mp: dict[str, list[dict]] = {}
-    for q in questions:
-        mp = q["fromMP"]
-        q_by_mp.setdefault(mp, []).append(q)
-
-    # All unique MP names across all 3 datasets
-    all_names: set[str] = set()
-    all_names.update(mymp_name_index.values())
-    all_names.update(kancelarii_summaries.keys())
-    all_names.update(q["fromMP"] for q in questions)
-
-    # Build name indexes for fuzzy join
-    k_index = build_name_index(list(kancelarii_summaries.keys()))
-    photo_norm_index = build_name_index(list(photo_index.keys()))
-    api_party_norm_index = build_name_index(list(api_party_names.keys()))
-    mymp_by_name = {r["name"]: r for r in mymp_records}
-
-    profiles = []
-    for name in sorted(all_names):
-        # Join MyMP
-        mymp = mymp_by_name.get(name)
-        if not mymp:
-            matched = fuzzy_match(name, mymp_name_index)
-            if matched:
-                mymp = mymp_by_name.get(matched)
-
-        # Join Канцеларии
-        office = kancelarii_summaries.get(name)
-        if not office:
-            matched_k = fuzzy_match(name, k_index)
-            if matched_k:
-                office = kancelarii_summaries.get(matched_k)
-
-        # Join Questions (direct name match first, then fuzzy)
-        q_index = build_name_index(list(q_by_mp.keys()))
-        questions_for_mp = q_by_mp.get(name, [])
-        if not questions_for_mp:
-            matched_q = fuzzy_match(name, q_index)
-            if matched_q:
-                questions_for_mp = q_by_mp.get(matched_q, [])
-
-        # Party — prefer API party data (full 127 MPs), fall back to kancelarii xlsx
-        party_name_from_api = api_party_names.get(name)
-        party_logo_from_api: str | None = None
-        if not party_name_from_api:
-            matched_api = fuzzy_match(name, api_party_norm_index, threshold=88)
-            if matched_api:
-                party_name_from_api = api_party_names.get(matched_api)
-                party_logo_from_api = api_party_logos.get(matched_api)
-        else:
-            party_logo_from_api = api_party_logos.get(name)
-        party = party_name_from_api or (office or {}).get("party") or ""
-        party_logo = party_logo_from_api
-
-        # Photo lookup — try direct, then fuzzy
-        photo = photo_index.get(name)
-        if not photo:
-            matched_photo = fuzzy_match(name, photo_norm_index, threshold=88)
-            if matched_photo:
-                photo = photo_index.get(matched_photo)
-
-        profiles.append({
-            "name": name,
-            "party": party,
-            "partyLogo": party_logo,
-            "photo": photo,
-            "questions": {
-                "total": len(questions_for_mp),
-                "answered": sum(1 for q in questions_for_mp if q["status"] == "Одговорено"),
-                "topInstitutions": _top_institutions(questions_for_mp),
-                "recentQuestions": [
-                    {"id": q["id"], "date": q["date"], "question": q["question"],
-                     "toInstitution": q["toInstitution"], "status": q["status"]}
-                    for q in questions_for_mp[:5]
-                ],
-            },
-            "activity": {
-                "attendance": mymp["attendance"] if mymp else None,
-                "excused": mymp["excused"] if mymp else None,
-                "unexcused": mymp["unexcused"] if mymp else None,
-                "discussions": mymp["discussions"] if mymp else None,
-                "proposedLaws": mymp["proposedLaws"] if mymp else None,
-                "amendments": mymp["amendments"] if mymp else None,
-                "committeesAsMember": mymp["committeesAsMember"] if mymp else None,
-                "attendanceMember": mymp["attendanceMember"] if mymp else None,
-                "period": "Jan–Jun 2025",
-            } if mymp else None,
-            "office": {
-                "totalCases": office["totalCases"],
-                "totalMeetings": office["totalMeetings"],
-                "totalEvents": office["totalEvents"],
-                "totalInitiatives": office["totalInitiatives"],
-                "casesByType": office["casesByType"],
-            } if office else None,
-        })
-
-    return profiles
-
 
 def _top_institutions(questions: list[dict], n: int = 5) -> list[dict]:
     counts: dict[str, int] = {}
@@ -466,101 +398,154 @@ def _top_institutions(questions: list[dict], n: int = 5) -> list[dict]:
             for k, v in sorted(counts.items(), key=lambda x: -x[1])[:n]]
 
 
+def build_profiles(
+    roster: list[dict],
+    questions_by_uuid: dict[str, list[dict]],
+    mymp_by_uuid: dict[str, dict],
+    kancelarii_by_uuid: dict[str, dict],
+) -> list[dict]:
+    profiles = []
+    for m in sorted(roster, key=lambda r: r["name"]):
+        uuid = m["uuid"]
+        qs = questions_by_uuid.get(uuid, [])
+        mymp = mymp_by_uuid.get(uuid)
+        office = kancelarii_by_uuid.get(uuid)
+        profiles.append({
+            "uuid": uuid,
+            "name": m["name"],
+            "nameAl": m.get("nameAl"),
+            "party": m["party"],
+            "partyLogo": m["partyLogo"],
+            "photo": m["photo"],
+            "questions": {
+                "total": len(qs),
+                "answered": sum(1 for q in qs if q["status"] == "Одговорено"),
+                "topInstitutions": _top_institutions(qs),
+                "recentQuestions": [
+                    {"id": q["id"], "date": q["date"], "question": q["question"],
+                     "toInstitution": q["toInstitution"], "status": q["status"]}
+                    for q in qs[:5]
+                ],
+            },
+            "activity": {
+                "attendance": mymp["attendance"],
+                "excused": mymp["excused"],
+                "unexcused": mymp["unexcused"],
+                "discussions": mymp["discussions"],
+                "proposedLaws": mymp["proposedLaws"],
+                "amendments": mymp["amendments"],
+                "committeesAsMember": mymp["committeesAsMember"],
+                "attendanceMember": mymp["attendanceMember"],
+                "period": "Jan–Jun 2025",
+            } if mymp else None,
+            "office": {
+                "totalCases": office["totalCases"],
+                "totalMeetings": office["totalMeetings"],
+                "totalEvents": office["totalEvents"],
+                "totalInitiatives": office["totalInitiatives"],
+                "casesByType": office["casesByType"],
+            } if office else None,
+        })
+    return profiles
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    print("Fetching party data from kancelarii.sobranie.mk...")
-    party_index = fetch_parties()
-    print(f"  ✓ {len(party_index)} parties found")
+    print("Fetching party data...")
+    parties = fetch_parties()
+    print(f"  ✓ {len(parties)} parties")
 
-    print("Fetching MP data (photos + party assignments)...")
-    photo_index, api_party_names, api_party_logos = fetch_mp_data(party_index)
-    print(f"  ✓ {len(photo_index)} photos, {len(api_party_names)} MPs with party")
+    print("Fetching ACTIVE assembly roster (statusId=True)...")
+    roster = fetch_active_roster(parties)
+    if len(roster) != 120:
+        print(f"  ! WARNING: active roster has {len(roster)} members, expected 120.")
+    print(f"  ✓ {len(roster)} active MPs")
+    (PUBLIC_DATA / "mps_active.json").write_text(
+        json.dumps(roster, ensure_ascii=False, indent=2), encoding="utf-8")
+    matcher = RosterMatcher(roster)
 
     print("Fetching office coordinates...")
-    office_coords = fetch_office_coordinates()
-    print(f"  ✓ {len(office_coords)} offices with coordinates")
+    coords = fetch_office_coordinates()
+    print(f"  ✓ {len(coords)} offices with coordinates")
     (PUBLIC_DATA / "office_coords.json").write_text(
-        json.dumps(office_coords, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+        json.dumps(coords, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print("Processing questions...")
     questions = process_questions()
-    (PUBLIC_DATA / "questions.json").write_text(
-        json.dumps(questions, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"  ✓ {len(questions)} records → public/data/questions.json")
-
-    print("Processing MyMP...")
-    mymp_records, mymp_name_index = process_mymp()
-    # Attach photos + party from API
-    photo_norm = build_name_index(list(photo_index.keys()))
-    api_party_norm = build_name_index(list(api_party_names.keys()))
-    for rec in mymp_records:
-        photo = photo_index.get(rec["name"]) or (
-            photo_index.get(fuzzy_match(rec["name"], photo_norm, threshold=88) or "")
-        )
-        rec["photo"] = photo
-        matched_party = fuzzy_match(rec["name"], api_party_norm, threshold=88)
-        rec["party"] = api_party_names.get(matched_party or "") or ""
-        rec["partyLogo"] = api_party_logos.get(matched_party or "") if matched_party else None
-    (PUBLIC_DATA / "mymp.json").write_text(
-        json.dumps(mymp_records, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"  ✓ {len(mymp_records)} MPs → public/data/mymp.json")
-
-    print("Processing Канцеларии...")
-    kancelarii_records, kancelarii_summaries = process_kancelarii()
-    (PUBLIC_DATA / "kancelarii.json").write_text(
-        json.dumps(kancelarii_records, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"  ✓ {len(kancelarii_records)} rows, {len(kancelarii_summaries)} MPs → public/data/kancelarii.json")
-
-    print("Building MP profiles...")
-    profiles = build_profiles(questions, mymp_records, mymp_name_index, kancelarii_summaries, photo_index, api_party_names, api_party_logos)
-    (PUBLIC_DATA / "mp_profiles.json").write_text(
-        json.dumps(profiles, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"  ✓ {len(profiles)} profiles → public/data/mp_profiles.json")
-
-    print("Annotating questions with party, partyLogo and photo...")
-    profile_by_name = {p["name"]: p for p in profiles}
-    prof_name_index = build_name_index(list(profile_by_name.keys()))
-    matched_count = 0
+    # Tag each question with the matched active-MP uuid (or None)
+    questions_by_uuid: dict[str, list[dict]] = {}
+    matched_q = 0
     for q in questions:
-        matched = fuzzy_match(q["fromMP"], prof_name_index, threshold=80)
-        if matched and matched in profile_by_name:
-            prof = profile_by_name[matched]
-            q["party"] = prof.get("party") or ""
-            q["partyLogo"] = prof.get("partyLogo")
-            q["mpPhoto"] = prof.get("photo")
-            if q["party"]:
-                matched_count += 1
+        uuid = matcher.resolve(q["fromMP"])
+        q["mpId"] = uuid
+        q["mpActive"] = uuid is not None
+        if uuid:
+            prof = matcher.by_uuid[uuid]
+            q["party"] = prof["party"]
+            q["partyLogo"] = prof["partyLogo"]
+            q["mpPhoto"] = prof["photo"]
+            questions_by_uuid.setdefault(uuid, []).append(q)
+            matched_q += 1
         else:
             q["party"] = ""
             q["partyLogo"] = None
             q["mpPhoto"] = None
     (PUBLIC_DATA / "questions.json").write_text(
-        json.dumps(questions, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"  ✓ {matched_count} questions matched to party → questions.json updated")
+        json.dumps(questions, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  ✓ {len(questions)} questions ({matched_q} from active MPs) → questions.json")
 
-    # Meta — last updated timestamps surfaced in UI
+    print("Processing MyMP (Jan–Jun 2025 activity)...")
+    mymp_by_uuid = process_mymp(matcher)
+    # Roster-driven: one row per active MP, hasData=False for newly-seated members.
+    mymp_records = []
+    EMPTY = {k: 0 for k in (
+        "attendance", "excused", "unexcused", "discussions", "replies", "procedural",
+        "committeeDiscussions", "laws", "amendments", "proposedLaws", "questions",
+        "committeesAsMember", "sessionsHeldMember", "attendanceMember",
+        "committeesAsDeputy", "sessionsHeldDeputy", "attendanceDeputy")}
+    for m in sorted(roster, key=lambda r: r["name"]):
+        act = mymp_by_uuid.get(m["uuid"])
+        rec = {"uuid": m["uuid"], "name": m["name"], "party": m["party"],
+               "photo": m["photo"], "hasData": act is not None}
+        rec.update(act if act else EMPTY)
+        rec.pop("nameRaw", None)
+        mymp_records.append(rec)
+    with_data = sum(1 for r in mymp_records if r["hasData"])
+    (PUBLIC_DATA / "mymp.json").write_text(
+        json.dumps(mymp_records, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  ✓ {len(mymp_records)} MPs ({with_data} with period data) → mymp.json")
+
+    print("Processing Канцеларии...")
+    kancelarii_records, kancelarii_by_uuid = process_kancelarii(matcher)
+    (PUBLIC_DATA / "kancelarii.json").write_text(
+        json.dumps(kancelarii_records, ensure_ascii=False, indent=2), encoding="utf-8")
+    active_offices = sum(1 for s in kancelarii_by_uuid.values()
+                         if s["mpId"] in matcher.by_uuid)
+    print(f"  ✓ {len(kancelarii_records)} rows, {len(kancelarii_by_uuid)} MPs "
+          f"({active_offices} active) → kancelarii.json")
+
+    print("Building MP profiles (active 120)...")
+    profiles = build_profiles(roster, questions_by_uuid, mymp_by_uuid, kancelarii_by_uuid)
+    (PUBLIC_DATA / "mp_profiles.json").write_text(
+        json.dumps(profiles, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  ✓ {len(profiles)} profiles → mp_profiles.json")
+
     meta = {
         "lastProcessed": datetime.now(tz=timezone.utc).isoformat(),
+        "activeAssembly": len(roster),
         "sources": {
             "questions": {"lastPortalUpdate": "2026-05-10", "records": len(questions)},
-            "mymp": {"lastPortalUpdate": "2025-11-11", "records": len(mymp_records), "period": "Jan–Jun 2025"},
+            "mymp": {"lastPortalUpdate": "2025-11-11", "records": with_data,
+                     "period": "Jan–Jun 2025"},
             "kancelarii": {"lastPortalUpdate": "2026-01-08", "records": len(kancelarii_records)},
         },
     }
     (PUBLIC_DATA / "meta.json").write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print("  ✓ public/data/meta.json")
-    print("\nDone.")
+        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    print("  ✓ meta.json\n\nDone.")
 
 
 if __name__ == "__main__":
