@@ -29,8 +29,9 @@
     #   script/style 'unsafe-inline': required by Astro's inline island-hydration
     #     bootstraps on a static host (no nonce server). External scripts are still
     #     blocked. Can be tightened to hashes later via Astro experimental CSP.
-    #   img-src: MP photos + party logos (kancelarii.sobranie.mk) and OSM map tiles.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://kancelarii.sobranie.mk https://*.tile.openstreetmap.org; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+    #   img-src: MP photos + party logos are now self-hosted; only OSM map tiles
+    #   remain external. blob:/data: cover canvas/PNG chart export.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.tile.openstreetmap.org; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
 
 # ---------------------------------------------------------------------------
 # Caching — content-hashed Astro assets are immutable; HTML/data revalidated

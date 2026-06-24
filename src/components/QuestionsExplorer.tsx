@@ -232,10 +232,19 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       {/* Row 1: Top MPs photo list + Institution answer rate — equal halves */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top 15 MPs */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-          <div className="flex items-baseline justify-between mb-5">
+        <div id="viz-questions-mp" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
             <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartByMP")}</h2>
-            <span className="text-xs text-gray-400">{mpsByQuestions.length} {t(lang, "mymp.kpiMPs").toLowerCase()}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-400">{mpsByQuestions.length} {t(lang, "mymp.kpiMPs").toLowerCase()}</span>
+              <ChartDownload
+                targetId="viz-questions-mp"
+                csv={{ headers: [t(lang, "questions.tableFrom"), t(lang, "questions.kpiTotal")],
+                       rows: mpsByQuestions.map(m => [m.name, m.count]) }}
+                filename="prasanja-po-pratenik"
+                lang={lang}
+              />
+            </div>
           </div>
           <div className="space-y-3">
             {visibleMPs.map((mp, idx) => {
@@ -279,7 +288,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             })}
           </div>
           {mpsByQuestions.length > MP_PAGE_SIZE && (
-            <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+            <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100" data-html2canvas-ignore="true">
               <button
                 onClick={() => setMpPage(p => Math.max(0, p - 1))}
                 disabled={mpPage === 0}
@@ -324,18 +333,17 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       </div>
 
       {/* Row 2: Answered vs Pending stacked bar — full width */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+      <div id="viz-answered-pending" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
         <div className="flex items-start justify-between mb-4">
           <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartAnsweredVsPending")}</h2>
           <ChartDownload
-            chartId="chart-answered-pending"
+            targetId="viz-answered-pending"
             csv={{ headers: [t(lang, "questions.tableTo"), t(lang, "common.answered"), t(lang, "common.pending")],
                    rows: byInst.map(d => [d.name, d.answered, d.pending]) }}
             filename="prasanja-po-institucija"
             lang={lang}
           />
         </div>
-        <div id="chart-answered-pending">
         <ResponsiveContainer width="100%" height={380}>
           <BarChart data={byInst} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
@@ -347,7 +355,6 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
-        </div>
       </div>
 
       {/* Row 3: Questions by party — full width, 2-col internal grid for many parties */}
@@ -394,18 +401,17 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
         </div>
 
       {/* Row 4: Timeline — full width */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+      <div id="viz-timeline" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
         <div className="flex items-start justify-between mb-4">
           <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartTimeline")}</h2>
           <ChartDownload
-            chartId="chart-timeline"
+            targetId="viz-timeline"
             csv={{ headers: [t(lang, "common.sessions"), t(lang, "questions.kpiTotal")],
                    rows: bySession.map(d => [d.session, d.count]) }}
             filename="prasanja-po-sednica"
             lang={lang}
           />
         </div>
-        <div id="chart-timeline">
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={bySession}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -415,7 +421,6 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <Line type="monotone" dataKey="count" stroke={NAVY} strokeWidth={2} dot={{ r: 3, fill: NAVY }} />
           </LineChart>
         </ResponsiveContainer>
-        </div>
       </div>
 
       {/* Filters + table */}

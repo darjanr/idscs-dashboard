@@ -180,6 +180,43 @@ def fetch_active_roster(parties: dict[int, dict]) -> list[dict]:
     return roster
 
 
+MEDIA_DIR = ROOT / "public" / "mp-media"
+_media_cache: dict[str, str | None] = {}
+
+
+def localize_media(url: str | None, kind: str) -> str | None:
+    """Download an external image into public/mp-media/<kind>/ and return its
+    local path, so images are same-origin (needed for PNG chart export, faster
+    loads, and a tighter CSP). Results are cached by URL within a run."""
+    if not url:
+        return None
+    if url in _media_cache:
+        return _media_cache[url]
+    fname = url.split("/")[-1].split("?")[0]
+    fname = re.sub(r"[^A-Za-z0-9._-]", "_", fname) or "img"
+    dest_dir = MEDIA_DIR / kind
+    dest = dest_dir / fname
+    local = f"/mp-media/{kind}/{fname}"
+    try:
+        if not dest.exists():
+            r = requests.get(url, headers=HEADERS, timeout=25)
+            r.raise_for_status()
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(r.content)
+        _media_cache[url] = local
+    except Exception as e:
+        print(f"  ! photo fetch failed ({url}): {e}")
+        _media_cache[url] = url  # fall back to the remote URL
+    return _media_cache[url]
+
+
+def localize_roster_media(roster: list[dict]) -> None:
+    """Rewrite roster photo + party-logo URLs to local copies (downloads them)."""
+    for m in roster:
+        m["photo"] = localize_media(m.get("photo"), "photos")
+        m["partyLogo"] = localize_media(m.get("partyLogo"), "party-logos")
+
+
 def fetch_office_coordinates() -> list[dict]:
     try:
         r = requests.get(f"{KANCELARII_API}/api/offices", headers=HEADERS, timeout=25)
@@ -463,6 +500,9 @@ def main() -> None:
     if len(roster) != 120:
         print(f"  ! WARNING: active roster has {len(roster)} members, expected 120.")
     print(f"  ✓ {len(roster)} active MPs")
+    print("Downloading MP photos + party logos (local copies)...")
+    localize_roster_media(roster)
+    print(f"  ✓ media cached → public/mp-media/")
     (PUBLIC_DATA / "mps_active.json").write_text(
         json.dumps(roster, ensure_ascii=False, indent=2), encoding="utf-8")
     matcher = RosterMatcher(roster)

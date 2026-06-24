@@ -1,4 +1,4 @@
-// Client-side chart export helpers — PNG (from the rendered SVG) and CSV.
+// Client-side export helpers — PNG (screenshot of any DOM node) and CSV.
 
 export function downloadCsv(filename: string, headers: string[], rows: (string | number)[][]) {
   const escape = (v: string | number) => {
@@ -11,36 +11,20 @@ export function downloadCsv(filename: string, headers: string[], rows: (string |
   triggerDownload(blob, `${filename}.csv`);
 }
 
-export function downloadSvgAsPng(svg: SVGSVGElement | null, filename: string, scale = 2) {
-  if (!svg) return;
-  const rect = svg.getBoundingClientRect();
-  const width = Math.max(1, Math.round(rect.width));
-  const height = Math.max(1, Math.round(rect.height));
-
-  const clone = svg.cloneNode(true) as SVGSVGElement;
-  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  clone.setAttribute("width", String(width));
-  clone.setAttribute("height", String(height));
-
-  const xml = new XMLSerializer().serializeToString(clone);
-  const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
-
-  const img = new Image();
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(scale, scale);
-      ctx.drawImage(img, 0, 0);
-    }
-    URL.revokeObjectURL(url);
-    canvas.toBlob(blob => { if (blob) triggerDownload(blob, `${filename}.png`); });
-  };
-  img.src = url;
+// Screenshot a DOM node (chart or HTML visualisation) to a PNG. html2canvas is
+// imported lazily so it stays out of the initial bundle.
+export async function downloadNodeAsPng(node: HTMLElement | null, filename: string) {
+  if (!node) return;
+  // html2canvas-pro: maintained fork that supports modern CSS colour functions
+  // (oklch/oklab) which Tailwind v4 emits — the original html2canvas throws on them.
+  const { default: html2canvas } = await import("html2canvas-pro");
+  const canvas = await html2canvas(node, {
+    backgroundColor: "#ffffff",
+    scale: 2,
+    useCORS: true,
+    logging: false,
+  });
+  canvas.toBlob(blob => { if (blob) triggerDownload(blob, `${filename}.png`); });
 }
 
 function triggerDownload(blob: Blob, name: string) {

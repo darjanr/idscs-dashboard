@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import ChartDownload from "./ChartDownload";
 
 interface MP {
   name: string;
@@ -191,10 +192,19 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       </div>
 
       {/* Top 5 most active — photo grid */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-        <div className="mb-4">
-          <h2 className="font-semibold text-gray-800">Топ 5 најактивни пратеници</h2>
-          <p className="text-xs text-gray-400 mt-0.5">{t(lang, "mymp.mostActiveNote")}</p>
+      <div id="viz-mymp-top5" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h2 className="font-semibold text-gray-800">Топ 5 најактивни пратеници</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t(lang, "mymp.mostActiveNote")}</p>
+          </div>
+          <ChartDownload
+            targetId="viz-mymp-top5"
+            csv={{ headers: [t(lang, "mymp.colMP"), ...CHIP_LABELS.map(c => c.label)],
+                   rows: top5.map(m => [m.name, ...CHIP_LABELS.map(c => m[c.key] as number)]) }}
+            filename="top5-aktivni-pratenici"
+            lang={lang}
+          />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           {top5.map((mp, i) => {
@@ -229,7 +239,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       </div>
 
       {/* Top 15 ranked list */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+      <div id="viz-mymp-top15" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
         <div className="flex flex-wrap items-center gap-2 mb-5">
           <h2 className="font-semibold text-gray-800 mr-2">Топ 15 —</h2>
           <div className="flex gap-2 flex-wrap">
@@ -245,6 +255,15 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                 {COL_LABEL[key]}
               </button>
             ))}
+          </div>
+          <div className="ml-auto">
+            <ChartDownload
+              targetId="viz-mymp-top15"
+              csv={{ headers: [t(lang, "mymp.colMP"), COL_LABEL[chartSortBy]],
+                     rows: top15.map(m => [m.name, getVal(m, chartSortBy)]) }}
+              filename="top15-pratenici"
+              lang={lang}
+            />
           </div>
         </div>
         <div className="space-y-2">

@@ -233,18 +233,17 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
       </div>
 
       {/* By case type — horizontal bar */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div id="viz-cases-by-type" className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <div className="flex items-start justify-between mb-5">
           <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByType")}</h2>
           <ChartDownload
-            chartId="chart-cases-by-type"
+            targetId="viz-cases-by-type"
             csv={{ headers: [t(lang, "offices.chartByType"), t(lang, "offices.kpiCases")],
                    rows: byCaseType.map(d => [d.name, d.value]) }}
             filename="slucai-po-tip"
             lang={lang}
           />
         </div>
-        <div id="chart-cases-by-type">
         <ResponsiveContainer width="100%" height={Math.max(200, byCaseType.length * 36)}>
           <BarChart data={byCaseType} layout="vertical" margin={{ left: 8, right: 24, top: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
@@ -256,12 +255,20 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        </div>
       </div>
 
       {/* By party — logo ranklist */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h2 className="font-semibold text-gray-800 mb-5">{t(lang, "offices.chartByParty")}</h2>
+      <div id="viz-offices-party" className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="flex items-start justify-between mb-5">
+          <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByParty")}</h2>
+          <ChartDownload
+            targetId="viz-offices-party"
+            csv={{ headers: [t(lang, "common.filterByParty"), t(lang, "offices.kpiCases")],
+                   rows: byParty.map(p => [p.name, p.total]) }}
+            filename="slucai-po-partija"
+            lang={lang}
+          />
+        </div>
         <div className="space-y-3">
           {byParty.map((p, i) => {
             const pct = (p.total / maxParty) * 100;
@@ -288,8 +295,17 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
       </div>
 
       {/* By gender */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h2 className="font-semibold text-gray-800 mb-5">{t(lang, "offices.chartByGender")}</h2>
+      <div id="viz-offices-gender" className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="flex items-start justify-between mb-5">
+          <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByGender")}</h2>
+          <ChartDownload
+            targetId="viz-offices-gender"
+            csv={{ headers: [t(lang, "offices.chartByGender"), t(lang, "offices.kpiCases")],
+                   rows: byGender.map(d => [d.name, d.value]) }}
+            filename="slucai-po-pol"
+            lang={lang}
+          />
+        </div>
         <div className="flex flex-col sm:flex-row items-center gap-8">
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
