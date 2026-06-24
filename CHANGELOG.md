@@ -1,3 +1,9 @@
+## 2026-06-24 09:07 — Darjan Radenkovic
+> Chart downloads (PNG+CSV) on key visuals + self-hosted MP media
+
+## 2026-06-23 18:17 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-23 18:17 — Darjan Radenkovic
 > Active-120 data model, branding, content updates, chart downloads, prod config
 
