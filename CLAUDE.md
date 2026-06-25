@@ -41,18 +41,23 @@ Three different name formats across datasets:
 - MyMP: `"МУРАТИ САЛИ"` or `"МУРАТИ САЛИ/MURATI SALI"` for Albanian MPs (LASTNAME FIRSTNAME, bilingual)
 - Канцеларии: `"Сали Мурати"` (Firstname Lastname) + UUID
 
-Normalisation approach: strip Albanian part (after `/`), split LASTNAME FIRSTNAME, reverse and capitalise. Achieves 93% match Канцеларии↔MyMP. Remaining ~7% need fuzzy match by surname. The MP UUID in Канцеларии is the most reliable join key — use it wherever possible and fall back to name normalisation only for Questions↔MyMP joins.
+**Source of truth = the active assembly of 120 MPs**, fetched from `kancelarii.sobranie.mk/api/mps` where `statusId == True`. Written to `public/data/mps_active.json` keyed by `parliamentUserId` UUID. All MP-level data is scoped to these 120.
+
+Join approach (in `process.py`):
+- **Канцеларии → UUID** (`Идентификатор на пратеник` == API `parliamentUserId`): exact, 46/46.
+- **MyMP + Questions → name**: deterministic `norm_name()` (accent-strip, token-sort, drop Latin part) + an explicit `NAME_OVERRIDES` table for ~5 spelling variants. **No fuzzy matching** — it caused cross-person false positives (e.g. minister `Николоски Александар` → active `Александра Николовска`). The build prints any unmatched row so new variants are caught and added to the table.
 
 ## Pipeline commands
 
 ```bash
 # Install dependencies (one-time)
-pip3 install requests openpyxl pandas rapidfuzz
+pip3 install requests openpyxl pandas
 
 # Fetch/refresh all 3 datasets into raw/
 python3 fetch_data.py
 
-# Process raw data into public/data/*.json
+# Process raw data into public/data/*.json (also fetches the active roster +
+# downloads MP photos/party logos into public/mp-media/ — needs network)
 python3 scripts/process.py
 ```
 
@@ -64,16 +69,21 @@ npm run dev        # dev server at http://localhost:4321
 npm run build      # static build into dist/
 npm run preview    # preview the build
 
-# Full redeploy workflow:
-# python3 fetch_data.py && python3 scripts/process.py && npm run build
-# then drag dist/ to Netlify
+# Refresh data:
+# python3 fetch_data.py && python3 scripts/process.py
+# Deploy: repo is connected to Netlify — push to main (GitHub: darjanr/idscs-dashboard)
+# auto-builds & deploys. netlify.toml holds build config + security headers/CSP.
+# (Manual fallback: npm run build, then drag dist/ to app.netlify.com/drop)
+
+# NOTE: node/npm are not on PATH by default — load nvm first:
+#   export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
 ```
 
 ## Modules and build order
 
 Build in this order — each depends on the previous:
 
-1. **Python pipeline** (`scripts/process.py`) — parses all 3 datasets, normalises names, joins, outputs `public/data/questions.json`, `public/data/mymp.json`, `public/data/kancelarii.json`, `public/data/mp_profiles.json`
+1. **Python pipeline** (`scripts/process.py`) — fetches the active 120 roster, parses all 3 datasets, joins (UUID + name overrides), scopes MP data to the 120, downloads photos/logos to `public/mp-media/`, outputs `mps_active.json`, `questions.json`, `mymp.json`, `kancelarii.json`, `mp_profiles.json`, `office_coords.json`, `meta.json`
 2. **Questions module** — richest and most complex; validates the pipeline design
 3. **MyMP module** — depends on same pipeline patterns
 4. **Канцеларии module** — simplest; long format already clean
@@ -83,14 +93,16 @@ Build in this order — each depends on the previous:
 
 ## Design
 
-IDSCS will provide a brandbook. Until received, use a neutral palette. The reference design language (from `kancelarii.sobranie.mk/dashboard`, built by IDSCS/NDI) uses a dark navy header and teal/cyan charts — our dashboard can follow a similar institutional aesthetic. Must be WCAG 2.1 AA compliant and mobile-first.
+Navy (`#1a2e5a`) header + teal/cyan (`#0d9488`) charts. Header logo = DDI (funder, in a white chip); footer partner strip = CIVICUS → Metamorphosis → TechSoup → Digital Activism → IDSCS; hero uses the white-line parliament illustration (`public/parliament.svg`). Colours are client-approved — do not change. WCAG 2.1 AA, mobile-first.
+
+## Chart download
+
+`ChartDownload` component (`src/components/ChartDownload.tsx`) + `src/lib/chartExport.ts` give a per-visual PNG/CSV menu. PNG uses **`html2canvas-pro`** (NOT `html2canvas` — the original throws on Tailwind v4's `oklch()` colours). The control marks itself `data-html2canvas-ignore`; mark pagination/controls the same so they're excluded from the screenshot. PNG needs same-origin images — that's why photos are self-hosted in `public/mp-media/`.
 
 ## Key numbers (for sanity checks)
 
-- Total questions: 657 | Answered: 590 | Pending: 57
-- Questions sessions: 18 to 101 (30 unique sessions)
-- MPs in MyMP: 133 | MPs asking 0 questions in H1 2025: 81 (61%)
-- Top MP by questions (full term): Сали Мурати — 99
-- Top institution: Претседател на Владата — 110 questions
-- Канцеларии MPs: 46 of ~120 total MPs
+- **Active assembly: 120 MPs** (everything is scoped to these). MyMP report has 116 of them with Jan–Jun 2025 data; 4 joined after the period (shown but flagged).
+- Total questions: 657 (record kept complete) | 647 from active MPs | top asker Сали Мурати — 99
+- Канцеларии: 46 office-holders (44 active + 2 former MPs)
+- The 12 zero-attendance names in the raw MyMP report are ministers/PM (mandate frozen) — excluded.
 - Top citizen issue: Работен однос и права — 183 cases
