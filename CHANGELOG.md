@@ -1,3 +1,9 @@
+## 2026-06-25 12:07 — Darjan Radenkovic
+> docs: update CLAUDE.md for active-120 model, deployment, chart export
+
+## 2026-06-24 09:07 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-24 09:07 — Darjan Radenkovic
 > Chart downloads (PNG+CSV) on key visuals + self-hosted MP media
 
