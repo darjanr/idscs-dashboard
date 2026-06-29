@@ -1,3 +1,9 @@
+## 2026-06-29 15:35 — Darjan Radenkovic
+> Translate MP names + parties (AL/EN); Excel round-trip translation workflow
+
+## 2026-06-29 15:11 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-29 15:11 — Darjan Radenkovic
 > Add Albanian + English versions with language toggle
 
