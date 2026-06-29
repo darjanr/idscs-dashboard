@@ -4,7 +4,7 @@ import en from "./en.json";
 
 export type Translations = typeof mk;
 export type Lang = "mk" | "al" | "en";
-export const languages: Record<Lang, string> = { mk: "МК", al: "АЛ", en: "EN" };
+export const languages: Record<Lang, string> = { mk: "МК", al: "AL", en: "EN" };
 export const defaultLang: Lang = "mk";
 export const LANGS: Lang[] = ["mk", "al", "en"];
 
