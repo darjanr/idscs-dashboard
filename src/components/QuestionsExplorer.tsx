@@ -6,6 +6,7 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import { tName, tParty, partyAcr } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
 
 interface Question {
@@ -34,32 +35,6 @@ const TEAL = "#0d9488";
 const NAVY = "#1a2e5a";
 const ANSWERED_COLOR = "#0d9488";
 const PENDING_COLOR = "#f59e0b";
-
-const PARTY_ACRONYM: Record<string, string> = {
-  "Социјалдемократски сојуз на Македонија": "СДСМ",
-  "ВМРО-ДПМНЕ": "ВМРО-ДПМНЕ",
-  "Демократска унија за интеграција": "ДУИ",
-  "Левица": "Левица",
-  "Алијанса за Албанците": "АзА",
-  "Движење на Турците на Македонија за правда и демократија": "ДТМ",
-  "Движење БЕСА": "БЕСА",
-  "Нова социјалдемократска партија": "НСДП",
-  "Либерално-демократска партија": "ЛДП",
-  "Независни пратеници": "Независни",
-  "Движење ЗНАМ": "ЗНАМ",
-  "Социјалистичка партија на Македонија": "СПМ",
-  "Алтернатива": "Алт.",
-  "Демократска партија на Албанците": "ДПА",
-  "Демократско движење": "Дем. движ.",
-  "Турска демократска партија": "ТДП",
-  "Демократска партија на Србите": "ДПС",
-  "ВЛЕН": "ВЛЕН",
-};
-
-function partyAcronym(party: string | undefined): string {
-  if (!party) return "—";
-  return PARTY_ACRONYM[party] ?? party.split(" ").filter(w => w.length > 2).map(w => w[0]).join("").toUpperCase().slice(0, 5);
-}
 
 // "YYYY-MM-DD" → "DD.MM.YY" (compact, for axis ticks)
 function fmtDateShort(d: string | null): string {
@@ -117,10 +92,11 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       if (filterMP !== "all" && q.fromMP !== filterMP) return false;
       if (filterParty !== "all" && q.party !== filterParty) return false;
       if (filterStatus !== "all" && q.status !== filterStatus) return false;
-      if (s && !q.question.toLowerCase().includes(s) && !q.fromMP.toLowerCase().includes(s)) return false;
+      if (s && !q.question.toLowerCase().includes(s) && !q.fromMP.toLowerCase().includes(s)
+          && !tName(lang, q.fromMP).toLowerCase().includes(s)) return false;
       return true;
     });
-  }, [questions, search, filterMP, filterParty, filterStatus]);
+  }, [questions, search, filterMP, filterParty, filterStatus, lang]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const pageSlice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
@@ -290,8 +266,8 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
                       <div className="min-w-0 pr-2">
-                        <p className="text-sm font-medium text-gray-900 truncate leading-tight">{mp.name}</p>
-                        {mp.party && <p className="text-xs text-gray-400 truncate">{mp.party}</p>}
+                        <p className="text-sm font-medium text-gray-900 truncate leading-tight">{tName(lang, mp.name)}</p>
+                        {mp.party && <p className="text-xs text-gray-400 truncate">{tParty(lang, mp.party)}</p>}
                       </div>
                       <span
                         className="text-sm font-bold shrink-0"
@@ -406,7 +382,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                           ? <img src={p.logo} alt={p.name} className="w-7 h-7 rounded object-contain bg-gray-50 border border-gray-100 shrink-0 p-0.5" loading="lazy" />
                           : <div className="w-7 h-7 rounded bg-gray-200 flex items-center justify-center shrink-0 text-gray-500 text-xs font-bold">{p.name[0]}</div>
                         }
-                        <span className="text-sm font-medium text-gray-800 flex-1 leading-tight truncate">{p.name}</span>
+                        <span className="text-sm font-medium text-gray-800 flex-1 leading-tight truncate">{tParty(lang, p.name)}</span>
                         <span className="text-sm font-bold text-gray-900 shrink-0 ml-2">{p.total}</span>
                         <span className="text-xs text-gray-400 shrink-0">
                           (<span style={{ color: ANSWERED_COLOR }}>{p.answered}</span>
@@ -504,7 +480,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             aria-label={t(lang, "common.filterByMP")}
           >
             <option value="all">{t(lang, "common.allMPs")}</option>
-            {allMPs.slice(1).map(mp => <option key={mp} value={mp}>{mp}</option>)}
+            {allMPs.slice(1).map(mp => <option key={mp} value={mp}>{tName(lang, mp)}</option>)}
           </select>
           {allParties.length > 2 && (
             <select
@@ -514,7 +490,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
               aria-label={t(lang, "common.filterByParty")}
             >
               <option value="all">{t(lang, "common.allParties")}</option>
-              {allParties.slice(1).map(p => <option key={p} value={p}>{p}</option>)}
+              {allParties.slice(1).map(p => <option key={p} value={p}>{tParty(lang, p)}</option>)}
             </select>
           )}
           <select
@@ -558,9 +534,9 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   onKeyDown={e => e.key === "Enter" && setSelected(q)}
                   aria-label={`${t(lang, "questions.openDetailAria")} ${q.fromMP}`}
                 >
-                  <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{q.fromMP}</td>
+                  <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{tName(lang, q.fromMP)}</td>
                   <td className="px-4 py-3 text-xs whitespace-nowrap">
-                    <span className="text-gray-600 font-medium">{partyAcronym(q.party)}</span>
+                    <span className="text-gray-600 font-medium">{partyAcr(lang, q.party)}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-600 max-w-[180px] truncate">
                     {q.toInstitution || <span className="text-gray-400 italic">{t(lang, "questions.nullInstitution")}</span>}
@@ -626,8 +602,8 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                     </div>
                 }
                 <div>
-                  <p className="font-semibold text-gray-900">{selected.fromMP}</p>
-                  {selected.party && <p className="text-xs text-gray-400">{selected.party}</p>}
+                  <p className="font-semibold text-gray-900">{tName(lang, selected.fromMP)}</p>
+                  {selected.party && <p className="text-xs text-gray-400">{tParty(lang, selected.party)}</p>}
                   <p className="text-xs text-gray-400 mt-0.5">
                     → {selected.toUser || selected.toInstitution || t(lang, "questions.nullInstitution")}
                     {selected.date ? ` · ${selected.date}` : ""}

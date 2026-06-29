@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import { tName, tParty } from "../i18n/translate";
 
 interface Profile {
   name: string;
@@ -93,10 +94,13 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
     // period who have no activity/office data yet.
     let list = [...profiles];
     if (filterParty !== "all") list = list.filter(p => p.party === filterParty);
-    if (search) list = list.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+    if (search) {
+      const s = search.toLowerCase();
+      list = list.filter(p => p.name.toLowerCase().includes(s) || tName(lang, p.name).toLowerCase().includes(s));
+    }
     if (sortBy === "name") return list.sort((a, b) => a.name.localeCompare(b.name));
     return list.sort((a, b) => getVal(b, sortBy) - getVal(a, sortBy));
-  }, [profiles, filterParty, search, sortBy, compositeMap]);
+  }, [profiles, filterParty, search, sortBy, compositeMap, lang]);
 
   const CHIP_DEFS = [
     { key: "questions",   label: t(lang, "mymp.colQuestions") + " (2024–28)", color: NAVY },
@@ -156,7 +160,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           <option value="all">{t(lang, "common.allParties")}</option>
-          {parties.slice(1).map(p => <option key={p} value={p}>{p}</option>)}
+          {parties.slice(1).map(p => <option key={p} value={p}>{tParty(lang, p)}</option>)}
         </select>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-500 whitespace-nowrap">{t(lang, "common.sortBy")}:</span>
@@ -191,8 +195,8 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                 : <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-400 font-bold text-lg">{profile.name[0]}</div>
               }
               <div className="min-w-0">
-                <p className="font-semibold text-gray-900 leading-tight truncate">{profile.name}</p>
-                <p className="text-xs text-gray-400 mt-0.5 truncate">{profile.party || "—"}</p>
+                <p className="font-semibold text-gray-900 leading-tight truncate">{tName(lang, profile.name)}</p>
+                <p className="text-xs text-gray-400 mt-0.5 truncate">{profile.party ? tParty(lang, profile.party) : "—"}</p>
               </div>
             </div>
 
@@ -230,8 +234,8 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                   : <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-400 font-bold text-2xl">{selected.name[0]}</div>
                 }
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">{selected.name}</h2>
-                  <p className="text-sm text-gray-500">{selected.party || "—"}</p>
+                  <h2 className="text-xl font-bold text-gray-900">{tName(lang, selected.name)}</h2>
+                  <p className="text-sm text-gray-500">{selected.party ? tParty(lang, selected.party) : "—"}</p>
                 </div>
               </div>
               <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none shrink-0">×</button>

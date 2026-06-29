@@ -1,7 +1,8 @@
-import { mk } from "./mk";
-import { al } from "./al";
-import { en } from "./en";
+import mk from "./mk.json";
+import al from "./al.json";
+import en from "./en.json";
 
+export type Translations = typeof mk;
 export type Lang = "mk" | "al" | "en";
 export const languages: Record<Lang, string> = { mk: "МК", al: "АЛ", en: "EN" };
 export const defaultLang: Lang = "mk";

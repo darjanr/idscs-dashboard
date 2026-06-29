@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import { tName, tParty } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
 
 interface MP {
@@ -117,10 +118,13 @@ export default function MyMPExplorer({ mps, lang }: Props) {
 
   const filtered = useMemo(() => {
     let list = mps;
-    if (search) list = list.filter(m => m.name.toLowerCase().includes(search.toLowerCase()));
+    if (search) {
+      const s = search.toLowerCase();
+      list = list.filter(m => m.name.toLowerCase().includes(s) || tName(lang, m.name).toLowerCase().includes(s));
+    }
     if (showZeroOnly) list = list.filter(m => m.hasData && m.questions === 0);
     return sortedByTable(list);
-  }, [mps, search, tableSortBy, tableSortDir, showZeroOnly, scoreMap]);
+  }, [mps, search, tableSortBy, tableSortDir, showZeroOnly, scoreMap, lang]);
 
   const zeroQuestions = withData.filter(m => m.questions === 0).length;
   const avgAttendance = Math.round(withData.reduce((s, m) => s + m.attendance, 0) / withData.length);
@@ -220,8 +224,8 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                   ? <img src={mp.photo} alt={mp.name} className="w-16 h-16 rounded-full object-cover object-top bg-gray-100 mb-3" loading="lazy" style={{ outline: i === 0 ? `3px solid ${NAVY}` : i <= 2 ? `2px solid ${TEAL}` : "none", outlineOffset: "2px" }} />
                   : <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mb-3 text-gray-400 font-bold text-xl">{mp.name[0]}</div>
                 }
-                <p className="text-sm font-semibold text-gray-900 leading-tight mb-1">{mp.name}</p>
-                <p className="text-xs text-gray-400 mb-3 truncate w-full">{mp.party || ""}</p>
+                <p className="text-sm font-semibold text-gray-900 leading-tight mb-1">{tName(lang, mp.name)}</p>
+                <p className="text-xs text-gray-400 mb-3 truncate w-full">{mp.party ? tParty(lang, mp.party) : ""}</p>
                 <div className="w-full grid grid-cols-2 gap-1">
                   {CHIP_LABELS.map(({ key, label }) => (
                     <div key={key} className="bg-gray-50 rounded px-1.5 py-1 text-left">
@@ -280,7 +284,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                 }
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-sm font-medium text-gray-900 truncate group-hover:text-teal-700">{mp.name}</span>
+                    <span className="text-sm font-medium text-gray-900 truncate group-hover:text-teal-700">{tName(lang, mp.name)}</span>
                     <span className="text-sm font-bold ml-2 shrink-0" style={{ color: i === 0 ? NAVY : TEAL }}>
                       {val}
                     </span>
@@ -308,7 +312,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
               onClick={() => setSelectedMP(m)}
               className="px-3 py-1 bg-white border border-amber-300 rounded-full text-xs text-amber-800 hover:bg-amber-100 transition-colors"
             >
-              {m.name}
+              {tName(lang, m.name)}
             </button>
           ))}
         </div>
@@ -358,7 +362,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                   tabIndex={0}
                   onKeyDown={e => e.key === "Enter" && setSelectedMP(m)}
                 >
-                  <td className="px-4 py-3 font-medium text-gray-900">{m.name}</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">{tName(lang, m.name)}</td>
                   {m.hasData ? (
                     <>
                       <td className="px-4 py-3 text-right text-gray-700">
@@ -401,8 +405,8 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                   : <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-400 font-bold text-2xl">{selectedMP.name[0]}</div>
                 }
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">{selectedMP.name}</h2>
-                  {selectedMP.party && <p className="text-xs text-gray-400 mt-0.5">{selectedMP.party}</p>}
+                  <h2 className="text-xl font-bold text-gray-900">{tName(lang, selectedMP.name)}</h2>
+                  {selectedMP.party && <p className="text-xs text-gray-400 mt-0.5">{tParty(lang, selectedMP.party)}</p>}
                 </div>
               </div>
               <button onClick={() => setSelectedMP(null)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>

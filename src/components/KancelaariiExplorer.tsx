@@ -6,6 +6,7 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
+import { tName, tParty } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
 
 interface Row {
@@ -142,7 +143,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
           aria-label={t(lang, "common.filterByParty")}
         >
           <option value="all">{t(lang, "common.allParties")}</option>
-          {parties.slice(1).map(p => <option key={p} value={p}>{p}</option>)}
+          {parties.slice(1).map(p => <option key={p} value={p}>{tParty(lang, p)}</option>)}
         </select>
         <select
           value={filterMP}
@@ -151,7 +152,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
           aria-label={t(lang, "common.filterByMP")}
         >
           <option value="all">{t(lang, "common.allMPs")}</option>
-          {allMPs.slice(1).map(m => <option key={m} value={m}>{m}</option>)}
+          {allMPs.slice(1).map(m => <option key={m} value={m}>{tName(lang, m)}</option>)}
         </select>
         <button onClick={downloadCSV} className="ml-auto text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50">
           {t(lang, "common.downloadCSV")}
@@ -197,13 +198,13 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
                 }
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-900 truncate">{mp.name}</span>
+                    <span className="text-sm font-medium text-gray-900 truncate">{tName(lang, mp.name)}</span>
                     <span className="text-sm font-bold ml-3 shrink-0" style={{ color: globalRank === 0 ? NAVY : TEAL }}>{mp.total}</span>
                   </div>
                   <div className="w-full bg-gray-100 rounded-full h-1.5">
                     <div className="h-1.5 rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: globalRank === 0 ? NAVY : TEAL }} />
                   </div>
-                  <p className="text-xs text-gray-400 mt-0.5">{mp.party}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{tParty(lang, mp.party)}</p>
                 </div>
               </div>
             );
@@ -282,7 +283,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
                 }
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-900 truncate">{p.name}</span>
+                    <span className="text-sm font-medium text-gray-900 truncate">{tParty(lang, p.name)}</span>
                     <span className="text-sm font-bold ml-3 shrink-0" style={{ color: i === 0 ? NAVY : TEAL }}>{p.total}</span>
                   </div>
                   <div className="w-full bg-gray-100 rounded-full h-1.5">

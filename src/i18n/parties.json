@@ -1,0 +1,135 @@
+{
+  "ВМРО-ДПМНЕ": {
+    "al": "VMRO-DPMNE",
+    "en": "VMRO-DPMNE",
+    "acrMk": "ВМРО-ДПМНЕ",
+    "acrAl": "VMRO-DPMNE",
+    "acrEn": "VMRO-DPMNE"
+  },
+  "Социјалдемократски сојуз на Македонија": {
+    "al": "Lidhja Socialdemokrate e Maqedonisë",
+    "en": "Social Democratic Union of Macedonia",
+    "acrMk": "СДСМ",
+    "acrAl": "LSDM",
+    "acrEn": "SDSM"
+  },
+  "Демократска унија за интеграција": {
+    "al": "Bashkimi Demokratik për Integrim",
+    "en": "Democratic Union for Integration",
+    "acrMk": "ДУИ",
+    "acrAl": "BDI",
+    "acrEn": "DUI"
+  },
+  "Левица": {
+    "al": "E Majta",
+    "en": "The Left",
+    "acrMk": "Левица",
+    "acrAl": "E Majta",
+    "acrEn": "The Left"
+  },
+  "Алијанса за Албанците": {
+    "al": "Aleanca për Shqiptarët",
+    "en": "Alliance for Albanians",
+    "acrMk": "АзА",
+    "acrAl": "ASH",
+    "acrEn": "AA"
+  },
+  "Алтернатива": {
+    "al": "Alternativa",
+    "en": "Alternativa",
+    "acrMk": "Алт.",
+    "acrAl": "Alt.",
+    "acrEn": "Alt."
+  },
+  "Движење БЕСА": {
+    "al": "Lëvizja BESA",
+    "en": "BESA Movement",
+    "acrMk": "БЕСА",
+    "acrAl": "BESA",
+    "acrEn": "BESA"
+  },
+  "Движење ЗНАМ": {
+    "al": "Lëvizja ZNAM",
+    "en": "ZNAM Movement",
+    "acrMk": "ЗНАМ",
+    "acrAl": "ZNAM",
+    "acrEn": "ZNAM"
+  },
+  "Движење на Турците на Македонија за правда и демократија": {
+    "al": "Lëvizja e Turqve të Maqedonisë për Drejtësi dhe Demokraci",
+    "en": "Movement of Turks of Macedonia for Justice and Democracy",
+    "acrMk": "ДТМ",
+    "acrAl": "DTM",
+    "acrEn": "DTM"
+  },
+  "Движење „Попули“": {
+    "al": "Lëvizja Populli",
+    "en": "Populi Movement",
+    "acrMk": "Попули",
+    "acrAl": "Populli",
+    "acrEn": "Populi"
+  },
+  "Демократска партија на Албанците": {
+    "al": "Partia Demokratike Shqiptare",
+    "en": "Democratic Party of Albanians",
+    "acrMk": "ДПА",
+    "acrAl": "PDSH",
+    "acrEn": "DPA"
+  },
+  "Демократска партија на Србите": {
+    "al": "Partia Demokratike e Serbëve",
+    "en": "Democratic Party of Serbs",
+    "acrMk": "ДПС",
+    "acrAl": "PDS",
+    "acrEn": "DPS"
+  },
+  "Либерално-демократска партија": {
+    "al": "Partia Liberale Demokratike",
+    "en": "Liberal Democratic Party",
+    "acrMk": "ЛДП",
+    "acrAl": "PLD",
+    "acrEn": "LDP"
+  },
+  "Нова социјалдемократска партија": {
+    "al": "Partia e Re Socialdemokrate",
+    "en": "New Social Democratic Party",
+    "acrMk": "НСДП",
+    "acrAl": "PRS",
+    "acrEn": "NSDP"
+  },
+  "Социјалистичка партија на Македонија": {
+    "al": "Partia Socialiste e Maqedonisë",
+    "en": "Socialist Party of Macedonia",
+    "acrMk": "СПМ",
+    "acrAl": "PSM",
+    "acrEn": "SPM"
+  },
+  "Независни пратеници": {
+    "al": "Deputetë të pavarur",
+    "en": "Independent MPs",
+    "acrMk": "Независни",
+    "acrAl": "Të pavarur",
+    "acrEn": "Independent"
+  },
+  "Демократско движење": {
+    "al": "Lëvizja Demokratike",
+    "en": "Democratic Movement",
+    "acrMk": "Дем. движ.",
+    "acrAl": "LD",
+    "acrEn": "DM"
+  },
+  "Турска демократска партија": {
+    "al": "Partia Demokratike Turke",
+    "en": "Turkish Democratic Party",
+    "acrMk": "ТДП",
+    "acrAl": "PDT",
+    "acrEn": "TDP"
+  },
+  "ВЛЕН": {
+    "al": "VLEN",
+    "en": "VLEN",
+    "acrMk": "ВЛЕН",
+    "acrAl": "VLEN",
+    "acrEn": "VLEN"
+  }
+}

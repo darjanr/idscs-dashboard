@@ -12,7 +12,7 @@ Full brief: `docs/PROJECT_BRIEF.md` — read it before making architectural deci
 
 - **Frontend:** Astro 5 + React islands + Tailwind CSS v4 + Recharts + Leaflet
 - **Data pipeline:** Python 3 (requests, pandas, openpyxl, rapidfuzz) — `fetch_data.py` fetches, `scripts/process.py` transforms
-- **i18n:** MK + ALB, strings in `src/i18n/mk.ts` and `src/i18n/al.ts`
+- **i18n:** MK + ALB + ENG, strings in `src/i18n/{mk,al,en}.json` (see Translations workflow below)
 - **Hosting:** Static build deployed to Netlify (drag-and-drop `dist/`)
 - **Repo:** Public GitHub, handed over to IDSCS at end
 
@@ -78,6 +78,34 @@ npm run preview    # preview the build
 # NOTE: node/npm are not on PATH by default — load nvm first:
 #   export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
 ```
+
+## Translations workflow (MK / AL / EN — single source of truth)
+
+The site is trilingual. **MK lives at the site root**, AL under `src/pages/al/*`, EN under
+`src/pages/en/*` — all plain static pages (Astro 6 would not prerender a `[lang]` dynamic
+route, so don't reintroduce one). The МК/АЛ/EN toggle is in `Nav.astro`.
+
+Two kinds of translatable text:
+- **UI strings** → `src/i18n/{mk,al,en}.json` (read via `t(lang, "key")`; arrays/structured
+  content via `dict(lang)`).
+- **Data values** (MP names, party names) → `src/i18n/mp_names.json` + `src/i18n/parties.json`,
+  rendered through `tName(lang, cyrillic)` / `tParty(lang, cyrillic)` / `partyAcr(...)` from
+  `src/i18n/translate.ts`. MK returns the original Cyrillic; AL/EN look up the map and fall
+  back to the original. MP names are seeded from the roster API's `nameAl`/`nameEn`; party
+  names are curated. Institution names are intentionally NOT translated.
+
+**`translations.xlsx` is the editable single source of truth** for the client to verify
+(tabs: UI text, Parties, MP names — MK/AL/EN columns). Round-trip:
+
+```bash
+python3 scripts/i18n_export.py   # locale/map JSON -> translations.xlsx
+# client edits translations.xlsx, returns it
+python3 scripts/i18n_import.py   # translations.xlsx -> regenerates the JSON files
+npm run build                    # then commit
+```
+
+The JSON files are generated artifacts; edit text in the xlsx (or the JSON) and re-run the
+round-trip. New MP added on data refresh: re-run export (prefills from API), then import.
 
 ## Modules and build order
 
