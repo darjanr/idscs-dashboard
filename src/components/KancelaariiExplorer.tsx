@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell, Legend,
+  ResponsiveContainer, PieChart, Pie, Cell, Legend, LabelList,
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
@@ -245,13 +245,14 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
           />
         </div>
         <ResponsiveContainer width="100%" height={Math.max(200, byCaseType.length * 36)}>
-          <BarChart data={byCaseType} layout="vertical" margin={{ left: 8, right: 24, top: 0, bottom: 0 }}>
+          <BarChart data={byCaseType} layout="vertical" margin={{ left: 8, right: 36, top: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
             <XAxis type="number" tick={{ fontSize: 12 }} />
             <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} width={220} />
             <Tooltip />
             <Bar dataKey="value" fill={NAVY} radius={[0, 4, 4, 0]}>
               {byCaseType.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <LabelList dataKey="value" position="right" fontSize={11} fill="#374151" />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -307,13 +308,13 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
           />
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-8">
-          <ResponsiveContainer width="100%" height={220}>
-            <PieChart>
+          <ResponsiveContainer width="100%" height={260}>
+            <PieChart margin={{ top: 24, right: 8, bottom: 8, left: 8 }}>
               <Pie
                 data={byGender}
                 cx="50%"
                 cy="50%"
-                outerRadius={80}
+                outerRadius={72}
                 dataKey="value"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 label={(props: any) => `${props.name} ${Math.round((props.percent ?? 0) * 100)}%`}

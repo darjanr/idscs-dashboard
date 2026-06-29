@@ -47,6 +47,8 @@ export const al = {
     chartByParty: "Pyetje sipas grupit parlamentar",
     chartByPartyNote: "Gjithsej pyetje sipas partisë, me shkallën e përgjigjes",
     chartTimeline: "Pyetje sipas seancës",
+    sessionFull: "Seanca nr.",
+    questionsShort: "pyetje",
     tableQuestion: "Pyetja",
     tableFrom: "Deputeti",
     tableTo: "Institucioni",
@@ -87,7 +89,7 @@ export const al = {
   },
   offices: {
     title: "Zyrat e kontaktit me qytetarët",
-    subtitle: "Statistika të rasteve të qytetarëve sipas zyrave të deputetëve",
+    subtitle: "Statistika të rasteve të qytetarëve sipas zyrave të deputetëve · sipas gjendjes më 8 janar 2026",
     kpiCases: "Raste",
     kpiMeetings: "Takime",
     kpiEvents: "Ngjarje",
@@ -104,7 +106,7 @@ export const al = {
   },
   profile: {
     title: "Profili i deputetit",
-    subtitle: "Pamje e unifikuar e aktivitetit parlamentar dhe rasteve të qytetarëve",
+    subtitle: "Pyetje 2024–2028 · Aktiviteti janar–qershor 2025 · Zyrat sipas gjendjes më 8 janar 2026",
     sectionQuestions: "Pyetje parlamentare",
     sectionActivity: "Aktiviteti në Kuvend",
     sectionOffice: "Zyra e kontaktit",

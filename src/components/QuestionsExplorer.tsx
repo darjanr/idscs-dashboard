@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, Legend,
+  LineChart, Line, Legend, LabelList,
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
@@ -59,6 +59,19 @@ const PARTY_ACRONYM: Record<string, string> = {
 function partyAcronym(party: string | undefined): string {
   if (!party) return "—";
   return PARTY_ACRONYM[party] ?? party.split(" ").filter(w => w.length > 2).map(w => w[0]).join("").toUpperCase().slice(0, 5);
+}
+
+// "YYYY-MM-DD" → "DD.MM.YY" (compact, for axis ticks)
+function fmtDateShort(d: string | null): string {
+  if (!d) return "";
+  const [y, m, day] = d.split("-");
+  return `${day}.${m}.${y.slice(2)}`;
+}
+// "YYYY-MM-DD" → "DD.MM.YYYY" (full, for tooltip)
+function fmtDateFull(d: string | null): string {
+  if (!d) return "";
+  const [y, m, day] = d.split("-");
+  return `${day}.${m}.${y}`;
 }
 
 function shortInst(name: string): string {
@@ -179,16 +192,25 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       .sort((a, b) => b.total - a.total);
   }, [questions]);
 
-  // Timeline by session
+  // Timeline by session (carry a representative sitting date per session)
   const bySession = useMemo(() => {
-    const counts: Record<number, number> = {};
+    const counts: Record<number, { count: number; date: string | null }> = {};
     questions.forEach(q => {
-      if (q.session) counts[q.session] = (counts[q.session] || 0) + 1;
+      if (!q.session) return;
+      if (!counts[q.session]) counts[q.session] = { count: 0, date: q.date };
+      counts[q.session].count++;
+      if (!counts[q.session].date && q.date) counts[q.session].date = q.date;
     });
     return Object.entries(counts)
       .sort((a, b) => Number(a[0]) - Number(b[0]))
-      .map(([session, count]) => ({ session: `С${session}`, count }));
+      .map(([session, v]) => ({ sessionNum: Number(session), session: `С${session}`, count: v.count, date: v.date }));
   }, [questions]);
+
+  const sessionDate = useMemo(() => {
+    const m = new Map<number, string | null>();
+    bySession.forEach(s => m.set(s.sessionNum, s.date));
+    return m;
+  }, [bySession]);
 
   const totalAnswered = questions.filter(q => q.status === "Одговорено").length;
   const totalPending = questions.filter(q => q.status !== "Одговорено").length;
@@ -351,8 +373,14 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={200} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="answered" name={t(lang, "common.answered")} stackId="a" fill={ANSWERED_COLOR} />
-            <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]} />
+            <Bar dataKey="answered" name={t(lang, "common.answered")} stackId="a" fill={ANSWERED_COLOR}>
+              <LabelList dataKey="answered" position="center" fill="#fff" fontSize={11}
+                formatter={(v: number) => (v > 0 ? v : "")} />
+            </Bar>
+            <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]}>
+              <LabelList dataKey="pending" position="center" fill="#fff" fontSize={11}
+                formatter={(v: number) => (v > 0 ? v : "")} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -412,12 +440,47 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             lang={lang}
           />
         </div>
-        <ResponsiveContainer width="100%" height={220}>
-          <LineChart data={bySession}>
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart data={bySession} margin={{ bottom: 28 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="session" tick={{ fontSize: 11 }} interval={1} />
+            <XAxis
+              dataKey="sessionNum"
+              interval={2}
+              height={44}
+              tickMargin={6}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              tick={(props: any) => {
+                const { x, y, payload } = props;
+                const d = sessionDate.get(payload.value);
+                return (
+                  <g transform={`translate(${x},${y})`}>
+                    <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#374151">
+                      {`${t(lang, "questions.sessionFull")} ${payload.value}`}
+                    </text>
+                    {d && (
+                      <text x={0} y={0} dy={25} textAnchor="middle" fontSize={9} fill="#9ca3af">
+                        {fmtDateShort(d)}
+                      </text>
+                    )}
+                  </g>
+                );
+              }}
+            />
             <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip />
+            <Tooltip
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              content={({ active, payload }: any) => {
+                if (!active || !payload?.length) return null;
+                const p = payload[0].payload;
+                return (
+                  <div className="bg-white border border-gray-200 rounded-lg shadow-sm px-3 py-2 text-xs">
+                    <p className="font-semibold text-gray-800">{t(lang, "questions.sessionFull")} {p.sessionNum}</p>
+                    {p.date && <p className="text-gray-500">{fmtDateFull(p.date)}</p>}
+                    <p className="text-gray-700 mt-1">{p.count} {t(lang, "questions.questionsShort")}</p>
+                  </div>
+                );
+              }}
+            />
             <Line type="monotone" dataKey="count" stroke={NAVY} strokeWidth={2} dot={{ r: 3, fill: NAVY }} />
           </LineChart>
         </ResponsiveContainer>
