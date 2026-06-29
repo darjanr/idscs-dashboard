@@ -1,3 +1,9 @@
+## 2026-06-29 15:37 — Darjan Radenkovic
+> Show Albanian toggle label as Latin "AL" (not Cyrillic "АЛ")
+
+## 2026-06-29 15:35 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-29 15:35 — Darjan Radenkovic
 > Translate MP names + parties (AL/EN); Excel round-trip translation workflow
 
