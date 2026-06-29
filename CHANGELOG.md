@@ -1,3 +1,9 @@
+## 2026-06-29 14:09 — Darjan Radenkovic
+> Client feedback round 2: always-on bar values, session labels, period subtitles
+
+## 2026-06-25 12:07 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-25 12:07 — Darjan Radenkovic
 > docs: update CLAUDE.md for active-120 model, deployment, chart export
 
