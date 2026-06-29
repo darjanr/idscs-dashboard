@@ -126,7 +126,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
   const avgAttendance = Math.round(withData.reduce((s, m) => s + m.attendance, 0) / withData.length);
 
   const COL_LABEL: Record<SortKey, string> = {
-    composite:          "Вкупна активност",
+    composite:          t(lang, "mymp.compositeLabel"),
     attendance:         t(lang, "mymp.colAttendance"),
     discussions:        t(lang, "mymp.colDiscussions"),
     questions:          t(lang, "mymp.colQuestions"),
@@ -154,7 +154,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
   ];
 
   function downloadCSV() {
-    const header = ["Пратеник", "Присуство", "Дискусии", "Прашања", "Закони", "Амандмани", "Комисии"];
+    const header = [t(lang, "mymp.colMP"), t(lang, "mymp.colAttendance"), t(lang, "mymp.colDiscussions"), t(lang, "mymp.colQuestions"), t(lang, "mymp.colLaws"), t(lang, "mymp.colAmendments"), t(lang, "mymp.colCommittees")];
     const rows = filtered.map(m => [m.name, m.attendance, m.discussions, m.questions, m.laws, m.amendments, m.committeesAsMember]);
     const csv = [header, ...rows].map(r => r.join(",")).join("\n");
     const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
@@ -195,7 +195,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       <div id="viz-mymp-top5" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="font-semibold text-gray-800">Топ 5 најактивни пратеници</h2>
+            <h2 className="font-semibold text-gray-800">{t(lang, "mymp.top5Title")}</h2>
             <p className="text-xs text-gray-400 mt-0.5">{t(lang, "mymp.mostActiveNote")}</p>
           </div>
           <ChartDownload
@@ -241,7 +241,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       {/* Top 15 ranked list */}
       <div id="viz-mymp-top15" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
         <div className="flex flex-wrap items-center gap-2 mb-5">
-          <h2 className="font-semibold text-gray-800 mr-2">Топ 15 —</h2>
+          <h2 className="font-semibold text-gray-800 mr-2">{t(lang, "mymp.top15Label")}</h2>
           <div className="flex gap-2 flex-wrap">
             {sortOptions.map(key => (
               <button
@@ -299,7 +299,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
         <h2 className="font-semibold text-amber-900 mb-1">{t(lang, "mymp.zeroQuestionsLabel")}</h2>
         <p className="text-sm text-amber-700 mb-3">
-          {zeroQuestions} од {mps.length} пратеници не поставиле ниту едно прашање во периодот јануари–јуни 2025.
+          {t(lang, "mymp.zeroSentence").replace("{count}", String(zeroQuestions)).replace("{total}", String(mps.length))}
         </p>
         <div className="flex flex-wrap gap-2">
           {withData.filter(m => m.questions === 0).map(m => (
@@ -326,9 +326,9 @@ export default function MyMPExplorer({ mps, lang }: Props) {
           />
           <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
             <input type="checkbox" checked={showZeroOnly} onChange={e => setShowZeroOnly(e.target.checked)} className="rounded" />
-            Само без прашања
+            {t(lang, "mymp.onlyZero")}
           </label>
-          <span className="text-sm text-gray-400 ml-auto">{filtered.length} пратеници</span>
+          <span className="text-sm text-gray-400 ml-auto">{filtered.length} {t(lang, "common.mpsLower")}</span>
           <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50">
             {t(lang, "common.downloadCSV")}
           </button>
@@ -424,7 +424,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-400 mt-4">Период: {t(lang, "mymp.subtitle")}</p>
+            <p className="text-xs text-gray-400 mt-4">{t(lang, "mymp.periodLabel")}: {t(lang, "mymp.subtitle")}</p>
           </div>
         </div>
       )}

@@ -1,10 +1,10 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import QuestionsExplorer from "../components/QuestionsExplorer";
-import { t, type Lang } from "../i18n";
-import questions from "../../public/data/questions.json";
+import Layout from "../../layouts/Layout.astro";
+import QuestionsExplorer from "../../components/QuestionsExplorer";
+import { t, type Lang } from "../../i18n";
+import questions from "../../../public/data/questions.json";
 
-const lang: Lang = "mk";
+const lang: Lang = "al";
 ---
 
 <Layout title={t(lang, "questions.title")} lang={lang}>

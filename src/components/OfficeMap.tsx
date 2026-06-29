@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
+import type { Lang } from "../i18n";
+import { t } from "../i18n";
 
 interface Office {
   id: number;
@@ -11,9 +13,10 @@ interface Office {
 
 interface Props {
   offices: Office[];
+  lang: Lang;
 }
 
-export default function OfficeMap({ offices }: Props) {
+export default function OfficeMap({ offices, lang }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<unknown>(null);
 
@@ -41,7 +44,7 @@ export default function OfficeMap({ offices }: Props) {
       offices.forEach(office => {
         L.marker([office.lat, office.lon], { icon })
           .addTo(map)
-          .bindPopup(`<strong>Канцеларија</strong><br/>${office.address}`);
+          .bindPopup(`<strong>${t(lang, "map.popupTitle")}</strong><br/>${office.address}`);
       });
     });
 
@@ -52,13 +55,13 @@ export default function OfficeMap({ offices }: Props) {
         mapInstance.current = null;
       }
     };
-  }, [offices]);
+  }, [offices, lang]);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       <div className="px-5 pt-5 pb-3">
-        <h2 className="font-semibold text-gray-800">Локации на канцеларии</h2>
-        <p className="text-sm text-gray-400 mt-0.5">{offices.length} лоцирани канцеларии на мапата</p>
+        <h2 className="font-semibold text-gray-800">{t(lang, "map.title")}</h2>
+        <p className="text-sm text-gray-400 mt-0.5">{offices.length} {t(lang, "map.locatedSuffix")}</p>
       </div>
       <div ref={mapRef} style={{ height: "380px", width: "100%" }} />
     </div>

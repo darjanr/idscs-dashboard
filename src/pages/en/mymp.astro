@@ -1,10 +1,10 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import MyMPExplorer from "../components/MyMPExplorer";
-import { t, type Lang } from "../i18n";
-import mps from "../../public/data/mymp.json";
+import Layout from "../../layouts/Layout.astro";
+import MyMPExplorer from "../../components/MyMPExplorer";
+import { t, type Lang } from "../../i18n";
+import mps from "../../../public/data/mymp.json";
 
-const lang: Lang = "mk";
+const lang: Lang = "en";
 ---
 
 <Layout title={t(lang, "mymp.title")} lang={lang}>

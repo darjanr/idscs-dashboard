@@ -217,7 +217,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
   const sessions = new Set(questions.map(q => q.session).filter(Boolean)).size;
 
   function downloadCSV() {
-    const header = ["ID", "Датум", "Седница", "Пратеник", "Партија", "Институција", "Прашање", "Статус"];
+    const header = ["ID", t(lang, "questions.tableDate"), t(lang, "questions.session"), t(lang, "questions.tableFrom"), t(lang, "common.party"), t(lang, "questions.tableTo"), t(lang, "questions.tableQuestion"), t(lang, "questions.tableStatus")];
     const rows = filtered.map(q => [
       q.id, q.date || "", q.session || "", q.fromMP, q.party || "",
       q.toInstitution || "", `"${q.question.replace(/"/g, '""')}"`, q.status,
@@ -527,7 +527,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             <option value="Одговорено">{t(lang, "common.answered")}</option>
             <option value="Доставено">{t(lang, "common.pending")}</option>
           </select>
-          <span className="text-sm text-gray-500 ml-auto">{filtered.length} резултати</span>
+          <span className="text-sm text-gray-500 ml-auto">{filtered.length} {t(lang, "common.results")}</span>
           <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
             {t(lang, "common.downloadCSV")}
           </button>
@@ -556,7 +556,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   onClick={() => setSelected(q)}
                   tabIndex={0}
                   onKeyDown={e => e.key === "Enter" && setSelected(q)}
-                  aria-label={`Отвори детали за прашање од ${q.fromMP}`}
+                  aria-label={`${t(lang, "questions.openDetailAria")} ${q.fromMP}`}
                 >
                   <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{q.fromMP}</td>
                   <td className="px-4 py-3 text-xs whitespace-nowrap">
@@ -631,14 +631,14 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   <p className="text-xs text-gray-400 mt-0.5">
                     → {selected.toUser || selected.toInstitution || t(lang, "questions.nullInstitution")}
                     {selected.date ? ` · ${selected.date}` : ""}
-                    {selected.session ? ` · Седница ${selected.session}` : ""}
+                    {selected.session ? ` · ${t(lang, "questions.session")} ${selected.session}` : ""}
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setSelected(null)}
                 className="text-gray-400 hover:text-gray-600 text-2xl leading-none ml-2 shrink-0"
-                aria-label="Затвори"
+                aria-label={t(lang, "common.close")}
               >×</button>
             </div>
 

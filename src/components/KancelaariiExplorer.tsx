@@ -119,7 +119,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
   }, [filtered, lang]);
 
   function downloadCSV() {
-    const header = ["Пратеник", "Партија", "Категорија", "Подкатегорија", "Вкупно"];
+    const header = [t(lang, "mymp.colMP"), t(lang, "common.party"), t(lang, "common.category"), t(lang, "common.subcategory"), t(lang, "common.total")];
     const csvRows = filtered.map(r => [r.mpName, r.party, r.category, r.subcategory, r.total]);
     const csv = [header, ...csvRows].map(r => r.join(",")).join("\n");
     const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
@@ -134,7 +134,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
     <div className="space-y-8">
       {/* Filters */}
       <div className="flex flex-wrap gap-3 items-center bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-        <span className="text-sm font-medium text-gray-600">Филтер:</span>
+        <span className="text-sm font-medium text-gray-600">{t(lang, "common.filter")}:</span>
         <select
           value={filterParty}
           onChange={e => { setFilterParty(e.target.value); setFilterMP("all"); setMpPage(0); }}
@@ -177,7 +177,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByMP")}</h2>
-          <span className="text-xs text-gray-400">{byMP.length} пратеници</span>
+          <span className="text-xs text-gray-400">{byMP.length} {t(lang, "common.mpsLower")}</span>
         </div>
         <div className="space-y-3">
           {byMP.slice(mpPage * MP_PAGE_SIZE, (mpPage + 1) * MP_PAGE_SIZE).map((mp, i) => {
@@ -216,17 +216,17 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
               disabled={mpPage === 0}
               className="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              ← Претходни
+              ← {t(lang, "common.prev")}
             </button>
             <span className="text-xs text-gray-500">
-              {mpPage * MP_PAGE_SIZE + 1}–{Math.min((mpPage + 1) * MP_PAGE_SIZE, byMP.length)} од {byMP.length}
+              {mpPage * MP_PAGE_SIZE + 1}–{Math.min((mpPage + 1) * MP_PAGE_SIZE, byMP.length)} {t(lang, "common.of")} {byMP.length}
             </span>
             <button
               onClick={() => setMpPage(p => Math.min(Math.ceil(byMP.length / MP_PAGE_SIZE) - 1, p + 1))}
               disabled={(mpPage + 1) * MP_PAGE_SIZE >= byMP.length}
               className="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              Следни →
+              {t(lang, "common.next")} →
             </button>
           </div>
         )}

@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
-import { getLangFromURL, type Lang } from "../i18n";
+import { getLangFromURL, t, type Lang } from "../i18n";
 
 interface Props {
   title: string;
@@ -31,7 +31,7 @@ const partnerLogos = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="bg-gray-50 text-gray-900 min-h-screen">
-    <a href="#main" class="skip-link">Прескокни на содржината</a>
+    <a href="#main" class="skip-link">{t(lang, "common.skipToContent")}</a>
     <Nav lang={lang} />
     {Astro.slots.has('hero') && <slot name="hero" />}
     <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -56,14 +56,13 @@ const partnerLogos = [
       </div>
       <div class="border-t border-gray-100 py-6 text-center text-sm text-gray-500">
         <p class="max-w-3xl mx-auto px-4 leading-relaxed">
-          Податоците се преземени од
+          {t(lang, "footer.dataNotePre")}
           <a
             href="https://opendata.sobranie.mk"
             class="underline hover:text-gray-900"
             target="_blank"
             rel="noopener noreferrer"
-          >Порталот за отворени податоци на Собранието на Република Северна Македонија</a>,
-          во формата и содржината во која тие се објавени од Собранието.
+          >{t(lang, "footer.portalName")}</a>{t(lang, "footer.dataNotePost")}
         </p>
       </div>
     </footer>

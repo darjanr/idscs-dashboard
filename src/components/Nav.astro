@@ -1,5 +1,5 @@
 ---
-import { t, type Lang } from "../i18n";
+import { t, languages, LANGS, type Lang } from "../i18n";
 
 interface Props {
   lang: Lang;
@@ -7,6 +7,15 @@ interface Props {
 const { lang } = Astro.props;
 
 const base = lang === "mk" ? "" : `/${lang}`;
+
+// Language switcher: keep the current page, swap the language prefix.
+const stripLang = (p: string) => {
+  const stripped = p.replace(/^\/(al|en)(?=\/|$)/, "");
+  return stripped === "" ? "/" : stripped;
+};
+const basePath = stripLang(Astro.url.pathname);
+const langHref = (code: Lang) =>
+  code === "mk" ? basePath : basePath === "/" ? `/${code}` : `/${code}${basePath}`;
 
 const mainLinks = [
   { href: `${base}/questions`, label: t(lang, "nav.questions") },
@@ -29,7 +38,7 @@ const aboutActive = aboutLinks.some(l => currentPath.startsWith(l.href));
 <header class="bg-navy-900 text-white shadow-lg" style="background-color: #1a2e5a;">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <a href={base || "/"} class="flex items-center hover:opacity-90" aria-label="Почетна">
+      <a href={base || "/"} class="flex items-center hover:opacity-90" aria-label={t(lang, "nav.home")}>
         <span class="inline-flex items-center bg-white rounded-md px-2.5 py-1.5 shadow-sm">
           <img
             src="/logos/ddi.png"
@@ -89,6 +98,22 @@ const aboutActive = aboutLinks.some(l => currentPath.startsWith(l.href));
             </div>
           </div>
         </div>
+        <!-- Language switcher -->
+        <span class="w-px h-5 bg-white/15 mx-2" aria-hidden="true"></span>
+        <div class="flex items-center gap-0.5" role="group" aria-label={t(lang, "nav.language")}>
+          {LANGS.map(code => (
+            <a
+              href={langHref(code)}
+              hreflang={code === "al" ? "sq" : code}
+              class={`px-2 py-1 rounded text-xs font-semibold transition-colors ${
+                lang === code ? "bg-white text-[#1a2e5a]" : "text-white/70 hover:text-white hover:bg-white/10"
+              }`}
+              aria-current={lang === code ? "true" : undefined}
+            >
+              {languages[code]}
+            </a>
+          ))}
+        </div>
       </nav>
 
       <!-- Mobile menu button -->
@@ -124,6 +149,21 @@ const aboutActive = aboutLinks.some(l => currentPath.startsWith(l.href));
           {link.label}
         </a>
       ))}
+      <p class="px-3 pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-white/40">{t(lang, "nav.language")}</p>
+      <div class="flex items-center gap-1 px-3 pt-1">
+        {LANGS.map(code => (
+          <a
+            href={langHref(code)}
+            hreflang={code === "al" ? "sq" : code}
+            class={`px-3 py-1.5 rounded text-sm font-semibold transition-colors ${
+              lang === code ? "bg-white text-[#1a2e5a]" : "text-white/70 hover:text-white hover:bg-white/10"
+            }`}
+            aria-current={lang === code ? "true" : undefined}
+          >
+            {languages[code]}
+          </a>
+        ))}
+      </div>
     </nav>
   </div>
 </header>

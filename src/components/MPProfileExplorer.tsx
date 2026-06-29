@@ -44,15 +44,8 @@ const TOTAL_SESSIONS = 56;
 
 type SortKey = "name" | "composite" | "questions" | "attendance" | "discussions" | "laws" | "amendments" | "committees";
 
-const SORT_OPTIONS: { key: SortKey; label: string }[] = [
-  { key: "name",        label: "Абецеден ред" },
-  { key: "composite",   label: "Општа активност" },
-  { key: "questions",   label: "Прашања (2024–28)" },
-  { key: "attendance",  label: "Присуство" },
-  { key: "discussions", label: "Дискусии" },
-  { key: "laws",        label: "Закони" },
-  { key: "amendments",  label: "Амандмани" },
-  { key: "committees",  label: "Комисии" },
+const SORT_KEYS: SortKey[] = [
+  "name", "composite", "questions", "attendance", "discussions", "laws", "amendments", "committees",
 ];
 
 export default function MPProfileExplorer({ profiles, lang }: Props) {
@@ -166,16 +159,16 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
           {parties.slice(1).map(p => <option key={p} value={p}>{p}</option>)}
         </select>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500 whitespace-nowrap">Сортирај по:</span>
+          <span className="text-sm text-gray-500 whitespace-nowrap">{t(lang, "common.sortBy")}:</span>
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value as SortKey)}
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
-            {SORT_OPTIONS.map(o => <option key={o.key} value={o.key}>{o.label}</option>)}
+            {SORT_KEYS.map(k => <option key={k} value={k}>{t(lang, `profile.sort.${k}`)}</option>)}
           </select>
         </div>
-        <span className="text-sm text-gray-400 ml-auto">{filtered.length} пратеници</span>
+        <span className="text-sm text-gray-400 ml-auto">{filtered.length} {t(lang, "common.mpsLower")}</span>
       </div>
 
       {/* Grid */}
@@ -269,7 +262,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                     </div>
                     {selected.questions.topInstitutions.length > 0 && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-2">Најчесто адресирани институции</p>
+                        <p className="text-xs text-gray-500 mb-2">{t(lang, "profile.topInstitutions")}</p>
                         <div className="space-y-1">
                           {selected.questions.topInstitutions.map(inst => (
                             <div key={inst.institution} className="flex items-center gap-2 text-sm">
@@ -291,12 +284,12 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                     )}
                     {selected.questions.recentQuestions.length > 0 && (
                       <div className="mt-3">
-                        <p className="text-xs text-gray-500 mb-2">Последни прашања</p>
+                        <p className="text-xs text-gray-500 mb-2">{t(lang, "profile.recentQuestions")}</p>
                         <ul className="space-y-2">
                           {selected.questions.recentQuestions.map(q => (
                             <li key={q.id} className="text-sm text-gray-700 border-l-2 border-gray-200 pl-3">
                               <p className="truncate">{q.question}</p>
-                              <p className="text-xs text-gray-400">{q.date || "—"} · {q.toInstitution || "Независно тело"}</p>
+                              <p className="text-xs text-gray-400">{q.date || "—"} · {q.toInstitution || t(lang, "profile.independentBody")}</p>
                             </li>
                           ))}
                         </ul>
@@ -352,7 +345,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                     </div>
                     {Object.keys(selected.office.casesByType).length > 0 && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-2">Случаи по тип</p>
+                        <p className="text-xs text-gray-500 mb-2">{t(lang, "profile.casesByType")}</p>
                         <div className="space-y-1">
                           {Object.entries(selected.office.casesByType)
                             .filter((e): e is [string, number] => e[1] !== undefined)
