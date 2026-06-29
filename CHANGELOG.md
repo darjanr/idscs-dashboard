@@ -1,3 +1,9 @@
+## 2026-06-29 15:11 — Darjan Radenkovic
+> Add Albanian + English versions with language toggle
+
+## 2026-06-29 14:09 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-29 14:09 — Darjan Radenkovic
 > Client feedback round 2: always-on bar values, session labels, period subtitles
 
