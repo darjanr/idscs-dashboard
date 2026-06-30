@@ -1,3 +1,9 @@
+## 2026-06-30 16:37 — Darjan Radenkovic
+> Refresh translations.xlsx — Questions tab now carries the AL/EN translations
+
+## 2026-06-30 16:31 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-30 16:31 — Darjan Radenkovic
 > Add AL/EN question translations (4/4: all 657) [manual]
 
