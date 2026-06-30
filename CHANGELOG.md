@@ -1,3 +1,9 @@
+## 2026-06-30 16:07 — Darjan Radenkovic
+> Add AL/EN question translations (3/4: 495 of 657) [manual]
+
+## 2026-06-30 15:28 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-30 15:28 — Darjan Radenkovic
 > Add AL/EN question translations (2/3: 330 of 657) [manual]
 
