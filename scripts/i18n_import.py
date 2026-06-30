@@ -96,8 +96,22 @@ def main():
         names[str(row[0])] = {"al": cell(row[1]), "en": cell(row[2])}
     dump(names, I18N / "mp_names.json")
 
-    print(f"✓ regenerated locales (UI: {len(_flat(mk))} keys), "
-          f"parties: {len(parties)}, MP names: {len(names)}")
+    # Institutions + Case types (simple MK | AL | EN maps)
+    counts = {}
+    for sheet_name, fname in [("Institutions", "institutions.json"), ("Case types", "case_types.json")]:
+        if sheet_name not in wb.sheetnames:
+            continue
+        data = {}
+        for row in wb[sheet_name].iter_rows(min_row=2, values_only=True):
+            if not row[0]:
+                continue
+            data[str(row[0])] = {"al": cell(row[1]), "en": cell(row[2])}
+        dump(data, I18N / fname)
+        counts[sheet_name] = len(data)
+
+    print(f"✓ regenerated locales (UI: {len(_flat(mk))} keys), parties: {len(parties)}, "
+          f"MP names: {len(names)}, "
+          + ", ".join(f"{k}: {v}" for k, v in counts.items()))
 
 
 def _flat(obj, n=0):

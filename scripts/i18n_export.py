@@ -94,9 +94,24 @@ def main():
         wn.column_dimensions[col].width = 34
     style_header(wn, 3)
 
+    # Two more simple MK | AL | EN maps: institutions and office case types.
+    for sheet_name, fname, widths in [
+        ("Institutions", "institutions.json", (52, 52, 52)),
+        ("Case types", "case_types.json", (48, 48, 48)),
+    ]:
+        data = load(I18N / fname)
+        wsx = wb.create_sheet(sheet_name)
+        wsx.append(["MK", "AL", "EN"])
+        for cyr, v in data.items():
+            wsx.append([cyr, v["al"], v["en"]])
+        for col, w in zip(("A", "B", "C"), widths):
+            wsx.column_dimensions[col].width = w
+        style_header(wsx, 3)
+
     wb.save(OUT)
     print(f"✓ wrote {OUT.relative_to(ROOT)}  "
-          f"(UI: {ws.max_row - 1}, Parties: {wp.max_row - 1}, MP names: {wn.max_row - 1})")
+          f"(UI: {ws.max_row - 1}, Parties: {wp.max_row - 1}, MP names: {wn.max_row - 1}, "
+          f"+ Institutions & Case types)")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
-import { tName, tParty } from "../i18n/translate";
+import { tName, tParty, tCaseType } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
 
 interface Row {
@@ -93,8 +93,8 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
     });
     return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
-      .map(([name, value]) => ({ name, value }));
-  }, [filtered]);
+      .map(([name, value]) => ({ name: tCaseType(lang, name), value }));
+  }, [filtered, lang]);
 
   // By party (casesAll) with logo
   const byParty = useMemo(() => {

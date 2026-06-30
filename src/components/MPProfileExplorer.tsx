@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
-import { tName, tParty } from "../i18n/translate";
+import { tName, tParty, tInst, tCaseType } from "../i18n/translate";
 
 interface Profile {
   name: string;
@@ -279,7 +279,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                                   }}
                                 />
                               </div>
-                              <span className="text-gray-500 truncate max-w-[200px] text-xs">{inst.institution}</span>
+                              <span className="text-gray-500 truncate max-w-[200px] text-xs">{tInst(lang, inst.institution)}</span>
                               <span className="font-semibold text-gray-700 w-5 text-right">{inst.count}</span>
                             </div>
                           ))}
@@ -293,7 +293,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                           {selected.questions.recentQuestions.map(q => (
                             <li key={q.id} className="text-sm text-gray-700 border-l-2 border-gray-200 pl-3">
                               <p className="truncate">{q.question}</p>
-                              <p className="text-xs text-gray-400">{q.date || "—"} · {q.toInstitution || t(lang, "profile.independentBody")}</p>
+                              <p className="text-xs text-gray-400">{q.date || "—"} · {q.toInstitution ? tInst(lang, q.toInstitution) : t(lang, "profile.independentBody")}</p>
                             </li>
                           ))}
                         </ul>
@@ -356,7 +356,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                             .sort((a, b) => b[1] - a[1])
                             .map(([type, count]) => (
                               <div key={type} className="flex justify-between text-sm">
-                                <span className="text-gray-600">{type}</span>
+                                <span className="text-gray-600">{tCaseType(lang, type)}</span>
                                 <span className="font-semibold text-gray-800">{count}</span>
                               </div>
                             ))}

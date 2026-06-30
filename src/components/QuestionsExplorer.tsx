@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
-import { tName, tParty, partyAcr } from "../i18n/translate";
+import { tName, tParty, partyAcr, tInst } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
 
 interface Question {
@@ -68,6 +68,15 @@ function shortInstChart(name: string): string {
     .replace(" и труд", "");
 }
 
+// Compact institution label for chart Y-axes, per language. MK uses the
+// Cyrillic shortener; AL/EN translate then abbreviate "Ministry/Ministria" → "Min."
+function shortInstByLang(lang: Lang, full: string): string {
+  if (lang === "mk") return shortInstChart(full);
+  return tInst(lang, full)
+    .replace(/^Ministria (e|për|i) /, "Min. ")
+    .replace(/^Ministry of /, "Min. ");
+}
+
 export default function QuestionsExplorer({ questions, lang }: Props) {
   const [search, setSearch] = useState("");
   const [filterMP, setFilterMP] = useState("all");
@@ -119,32 +128,37 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
 
   // Institution answered vs pending (top 12 by volume)
   const byInst = useMemo(() => {
-    const counts: Record<string, { answered: number; pending: number }> = {};
+    const counts: Record<string, { answered: number; pending: number; full: string | null }> = {};
     questions.forEach(q => {
-      const inst = shortInstChart(q.toInstitution || t(lang, "questions.nullInstitution"));
-      if (!counts[inst]) counts[inst] = { answered: 0, pending: 0 };
-      if (q.status === "Одговорено") counts[inst].answered++;
-      else counts[inst].pending++;
+      const full = q.toInstitution;
+      const key = full ?? "__null__";
+      if (!counts[key]) counts[key] = { answered: 0, pending: 0, full };
+      if (q.status === "Одговорено") counts[key].answered++;
+      else counts[key].pending++;
     });
-    return Object.entries(counts)
-      .sort((a, b) => (b[1].answered + b[1].pending) - (a[1].answered + a[1].pending))
+    return Object.values(counts)
+      .sort((a, b) => (b.answered + b.pending) - (a.answered + a.pending))
       .slice(0, 12)
-      .map(([name, v]) => ({ name, ...v, total: v.answered + v.pending }));
+      .map(v => ({
+        name: v.full ? shortInstByLang(lang, v.full) : t(lang, "questions.nullInstitution"),
+        answered: v.answered, pending: v.pending, total: v.answered + v.pending,
+      }));
   }, [questions, lang]);
 
   // Institution answer rate — sorted worst first (journalist view)
   const byInstAnswerRate = useMemo(() => {
-    const counts: Record<string, { answered: number; total: number }> = {};
+    const counts: Record<string, { answered: number; total: number; full: string | null }> = {};
     questions.forEach(q => {
-      const inst = shortInst(q.toInstitution || t(lang, "questions.nullInstitution"));
-      if (!counts[inst]) counts[inst] = { answered: 0, total: 0 };
-      counts[inst].total++;
-      if (q.status === "Одговорено") counts[inst].answered++;
+      const full = q.toInstitution;
+      const key = full ?? "__null__";
+      if (!counts[key]) counts[key] = { answered: 0, total: 0, full };
+      counts[key].total++;
+      if (q.status === "Одговорено") counts[key].answered++;
     });
-    return Object.entries(counts)
-      .filter(([, v]) => v.total >= 3)
-      .map(([name, v]) => ({
-        name,
+    return Object.values(counts)
+      .filter(v => v.total >= 3)
+      .map(v => ({
+        name: v.full ? (lang === "mk" ? shortInst(v.full) : tInst(lang, v.full)) : t(lang, "questions.nullInstitution"),
         rate: Math.round((v.answered / v.total) * 100),
         answered: v.answered,
         total: v.total,
@@ -539,7 +553,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                     <span className="text-gray-600 font-medium">{partyAcr(lang, q.party)}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-600 max-w-[180px] truncate">
-                    {q.toInstitution || <span className="text-gray-400 italic">{t(lang, "questions.nullInstitution")}</span>}
+                    {q.toInstitution ? tInst(lang, q.toInstitution) : <span className="text-gray-400 italic">{t(lang, "questions.nullInstitution")}</span>}
                   </td>
                   <td className="px-4 py-3 text-gray-700 max-w-xs truncate">{q.question}</td>
                   <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
@@ -605,7 +619,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   <p className="font-semibold text-gray-900">{tName(lang, selected.fromMP)}</p>
                   {selected.party && <p className="text-xs text-gray-400">{tParty(lang, selected.party)}</p>}
                   <p className="text-xs text-gray-400 mt-0.5">
-                    → {selected.toUser || selected.toInstitution || t(lang, "questions.nullInstitution")}
+                    → {selected.toInstitution ? tInst(lang, selected.toInstitution) : (selected.toUser || t(lang, "questions.nullInstitution"))}
                     {selected.date ? ` · ${selected.date}` : ""}
                     {selected.session ? ` · ${t(lang, "questions.session")} ${selected.session}` : ""}
                   </p>
