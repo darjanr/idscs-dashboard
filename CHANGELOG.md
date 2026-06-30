@@ -1,3 +1,9 @@
+## 2026-06-30 15:13 — Darjan Radenkovic
+> Add AL/EN question translations (1/3: 220 of 657) [manual]
+
+## 2026-06-30 11:55 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-30 11:55 — Darjan Radenkovic
 > Machine-translate question/answer bodies (AL/EN) via Batches API + spreadsheet tab
 
