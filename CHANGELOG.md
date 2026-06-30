@@ -1,3 +1,9 @@
+## 2026-06-30 11:55 — Darjan Radenkovic
+> Machine-translate question/answer bodies (AL/EN) via Batches API + spreadsheet tab
+
+## 2026-06-30 10:34 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-30 10:34 — Darjan Radenkovic
 > Translate institution names + office case types (AL/EN) + spreadsheet tabs
 
