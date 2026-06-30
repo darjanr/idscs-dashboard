@@ -1,3 +1,9 @@
+## 2026-06-30 10:34 — Darjan Radenkovic
+> Translate institution names + office case types (AL/EN) + spreadsheet tabs
+
+## 2026-06-29 15:37 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-29 15:37 — Darjan Radenkovic
 > Show Albanian toggle label as Latin "AL" (not Cyrillic "АЛ")
 
