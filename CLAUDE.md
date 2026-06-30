@@ -107,6 +107,24 @@ npm run build                    # then commit
 The JSON files are generated artifacts; edit text in the xlsx (or the JSON) and re-run the
 round-trip. New MP added on data refresh: re-run export (prefills from API), then import.
 
+Data values translated via curated maps in `src/i18n/`: `parties.json` (names + acronyms),
+`mp_names.json` (from the roster API), `institutions.json`, `case_types.json`. Institution
+names are translated; the charts abbreviate "Ministry/Ministria" → "Min." for AL/EN.
+
+**Question + answer bodies** (657 questions, ~21k words; only 14 answers have text) are
+machine-translated, not curated:
+
+```bash
+export ANTHROPIC_API_KEY=...        # needs `pip install anthropic`
+python3 scripts/translate_questions.py   # Batches API (claude-opus-4-8) -> public/data/questions_i18n.json
+```
+
+It's idempotent (only new ids are translated) — re-run after a data refresh. The frontend
+renders these with a "machine-translated" note and falls back to the original Macedonian
+wherever a translation is missing, so the site works before the script has ever run
+(`questions_i18n.json` ships as `{}`). The workbook's "Questions" tab lets the client review
+or override the machine output (import writes it back to `questions_i18n.json`).
+
 ## Modules and build order
 
 Build in this order — each depends on the previous:

@@ -37,6 +37,7 @@ interface Profile {
 interface Props {
   profiles: Profile[];
   lang: Lang;
+  qi18n?: Record<string, { q?: { al: string; en: string } }>;
 }
 
 const TEAL = "#0d9488";
@@ -49,7 +50,8 @@ const SORT_KEYS: SortKey[] = [
   "name", "composite", "questions", "attendance", "discussions", "laws", "amendments", "committees",
 ];
 
-export default function MPProfileExplorer({ profiles, lang }: Props) {
+export default function MPProfileExplorer({ profiles, lang, qi18n = {} }: Props) {
+  const trQ = (id: string, original: string) => (lang === "mk" ? original : (qi18n[id]?.q?.[lang] ?? original));
   const [search, setSearch] = useState("");
   const [filterParty, setFilterParty] = useState("all");
   const [sortBy, setSortBy] = useState<SortKey>("name");
@@ -292,7 +294,7 @@ export default function MPProfileExplorer({ profiles, lang }: Props) {
                         <ul className="space-y-2">
                           {selected.questions.recentQuestions.map(q => (
                             <li key={q.id} className="text-sm text-gray-700 border-l-2 border-gray-200 pl-3">
-                              <p className="truncate">{q.question}</p>
+                              <p className="truncate">{trQ(q.id, q.question)}</p>
                               <p className="text-xs text-gray-400">{q.date || "—"} · {q.toInstitution ? tInst(lang, q.toInstitution) : t(lang, "profile.independentBody")}</p>
                             </li>
                           ))}

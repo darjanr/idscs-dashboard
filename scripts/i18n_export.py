@@ -108,6 +108,23 @@ def main():
             wsx.column_dimensions[col].width = w
         style_header(wsx, 3)
 
+    # Questions + answers — machine-seeded by translate_questions.py, editable here.
+    questions = json.loads((ROOT / "public" / "data" / "questions.json").read_text(encoding="utf-8"))
+    qi18n_path = ROOT / "public" / "data" / "questions_i18n.json"
+    qi18n = json.loads(qi18n_path.read_text(encoding="utf-8")) if qi18n_path.exists() else {}
+    wq = wb.create_sheet("Questions")
+    wq.append(["id", "MK question", "AL question", "EN question", "MK answer", "AL answer", "EN answer"])
+    for q in questions:
+        tr = qi18n.get(q["id"], {})
+        qt, at = tr.get("q", {}), tr.get("a", {})
+        mk_answer = "" if q.get("answerIsCopy") else (q.get("answer") or "")
+        wq.append([q["id"], q.get("question") or "", qt.get("al", ""), qt.get("en", ""),
+                   mk_answer, at.get("al", ""), at.get("en", "")])
+    wq.column_dimensions["A"].width = 38
+    for col in ("B", "C", "D", "E", "F", "G"):
+        wq.column_dimensions[col].width = 60
+    style_header(wq, 7)
+
     wb.save(OUT)
     print(f"✓ wrote {OUT.relative_to(ROOT)}  "
           f"(UI: {ws.max_row - 1}, Parties: {wp.max_row - 1}, MP names: {wn.max_row - 1}, "

@@ -109,6 +109,23 @@ def main():
         dump(data, I18N / fname)
         counts[sheet_name] = len(data)
 
+    # Questions + answers -> public/data/questions_i18n.json (only non-empty rows)
+    if "Questions" in wb.sheetnames:
+        qi18n = {}
+        for row in wb["Questions"].iter_rows(min_row=2, values_only=True):
+            qid = row[0]
+            if not qid:
+                continue
+            entry = {}
+            if cell(row[2]) or cell(row[3]):
+                entry["q"] = {"al": cell(row[2]), "en": cell(row[3])}
+            if cell(row[5]) or cell(row[6]):
+                entry["a"] = {"al": cell(row[5]), "en": cell(row[6])}
+            if entry:
+                qi18n[str(qid)] = entry
+        dump(qi18n, ROOT / "public" / "data" / "questions_i18n.json")
+        counts["Questions"] = len(qi18n)
+
     print(f"✓ regenerated locales (UI: {len(_flat(mk))} keys), parties: {len(parties)}, "
           f"MP names: {len(names)}, "
           + ", ".join(f"{k}: {v}" for k, v in counts.items()))

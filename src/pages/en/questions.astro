@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import QuestionsExplorer from "../../components/QuestionsExplorer";
 import { t, type Lang } from "../../i18n";
 import questions from "../../../public/data/questions.json";
+import qi18n from "../../../public/data/questions_i18n.json";
 
 const lang: Lang = "en";
 ---
@@ -12,5 +13,5 @@ const lang: Lang = "en";
     <h1 class="text-3xl font-bold text-gray-900">{t(lang, "questions.title")}</h1>
     <p class="text-gray-500 mt-1">{t(lang, "questions.subtitle")}</p>
   </div>
-  <QuestionsExplorer questions={questions} lang={lang} client:load />
+  <QuestionsExplorer questions={questions} lang={lang} qi18n={qi18n} client:load />
 </Layout>

@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import MPProfileExplorer from "../../components/MPProfileExplorer";
 import { t, type Lang } from "../../i18n";
 import profiles from "../../../public/data/mp_profiles.json";
+import qi18n from "../../../public/data/questions_i18n.json";
 
 const lang: Lang = "al";
 ---
@@ -12,5 +13,5 @@ const lang: Lang = "al";
     <h1 class="text-3xl font-bold text-gray-900">{t(lang, "profile.title")}</h1>
     <p class="text-gray-500 mt-1">{t(lang, "profile.subtitle")}</p>
   </div>
-  <MPProfileExplorer profiles={profiles} lang={lang} client:load />
+  <MPProfileExplorer profiles={profiles} lang={lang} qi18n={qi18n} client:load />
 </Layout>

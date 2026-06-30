@@ -80,7 +80,8 @@
     "nullInstitution": "Independent body",
     "nullDate": "Date not assigned",
     "openDetailAria": "Open question details from",
-    "session": "Session"
+    "session": "Session",
+    "autoTranslated": "Machine-translated"
   },
   "mymp": {
     "title": "MP activity",

@@ -26,9 +26,12 @@ interface Question {
   answerIsCopy: boolean;
 }
 
+interface QTrans { q?: { al: string; en: string }; a?: { al: string; en: string } }
+
 interface Props {
   questions: Question[];
   lang: Lang;
+  qi18n?: Record<string, QTrans>;
 }
 
 const TEAL = "#0d9488";
@@ -77,7 +80,11 @@ function shortInstByLang(lang: Lang, full: string): string {
     .replace(/^Ministry of /, "Min. ");
 }
 
-export default function QuestionsExplorer({ questions, lang }: Props) {
+export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props) {
+  // Question/answer bodies are translated by scripts/translate_questions.py into
+  // questions_i18n.json; fall back to the original Macedonian where missing.
+  const trQ = (q: Question) => (lang === "mk" ? q.question : (qi18n[q.id]?.q?.[lang] ?? q.question));
+  const trA = (q: Question) => (lang === "mk" ? q.answer : (qi18n[q.id]?.a?.[lang] ?? q.answer));
   const [search, setSearch] = useState("");
   const [filterMP, setFilterMP] = useState("all");
   const [filterParty, setFilterParty] = useState("all");
@@ -102,7 +109,8 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
       if (filterParty !== "all" && q.party !== filterParty) return false;
       if (filterStatus !== "all" && q.status !== filterStatus) return false;
       if (s && !q.question.toLowerCase().includes(s) && !q.fromMP.toLowerCase().includes(s)
-          && !tName(lang, q.fromMP).toLowerCase().includes(s)) return false;
+          && !tName(lang, q.fromMP).toLowerCase().includes(s)
+          && !trQ(q).toLowerCase().includes(s)) return false;
       return true;
     });
   }, [questions, search, filterMP, filterParty, filterStatus, lang]);
@@ -555,7 +563,7 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
                   <td className="px-4 py-3 text-gray-600 max-w-[180px] truncate">
                     {q.toInstitution ? tInst(lang, q.toInstitution) : <span className="text-gray-400 italic">{t(lang, "questions.nullInstitution")}</span>}
                   </td>
-                  <td className="px-4 py-3 text-gray-700 max-w-xs truncate">{q.question}</td>
+                  <td className="px-4 py-3 text-gray-700 max-w-xs truncate">{trQ(q)}</td>
                   <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
                     {q.date || <span className="text-gray-400 italic">{t(lang, "questions.nullDate")}</span>}
                   </td>
@@ -633,22 +641,28 @@ export default function QuestionsExplorer({ questions, lang }: Props) {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-2">
                 {t(lang, "questions.detailQuestion")}
+                {lang !== "mk" && qi18n[selected.id]?.q && (
+                  <span className="normal-case font-normal text-[10px] text-gray-400 bg-gray-100 rounded px-1.5 py-0.5">⌁ {t(lang, "questions.autoTranslated")}</span>
+                )}
               </p>
-              <p className="text-gray-900 leading-relaxed">{selected.question}</p>
+              <p className="text-gray-900 leading-relaxed">{trQ(selected)}</p>
             </div>
 
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-2">
                 {t(lang, "questions.detailAnswer")}
+                {lang !== "mk" && qi18n[selected.id]?.a && (
+                  <span className="normal-case font-normal text-[10px] text-gray-400 bg-gray-100 rounded px-1.5 py-0.5">⌁ {t(lang, "questions.autoTranslated")}</span>
+                )}
               </p>
               {selected.answerIsCopy
                 ? <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 italic">
                     {t(lang, "questions.detailNoAnswerSource")}
                   </p>
                 : selected.answer
-                  ? <p className="text-gray-700 leading-relaxed">{selected.answer}</p>
+                  ? <p className="text-gray-700 leading-relaxed">{trA(selected)}</p>
                   : <p className="text-sm text-gray-400 italic">{t(lang, "questions.detailNoAnswer")}</p>
               }
             </div>
