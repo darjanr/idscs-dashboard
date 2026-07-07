@@ -1,3 +1,9 @@
+## 2026-07-07 12:11 — Darjan Radenkovic
+> Apply AL лектура + AI-translation notice on Questions (AL/EN)
+
+## 2026-06-30 16:37 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-06-30 16:37 — Darjan Radenkovic
 > Refresh translations.xlsx — Questions tab now carries the AL/EN translations
 
