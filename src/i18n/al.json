@@ -5,8 +5,8 @@
     "offices": "Zyrat e kontaktit",
     "profile": "Profili i deputetit",
     "methodology": "Metodologjia",
-    "project": "Për projektin",
-    "about": "Për IDSCS",
+    "project": "Rreth projektit",
+    "about": "Rreth IDSCS",
     "home": "Ballina",
     "language": "Gjuha"
   },
@@ -36,12 +36,12 @@
     "party": "Partia",
     "category": "Kategoria",
     "subcategory": "Nënkategoria",
-    "filter": "Filtri",
+    "filter": "Filtër",
     "sortBy": "Rendit sipas",
     "results": "rezultate",
     "close": "Mbyll",
-    "prev": "Të mëparshmet",
-    "next": "Të mëtejshmet",
+    "prev": "Të mëparshme",
+    "next": "Të mëtejshme",
     "mpsLower": "deputetë",
     "skipToContent": "Kalo te përmbajtja"
   },
@@ -67,7 +67,7 @@
     "chartTimeline": "Pyetje sipas seancës",
     "sessionFull": "Seanca nr.",
     "questionsShort": "pyetje",
-    "tableQuestion": "Pyetja",
+    "tableQuestion": "Pyetje",
     "tableFrom": "Deputeti",
     "tableTo": "Institucioni",
     "tableDate": "Data",
@@ -81,7 +81,8 @@
     "nullDate": "Data nuk është caktuar",
     "openDetailAria": "Hap detajet e pyetjes nga",
     "session": "Seanca",
-    "autoTranslated": "Përkthim automatik"
+    "autoTranslated": "Përkthim automatik",
+    "aiTranslationNotice": "Përkthimi në gjuhën shqipe i pyetjeve parlamentare është përgatitur me ndihmën e mjeteve të inteligjencës artificiale (AI), duke u bazuar në materialet e disponueshme në gjuhën maqedonase në Portalin e të Dhënave të Hapura të Kuvendit. Deri në ditën e publikimit, materialet në portal ishin të disponueshme vetëm në gjuhën maqedonase."
   },
   "mymp": {
     "title": "Aktiviteti i deputetit",
@@ -99,8 +100,8 @@
     "chartQuestions": "Pyetje të parashtruara",
     "colMP": "Deputeti",
     "colAttendance": "Prezenca",
-    "colExcused": "Mungesa e justifikuar",
-    "colUnexcused": "Mungesa e pajustifikuar",
+    "colExcused": "Mungesë e arsyetuar",
+    "colUnexcused": "Mungesa e pa arsyetuar",
     "colDiscussions": "Diskutime",
     "colLaws": "Ligje",
     "colAmendments": "Amendamente",
@@ -195,7 +196,7 @@
       "Realizimi i vlerave liberale në shoqëri",
       "Respekt ndaj sundimit të së drejtës dhe qeverisjes së mirë",
       "Promovimi i arsimit të qëndrueshëm",
-      "Realizimi i një procesi vendimmarrjeje të bazuar në dëshmi",
+      "Realizimi i një procesi të vendimmarrjes së bazuar në dëshmi",
       "Bashkëjetesë multietnike dhe multikulturore"
     ]
   },
@@ -245,10 +246,10 @@
     "joinP2": "Profili i deputetit i unifikon të tre datasetet dhe tregon ku ekzistojnë e ku mungojnë të dhënat.",
     "refreshTitle": "Procesi i përditësimit",
     "refreshIntro": "Paneli nuk përdor feed live. Të dhënat përditësohen manualisht ose përmes një skripti të automatizuar 2–3 herë deri në mars 2027. Në çdo përditësim:",
-    "refreshStep1pre": "Skripti",
+    "refreshStep1pre": "Skripta",
     "refreshStep1post": "i merr skedarët e rinj nga CKAN API.",
-    "refreshStep2pre": "Skripti",
-    "refreshStep2post": "i përpunon dhe gjeneron skedarë JSON të pastër.",
+    "refreshStep2pre": "Skripta",
+    "refreshStep2post": "përpunon dhe gjeneron skedarë JSON të pastër.",
     "refreshStep3": "Sistemi automatikisht e rindërton dhe e publikon panelin.",
     "lastProcessedLabel": "Paneli i përpunuar së fundi:"
   }

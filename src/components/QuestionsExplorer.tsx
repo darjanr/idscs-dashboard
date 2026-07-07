@@ -484,6 +484,14 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
         </ResponsiveContainer>
       </div>
 
+      {/* AI-translation disclaimer (AL/EN only — question bodies are machine-translated) */}
+      {lang !== "mk" && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 flex gap-2 items-start" role="note">
+          <span aria-hidden="true">⌁</span>
+          <p>{t(lang, "questions.aiTranslationNotice")}</p>
+        </div>
+      )}
+
       {/* Filters + table */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
         <div className="p-4 border-b border-gray-100 flex flex-wrap gap-3 items-center">

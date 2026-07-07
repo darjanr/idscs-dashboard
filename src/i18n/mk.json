@@ -81,7 +81,8 @@
     "nullDate": "Датумот не е назначен",
     "openDetailAria": "Отвори детали за прашање од",
     "session": "Седница",
-    "autoTranslated": "Автоматски превод"
+    "autoTranslated": "Автоматски превод",
+    "aiTranslationNotice": ""
   },
   "mymp": {
     "title": "Активност на пратеник",
