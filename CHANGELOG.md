@@ -1,3 +1,9 @@
+## 2026-07-10 16:18 — IDSCS
+> Add GitHub Actions deploy workflow (build → rsync to cPanel → purge Cloudflare)
+
+## 2026-07-10 13:02 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 13:02 — IDSCS
 > Set up cPanel + Cloudflare deploy config; scrub attribution to IDSCS
 
