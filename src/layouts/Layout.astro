@@ -12,12 +12,16 @@ const { title, lang: langProp } = Astro.props;
 const lang: Lang = langProp ?? getLangFromURL(Astro.url);
 
 // Partner logos for the footer strip, in the order required by the visibility guidelines.
+// `h` is a per-logo optical height (px): icon-forward marks (CIVICUS, Digital
+// Activism) sit at the full height, while the wide text wordmarks are set a touch
+// shorter so their letterforms don't optically dominate — keeps the strip visually
+// harmonised despite very different aspect ratios (per donor visibility guidance).
 const partnerLogos = [
-  { src: "/logos/civicus.png", alt: "CIVICUS" },
-  { src: "/logos/metamorphosis.png", alt: "Metamorphosis Foundation" },
-  { src: "/logos/techsoup.png", alt: "TechSoup" },
-  { src: "/logos/digital-activism.png", alt: "Digital Activism Program" },
-  { src: "/logos/idscs.png", alt: "Институт за демократија — Социетас Цивилис, Скопје" },
+  { src: "/logos/civicus.png", alt: "CIVICUS", h: 40 },
+  { src: "/logos/metamorphosis.png", alt: "Metamorphosis Foundation", h: 34 },
+  { src: "/logos/techsoup.png", alt: "TechSoup", h: 32 },
+  { src: "/logos/digital-activism.png", alt: "Digital Activism Program", h: 40 },
+  { src: "/logos/idscs.png", alt: "Институт за демократија — Социетас Цивилис, Скопје", h: 34 },
 ];
 ---
 
@@ -40,14 +44,14 @@ const partnerLogos = [
     <footer class="mt-16 border-t border-gray-200 bg-white">
       <!-- Partner logos -->
       <div class="max-w-5xl mx-auto px-4 pt-10 pb-8">
-        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
+        <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
           {partnerLogos.map(logo => (
             <div class="flex items-center justify-center h-10">
               <img
                 src={logo.src}
                 alt={logo.alt}
-                class="max-h-10 w-auto object-contain"
-                style="max-width: 150px;"
+                class="w-auto object-contain"
+                style={`height: ${logo.h}px;`}
                 loading="lazy"
               />
             </div>
