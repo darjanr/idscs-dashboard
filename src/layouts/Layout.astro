@@ -28,6 +28,11 @@ const langHref = (code: Lang) =>
   code === "mk" ? basePath : basePath === "/" ? `/${code}` : `/${code}${basePath}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og-image.png", Astro.site);
+
+// Google Analytics 4 — set the Measurement ID (G-XXXXXXXXXX) to enable tracking.
+// Empty = disabled (no scripts load). Google's domains are allowlisted in the CSP
+// (public/.htaccess). Note: GA4 sets cookies — add a consent banner for GDPR.
+const GA_ID = "G-K0NYDK258L";
 const alternates = [
   { hreflang: "mk", href: new URL(langHref("mk"), Astro.site).href },
   { hreflang: "sq", href: new URL(langHref("al"), Astro.site).href },
@@ -82,6 +87,13 @@ const partnerLogos = [
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
+
+    {GA_ID && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}></script>
+      </>
+    )}
   </head>
   <body class="bg-gray-50 text-gray-900 min-h-screen">
     <a href="#main" class="skip-link">{t(lang, "common.skipToContent")}</a>
