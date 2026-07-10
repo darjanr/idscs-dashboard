@@ -1,19 +1,17 @@
-# CLAUDE.md
+# Development guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Conventions, architecture and workflow notes for anyone working in this repository.
 
 ## Project
 
-IDSCS Parliamentary Open Data Dashboard — a public-facing bilingual (MK + ALB) dashboard visualising three Sobranie open datasets. Built by Дарјан Раденковиќ (physical person / Zhar Ptiza). Tender deadline was 17 May 2026; implementation runs May–June 2026 with a July 2026 launch and data refresh support until March 2027.
-
-Full brief: `docs/PROJECT_BRIEF.md` — read it before making architectural decisions.
+IDSCS Parliamentary Open Data Dashboard — a public-facing bilingual (MK + ALB) dashboard visualising three Sobranie open datasets. A project of IDSCS (Institute for Democracy "Societas Civilis", Skopje). Launched July 2026 with data refresh support until March 2027.
 
 ## Stack
 
 - **Frontend:** Astro 5 + React islands + Tailwind CSS v4 + Recharts + Leaflet
 - **Data pipeline:** Python 3 (requests, pandas, openpyxl, rapidfuzz) — `fetch_data.py` fetches, `scripts/process.py` transforms
 - **i18n:** MK + ALB + ENG, strings in `src/i18n/{mk,al,en}.json` (see Translations workflow below)
-- **Hosting:** Static build deployed to Netlify (drag-and-drop `dist/`)
+- **Hosting:** Static build served by nginx on the origin server, behind Cloudflare (see `deploy/`)
 - **Repo:** Public GitHub, handed over to IDSCS at end
 
 ## Data sources
@@ -71,9 +69,9 @@ npm run preview    # preview the build
 
 # Refresh data:
 # python3 fetch_data.py && python3 scripts/process.py
-# Deploy: repo is connected to Netlify — push to main (GitHub: darjanr/idscs-dashboard)
-# auto-builds & deploys. netlify.toml holds build config + security headers/CSP.
-# (Manual fallback: npm run build, then drag dist/ to app.netlify.com/drop)
+# Deploy: push to main — GitHub Actions builds and rsyncs dist/ to the origin
+# server (behind Cloudflare). See deploy/README.md for server + Cloudflare setup;
+# deploy/nginx.conf holds the security headers/CSP (ported from the old netlify.toml).
 
 # NOTE: node/npm are not on PATH by default — load nvm first:
 #   export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"

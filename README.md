@@ -1,6 +1,6 @@
 # Пратеничка активност — Parliamentary Open Data Dashboard
 
-Interactive bilingual (MK + ALB) dashboard visualising three open datasets from the Assembly of the Republic of North Macedonia, mandate 2024–2028. Built for **IDSCS** (Institute for Democracy "Societas Civilis") by Дарјан Раденковиќ / Zhar Ptiza.
+Interactive bilingual (MK + ALB) dashboard visualising three open datasets from the Assembly of the Republic of North Macedonia, mandate 2024–2028. A project of **IDSCS** (Institute for Democracy "Societas Civilis", Skopje).
 
 ---
 
@@ -74,7 +74,7 @@ npm run build
 
 ## Deployment
 
-The build output is a fully static site in `dist/`. Deploy by dragging the `dist/` folder to [netlify.com/drop](https://netlify.com/drop) for an instant public URL, or use any static host (GitHub Pages, Vercel, Surge, etc.).
+The build output is a fully static site in `dist/`. Production is served by nginx on the origin server behind Cloudflare; pushing to `main` triggers a GitHub Actions workflow that builds and deploys automatically. See [`deploy/README.md`](deploy/README.md) for the server and Cloudflare setup. Any static host also works, since `dist/` is plain HTML/CSS/JS.
 
 ---
 
@@ -99,7 +99,7 @@ idscs-dashboard/
 │   ├── layouts/Layout.astro
 │   └── pages/              # Astro pages (index, questions, mymp, offices, profile, methodology)
 ├── fetch_data.py           # Downloads raw datasets
-└── CLAUDE.md               # Guidance for Claude Code
+└── DEVELOPMENT.md          # Repo conventions & development guide
 ```
 
 ---
