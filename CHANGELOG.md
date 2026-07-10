@@ -1,5 +1,5 @@
-## 2026-07-10 13:00 — IDSCS
-> Set up cPanel + Cloudflare deploy; scrub attribution to IDSCS
+## 2026-07-10 13:02 — IDSCS
+> Set up cPanel + Cloudflare deploy config; scrub attribution to IDSCS
 
 ## 2026-07-10 12:11 — IDSCS
 > chore: update CHANGELOG [auto]
