@@ -1,3 +1,9 @@
+## 2026-07-10 17:34 — IDSCS
+> Add Google Analytics 4 (gtag.js); allow GA domains in CSP
+
+## 2026-07-10 16:48 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 16:48 — IDSCS
 > deploy: switch transport to FTPS (mkhost restricts SSH to whitelisted IPs)
 
