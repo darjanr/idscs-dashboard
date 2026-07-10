@@ -1,3 +1,9 @@
+## 2026-07-10 12:11 — Darjan Radenkovic
+> Prepare for pratenici.mk launch: SEO/social, sitemap, branding, offices polish
+
+## 2026-07-10 11:19 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 11:19 — Darjan Radenkovic
 > Match footer logo proportions to donor reference lockup
 
