@@ -12,16 +12,17 @@ const { title, lang: langProp } = Astro.props;
 const lang: Lang = langProp ?? getLangFromURL(Astro.url);
 
 // Partner logos for the footer strip, in the order required by the visibility guidelines.
-// `h` is a per-logo optical height (px): icon-forward marks (CIVICUS, Digital
-// Activism) sit at the full height, while the wide text wordmarks are set a touch
-// shorter so their letterforms don't optically dominate — keeps the strip visually
-// harmonised despite very different aspect ratios (per donor visibility guidance).
+// `h` is a per-logo optical height (px) matched to the donor's reference lockup:
+// the proportions were measured off that image (CIVICUS 1.0 : Metamorphosis 0.60 :
+// TechSoup 0.28 : Digital Activism 0.57) so each mark reads at the same visual weight
+// despite very different aspect ratios. IDSCS (our implementer mark, not in the
+// reference) is harmonised alongside the Metamorphosis wordmark.
 const partnerLogos = [
-  { src: "/logos/civicus.png", alt: "CIVICUS", h: 40 },
-  { src: "/logos/metamorphosis.png", alt: "Metamorphosis Foundation", h: 34 },
-  { src: "/logos/techsoup.png", alt: "TechSoup", h: 32 },
-  { src: "/logos/digital-activism.png", alt: "Digital Activism Program", h: 40 },
-  { src: "/logos/idscs.png", alt: "Институт за демократија — Социетас Цивилис, Скопје", h: 34 },
+  { src: "/logos/civicus.png", alt: "CIVICUS", h: 50 },
+  { src: "/logos/metamorphosis.png", alt: "Metamorphosis Foundation", h: 30 },
+  { src: "/logos/techsoup.png", alt: "TechSoup", h: 14 },
+  { src: "/logos/digital-activism.png", alt: "Digital Activism Program", h: 28 },
+  { src: "/logos/idscs.png", alt: "Институт за демократија — Социетас Цивилис, Скопје", h: 30 },
 ];
 ---
 
@@ -46,7 +47,7 @@ const partnerLogos = [
       <div class="max-w-5xl mx-auto px-4 pt-10 pb-8">
         <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
           {partnerLogos.map(logo => (
-            <div class="flex items-center justify-center h-10">
+            <div class="flex items-center justify-center">
               <img
                 src={logo.src}
                 alt={logo.alt}
