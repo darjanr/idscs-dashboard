@@ -1,3 +1,9 @@
+## 2026-07-10 16:48 — IDSCS
+> deploy: switch transport to FTPS (mkhost restricts SSH to whitelisted IPs)
+
+## 2026-07-10 16:35 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 16:35 — IDSCS
 > deploy: auto-accept host key + fail fast for clearer SSH errors
 
