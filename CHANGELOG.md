@@ -1,3 +1,9 @@
+## 2026-07-10 16:31 — IDSCS
+> Offices: drop ethnicity chart; move age + gender to a 2-col row at the end
+
+## 2026-07-10 16:18 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 16:18 — IDSCS
 > Add GitHub Actions deploy workflow (build → rsync to cPanel → purge Cloudflare)
 
