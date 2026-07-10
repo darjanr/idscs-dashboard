@@ -1,0 +1,68 @@
+name: Deploy
+
+# Build the static site and rsync it to the origin server (behind Cloudflare)
+# on every push to main. Mirrors the old Netlify "push = live" workflow.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to server via rsync
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          if [ -z "$SSH_HOST" ]; then
+            echo "Deploy secrets not set yet — build succeeded, skipping deploy."
+            exit 0
+          fi
+          PORT="${SSH_PORT:-22}"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "$PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          # --delete keeps the server in sync with the build (removes stale files),
+          # but we preserve cPanel/AutoSSL dirs so cert renewals never break.
+          rsync -avz --delete \
+            --exclude='.well-known/' --exclude='cgi-bin/' \
+            -e "ssh -p $PORT -i ~/.ssh/id_deploy -o StrictHostKeyChecking=yes" \
+            dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+
+      - name: Purge Cloudflare cache
+        env:
+          CF_ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$CF_TOKEN" ] && [ -n "$CF_ZONE" ]; then
+            curl -sf -X POST \
+              "https://api.cloudflare.com/client/v4/zones/$CF_ZONE/purge_cache" \
+              -H "Authorization: Bearer $CF_TOKEN" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}' > /dev/null && echo "Cloudflare cache purged"
+          else
+            echo "Cloudflare secrets not set — skipping cache purge"
+          fi
