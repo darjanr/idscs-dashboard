@@ -1,3 +1,9 @@
+## 2026-07-10 10:38 — Darjan Radenkovic
+> Add donor funding acknowledgment to project page + harmonize footer logos
+
+## 2026-07-07 12:11 — Darjan Radenkovic
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-07 12:11 — Darjan Radenkovic
 > Apply AL лектура + AI-translation notice on Questions (AL/EN)
 
