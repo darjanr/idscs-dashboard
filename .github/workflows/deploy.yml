@@ -29,28 +29,32 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to server via rsync
+      - name: Deploy to server via FTPS
         env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          if [ -z "$SSH_HOST" ]; then
-            echo "Deploy secrets not set yet — build succeeded, skipping deploy."
+          if [ -z "$FTP_PASSWORD" ]; then
+            echo "FTP secrets not set yet — build succeeded, skipping deploy."
             exit 0
           fi
-          PORT="${SSH_PORT:-22}"
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
-          # --delete keeps the server in sync with the build (removes stale files),
-          # but we preserve cPanel/AutoSSL dirs so cert renewals never break.
-          # accept-new trusts the host key on first connect and surfaces real errors.
-          rsync -avz --delete \
-            --exclude='.well-known/' --exclude='cgi-bin/' \
-            -e "ssh -p $PORT -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15" \
-            dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          # FTPS (TLS-encrypted). cPanel's FTP cert usually won't match the IP, so
+          # we skip cert validation — the transport stays encrypted either way.
+          # mirror -R uploads dist/ to the web root; --delete prunes stale files,
+          # but we keep .well-known and cgi-bin so AutoSSL/cPanel dirs survive.
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            set net:max-retries 2;
+            set net:timeout 25;
+            open -u '$FTP_USERNAME','$FTP_PASSWORD' ftp://$FTP_SERVER;
+            mirror --reverse --delete --parallel=4 --verbose \
+              -x '\.well-known' -x 'cgi-bin' \
+              dist/ ./ ;
+          "
 
       - name: Purge Cloudflare cache
         env:
