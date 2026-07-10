@@ -1,3 +1,9 @@
+## 2026-07-10 16:35 — IDSCS
+> deploy: auto-accept host key + fail fast for clearer SSH errors
+
+## 2026-07-10 16:31 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 16:31 — IDSCS
 > Offices: drop ethnicity chart; move age + gender to a 2-col row at the end
 
