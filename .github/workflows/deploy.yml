@@ -44,12 +44,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
-          ssh-keyscan -T 10 -p "$PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
           # --delete keeps the server in sync with the build (removes stale files),
           # but we preserve cPanel/AutoSSL dirs so cert renewals never break.
+          # accept-new trusts the host key on first connect and surfaces real errors.
           rsync -avz --delete \
             --exclude='.well-known/' --exclude='cgi-bin/' \
-            -e "ssh -p $PORT -i ~/.ssh/id_deploy -o StrictHostKeyChecking=yes -o ConnectTimeout=15" \
+            -e "ssh -p $PORT -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15" \
             dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
 
       - name: Purge Cloudflare cache
