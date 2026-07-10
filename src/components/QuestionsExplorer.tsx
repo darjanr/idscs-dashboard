@@ -327,9 +327,20 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
         </div>
 
         {/* Institution answer rate */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-          <h2 className="font-semibold text-gray-800 mb-1">{t(lang, "questions.chartAnswerRate")}</h2>
-          <p className="text-xs text-gray-400 mb-4">{t(lang, "questions.chartAnswerRateNote")}</p>
+        <div id="viz-answer-rate" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="font-semibold text-gray-800 mb-1">{t(lang, "questions.chartAnswerRate")}</h2>
+              <p className="text-xs text-gray-400">{t(lang, "questions.chartAnswerRateNote")}</p>
+            </div>
+            <ChartDownload
+              targetId="viz-answer-rate"
+              csv={{ headers: [t(lang, "questions.tableTo"), t(lang, "common.answered"), t(lang, "common.total"), t(lang, "questions.chartAnswerRate")],
+                     rows: byInstAnswerRate.map(d => [d.name, d.answered, d.total, `${d.rate}%`]) }}
+              filename="stapka-na-odgovaranje"
+              lang={lang}
+            />
+          </div>
           <div className="space-y-2.5">
             {byInstAnswerRate.map(inst => {
               const color = inst.rate < 60 ? "#dc2626" : inst.rate < 80 ? PENDING_COLOR : TEAL;
@@ -384,8 +395,17 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
       </div>
 
       {/* Row 3: Questions by party — full width, 2-col internal grid for many parties */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-          <h2 className="font-semibold text-gray-800 mb-1">{t(lang, "questions.chartByParty")}</h2>
+      <div id="viz-questions-party" className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-start justify-between mb-1">
+            <h2 className="font-semibold text-gray-800">{t(lang, "questions.chartByParty")}</h2>
+            <ChartDownload
+              targetId="viz-questions-party"
+              csv={{ headers: [t(lang, "common.party"), t(lang, "common.total"), t(lang, "common.answered"), t(lang, "common.pending")],
+                     rows: byParty.map(p => [p.name, p.total, p.answered, p.pending]) }}
+              filename="prasanja-po-partija"
+              lang={lang}
+            />
+          </div>
           <p className="text-xs text-gray-400 mb-5">{t(lang, "questions.chartByPartyNote")}</p>
           {byParty.length === 0
             ? <p className="text-sm text-gray-400 italic">{t(lang, "common.noData")}</p>

@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "siteName": "Assembly Open Data",
+    "description": "A public interactive dashboard of the Assembly's open data — parliamentary questions, the “My MP” platform and the citizen contact offices."
+  },
   "nav": {
     "questions": "Parliamentary questions",
     "mymp": "MP activity",
@@ -129,8 +133,11 @@
     "chartByAge": "Cases by age group",
     "chartByEthnicity": "Cases by ethnicity",
     "chartOverTime": "Cases over time",
+    "chartByAgeNote": "Cases by age group of citizens",
+    "chartByEthnicityNote": "Cases by ethnicity of citizens",
     "male": "Male",
-    "female": "Female"
+    "female": "Female",
+    "formerMP": "former MP"
   },
   "map": {
     "title": "Office locations",

@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "siteName": "Të dhënat e hapura të Kuvendit",
+    "description": "Paraqitje interaktive publike e të dhënave të hapura të Kuvendit — pyetjet e deputetëve, platforma „Deputeti im“ dhe zyrat e kontaktit me qytetarët."
+  },
   "nav": {
     "questions": "Pyetjet e deputetëve",
     "mymp": "Aktiviteti i deputetit",
@@ -129,8 +133,11 @@
     "chartByAge": "Raste sipas grupmoshës",
     "chartByEthnicity": "Raste sipas përkatësisë etnike",
     "chartOverTime": "Raste sipas periudhës",
+    "chartByAgeNote": "Raste sipas grupmoshës së qytetarëve",
+    "chartByEthnicityNote": "Raste sipas përkatësisë etnike të qytetarëve",
     "male": "Meshkuj",
-    "female": "Femra"
+    "female": "Femra",
+    "formerMP": "ish-deputet"
   },
   "map": {
     "title": "Vendndodhjet e zyrave",

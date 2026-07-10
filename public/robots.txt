@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 
 # Public open-data dashboard — all content is crawlable.
-# Add a Sitemap line here once the production domain is set, e.g.:
-# Sitemap: https://your-domain.mk/sitemap-index.xml
+Sitemap: https://pratenici.mk/sitemap-index.xml

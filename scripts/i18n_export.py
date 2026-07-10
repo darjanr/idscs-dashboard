@@ -98,6 +98,7 @@ def main():
     for sheet_name, fname, widths in [
         ("Institutions", "institutions.json", (52, 52, 52)),
         ("Case types", "case_types.json", (48, 48, 48)),
+        ("Ethnicities", "ethnicities.json", (28, 28, 28)),
     ]:
         data = load(I18N / fname)
         wsx = wb.create_sheet(sheet_name)

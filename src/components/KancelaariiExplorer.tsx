@@ -6,8 +6,13 @@ import {
 } from "recharts";
 import type { Lang } from "../i18n";
 import { t } from "../i18n";
-import { tName, tParty, tCaseType } from "../i18n/translate";
+import { tName, tParty, tCaseType, tEthnicity } from "../i18n/translate";
 import ChartDownload from "./ChartDownload";
+import activeMPs from "../../public/data/mps_active.json";
+
+// Office-holders whose mandate is active (the 120 roster). Anyone holding a
+// contact office who is NOT on this list is a former MP — flagged in the list.
+const ACTIVE_MP_NAMES = new Set((activeMPs as { name: string }[]).map(m => m.name));
 
 interface Row {
   mpId: string;
@@ -94,6 +99,29 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
     return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
       .map(([name, value]) => ({ name: tCaseType(lang, name), value }));
+  }, [filtered, lang]);
+
+  // By citizen age group (fixed order, low→high)
+  const byAge = useMemo(() => {
+    const order = ["18-25", "25-35", "35-45", "45-55", "55-65", "65+"];
+    const counts: Record<string, number> = {};
+    filtered.filter(r => r.category === "cases by age category").forEach(r => {
+      counts[r.subcategory] = (counts[r.subcategory] || 0) + r.total;
+    });
+    return order
+      .filter(a => counts[a] !== undefined)
+      .map(name => ({ name, value: counts[name] }));
+  }, [filtered]);
+
+  // By citizen ethnicity
+  const byEthnicity = useMemo(() => {
+    const counts: Record<string, number> = {};
+    filtered.filter(r => r.category === "cases by ethnicity").forEach(r => {
+      counts[r.subcategory] = (counts[r.subcategory] || 0) + r.total;
+    });
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([name, value]) => ({ name: tEthnicity(lang, name), value }));
   }, [filtered, lang]);
 
   // By party (casesAll) with logo
@@ -198,7 +226,14 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
                 }
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-900 truncate">{tName(lang, mp.name)}</span>
+                    <span className="flex items-center gap-2 min-w-0">
+                      <span className="text-sm font-medium text-gray-900 truncate">{tName(lang, mp.name)}</span>
+                      {!ACTIVE_MP_NAMES.has(mp.name) && (
+                        <span className="shrink-0 text-[10px] font-medium uppercase tracking-wide text-amber-700 bg-amber-100 rounded px-1.5 py-0.5">
+                          {t(lang, "offices.formerMP")}
+                        </span>
+                      )}
+                    </span>
                     <span className="text-sm font-bold ml-3 shrink-0" style={{ color: globalRank === 0 ? NAVY : TEAL }}>{mp.total}</span>
                   </div>
                   <div className="w-full bg-gray-100 rounded-full h-1.5">
@@ -257,6 +292,66 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Citizen demographics: age + ethnicity */}
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* By age group — vertical columns */}
+        <div id="viz-offices-age" className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div className="flex items-start justify-between mb-5">
+            <div>
+              <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByAge")}</h2>
+              <p className="text-xs text-gray-400 mt-0.5">{t(lang, "offices.chartByAgeNote")}</p>
+            </div>
+            <ChartDownload
+              targetId="viz-offices-age"
+              csv={{ headers: [t(lang, "offices.chartByAge"), t(lang, "offices.kpiCases")],
+                     rows: byAge.map(d => [d.name, d.value]) }}
+              filename="slucai-po-vozrast"
+              lang={lang}
+            />
+          </div>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={byAge} margin={{ left: 0, right: 8, top: 16, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
+              <Tooltip />
+              <Bar dataKey="value" fill={TEAL} radius={[4, 4, 0, 0]}>
+                <LabelList dataKey="value" position="top" fontSize={11} fill="#374151" />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* By ethnicity — horizontal bars */}
+        <div id="viz-offices-ethnicity" className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div className="flex items-start justify-between mb-5">
+            <div>
+              <h2 className="font-semibold text-gray-800">{t(lang, "offices.chartByEthnicity")}</h2>
+              <p className="text-xs text-gray-400 mt-0.5">{t(lang, "offices.chartByEthnicityNote")}</p>
+            </div>
+            <ChartDownload
+              targetId="viz-offices-ethnicity"
+              csv={{ headers: [t(lang, "offices.chartByEthnicity"), t(lang, "offices.kpiCases")],
+                     rows: byEthnicity.map(d => [d.name, d.value]) }}
+              filename="slucai-po-etnicka-pripadnost"
+              lang={lang}
+            />
+          </div>
+          <ResponsiveContainer width="100%" height={Math.max(200, byEthnicity.length * 34)}>
+            <BarChart data={byEthnicity} layout="vertical" margin={{ left: 8, right: 36, top: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+              <XAxis type="number" tick={{ fontSize: 12 }} allowDecimals={false} />
+              <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} width={96} />
+              <Tooltip />
+              <Bar dataKey="value" fill={NAVY} radius={[0, 4, 4, 0]}>
+                {byEthnicity.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                <LabelList dataKey="value" position="right" fontSize={11} fill="#374151" />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       {/* By party — logo ranklist */}

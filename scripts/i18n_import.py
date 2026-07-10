@@ -98,7 +98,7 @@ def main():
 
     # Institutions + Case types (simple MK | AL | EN maps)
     counts = {}
-    for sheet_name, fname in [("Institutions", "institutions.json"), ("Case types", "case_types.json")]:
+    for sheet_name, fname in [("Institutions", "institutions.json"), ("Case types", "case_types.json"), ("Ethnicities", "ethnicities.json")]:
         if sheet_name not in wb.sheetnames:
             continue
         data = {}

@@ -11,6 +11,30 @@ interface Props {
 const { title, lang: langProp } = Astro.props;
 const lang: Lang = langProp ?? getLangFromURL(Astro.url);
 
+// --- SEO / social metadata -------------------------------------------------
+const fullTitle = `${title} — Собрание Отворени Податоци`;
+const description = t(lang, "meta.description");
+const siteName = t(lang, "meta.siteName");
+// <html lang> + og:locale per language (AL uses the ISO code `sq` for Albanian).
+const htmlLang = lang === "al" ? "sq" : lang === "en" ? "en" : "mk";
+const ogLocale = lang === "al" ? "sq_AL" : lang === "en" ? "en_US" : "mk_MK";
+// Language-swapped paths for canonical + hreflang alternates (mirrors Nav.astro).
+const stripLang = (p: string) => {
+  const s = p.replace(/^\/(al|en)(?=\/|$)/, "");
+  return s === "" ? "/" : s;
+};
+const basePath = stripLang(Astro.url.pathname);
+const langHref = (code: Lang) =>
+  code === "mk" ? basePath : basePath === "/" ? `/${code}` : `/${code}${basePath}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/og-image.png", Astro.site);
+const alternates = [
+  { hreflang: "mk", href: new URL(langHref("mk"), Astro.site).href },
+  { hreflang: "sq", href: new URL(langHref("al"), Astro.site).href },
+  { hreflang: "en", href: new URL(langHref("en"), Astro.site).href },
+  { hreflang: "x-default", href: new URL(langHref("mk"), Astro.site).href },
+];
+
 // Partner logos for the footer strip, in the order required by the visibility guidelines.
 // `h` is a per-logo optical height (px) matched to the donor's reference lockup:
 // the proportions were measured off that image (CIVICUS 1.0 : Metamorphosis 0.60 :
@@ -27,13 +51,37 @@ const partnerLogos = [
 ---
 
 <!doctype html>
-<html lang={lang === "al" ? "sq" : "mk"}>
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={title} />
-    <title>{title} — Собрание Отворени Податоци</title>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical.href} />
+    {alternates.map(a => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={ogLocale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
   </head>
   <body class="bg-gray-50 text-gray-900 min-h-screen">
     <a href="#main" class="skip-link">{t(lang, "common.skipToContent")}</a>

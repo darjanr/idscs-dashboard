@@ -5,6 +5,7 @@ import parties from "./parties.json";
 import mpNames from "./mp_names.json";
 import institutions from "./institutions.json";
 import caseTypes from "./case_types.json";
+import ethnicities from "./ethnicities.json";
 import type { Lang } from "./index";
 
 type PartyEntry = { al: string; en: string; acrMk: string; acrAl: string; acrEn: string };
@@ -14,6 +15,7 @@ const partyMap = parties as Record<string, PartyEntry>;
 const nameMap = mpNames as Record<string, NameEntry>;
 const instMap = institutions as Record<string, NameEntry>;
 const caseTypeMap = caseTypes as Record<string, NameEntry>;
+const ethnicityMap = ethnicities as Record<string, NameEntry>;
 
 export function tName(lang: Lang, name: string | undefined | null): string {
   if (!name) return name ?? "";
@@ -37,6 +39,12 @@ export function tCaseType(lang: Lang, caseType: string | undefined | null): stri
   if (!caseType) return caseType ?? "";
   if (lang === "mk") return caseType;
   return caseTypeMap[caseType]?.[lang] ?? caseType;
+}
+
+export function tEthnicity(lang: Lang, ethnicity: string | undefined | null): string {
+  if (!ethnicity) return ethnicity ?? "";
+  if (lang === "mk") return ethnicity;
+  return ethnicityMap[ethnicity]?.[lang] ?? ethnicity;
 }
 
 export function partyAcr(lang: Lang, party: string | undefined | null): string {
