@@ -28,6 +28,9 @@ const langHref = (code: Lang) =>
   code === "mk" ? basePath : basePath === "/" ? `/${code}` : `/${code}${basePath}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og-image.png", Astro.site);
+// Fixed social-share card title/description (client-specified) used for og/twitter.
+const shareTitle = "Пратеничка активност - интерактивен панел";
+const shareDescription = "Интерактивен панел на отворени податоци за активноста на пратениците во Собранието на Република Северна Македонија - 2024 - 2028.";
 
 // Google Analytics 4 — set the Measurement ID (G-XXXXXXXXXX) to enable tracking.
 // Empty = disabled (no scripts load). Google's domains are allowlisted in the CSP
@@ -74,8 +77,8 @@ const partnerLogos = [
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteName} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={shareTitle} />
+    <meta property="og:description" content={shareDescription} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:image" content={ogImage.href} />
     <meta property="og:image:width" content="1200" />
@@ -84,8 +87,8 @@ const partnerLogos = [
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={shareTitle} />
+    <meta name="twitter:description" content={shareDescription} />
     <meta name="twitter:image" content={ogImage.href} />
 
     {GA_ID && (
