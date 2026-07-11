@@ -1,3 +1,9 @@
+## 2026-07-11 14:25 — IDSCS
+> Social share: client share image + custom og/twitter title & description
+
+## 2026-07-10 17:34 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-10 17:34 — IDSCS
 > Add Google Analytics 4 (gtag.js); allow GA domains in CSP
 
