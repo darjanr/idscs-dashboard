@@ -1,3 +1,9 @@
+## 2026-07-13 12:05 — IDSCS
+> Mobile/responsive fixes: filters, KPI strip, timeline, consent banner
+
+## 2026-07-13 10:51 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 10:51 — IDSCS
 > QA: allow Cloudflare Insights beacon in CSP; cache images/fonts 30d
 
