@@ -237,14 +237,16 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
       {/* KPI row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: t(lang, "questions.kpiTotal"), value: questions.length },
-          { label: t(lang, "questions.kpiAnswered"), value: `${totalAnswered} (${Math.round(totalAnswered / questions.length * 100)}%)` },
-          { label: t(lang, "questions.kpiPending"), value: totalPending },
-          { label: t(lang, "questions.kpiSessions"), value: sessions },
-        ].map(({ label, value }) => (
+          { label: t(lang, "questions.kpiTotal"), value: questions.length, sub: "" },
+          { label: t(lang, "questions.kpiAnswered"), value: totalAnswered, sub: `(${Math.round(totalAnswered / questions.length * 100)}%)` },
+          { label: t(lang, "questions.kpiPending"), value: totalPending, sub: "" },
+          { label: t(lang, "questions.kpiSessions"), value: sessions, sub: "" },
+        ].map(({ label, value, sub }) => (
           <div key={label} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
             <p className="text-sm text-gray-500 font-medium">{label}</p>
-            <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+            <p className="text-3xl font-bold text-gray-900 mt-1">
+              {value}{sub && <span className="text-lg font-semibold text-gray-400 ml-1.5">{sub}</span>}
+            </p>
           </div>
         ))}
       </div>
@@ -459,24 +461,26 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
           />
         </div>
         <ResponsiveContainer width="100%" height={260}>
-          <LineChart data={bySession} margin={{ bottom: 28 }}>
+          <LineChart data={bySession} margin={{ left: 0, right: 14, top: 4, bottom: 30 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="sessionNum"
               interval={2}
-              height={44}
+              height={54}
               tickMargin={6}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               tick={(props: any) => {
-                const { x, y, payload } = props;
+                const { x, y, payload, index } = props;
                 const d = sessionDate.get(payload.value);
+                // stagger dates on alternating ticks so they don't overlap
+                const dateDy = index % 2 === 0 ? 24 : 37;
                 return (
                   <g transform={`translate(${x},${y})`}>
                     <text x={0} y={0} dy={12} textAnchor="middle" fontSize={11} fill="#374151">
                       {payload.value}
                     </text>
                     {d && (
-                      <text x={0} y={0} dy={25} textAnchor="middle" fontSize={9} fill="#9ca3af">
+                      <text x={0} y={0} dy={dateDy} textAnchor="middle" fontSize={9} fill="#9ca3af">
                         {fmtDateShort(d)}
                       </text>
                     )}
@@ -484,7 +488,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
                 );
               }}
             />
-            <YAxis tick={{ fontSize: 12 }} />
+            <YAxis width={32} tick={{ fontSize: 12 }} />
             <Tooltip
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               content={({ active, payload }: any) => {
@@ -553,13 +557,17 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             <option value="Одговорено">{t(lang, "common.answered")}</option>
             <option value="Доставено">{t(lang, "common.pending")}</option>
           </select>
-          <span className="text-sm text-gray-500 ml-auto">{filtered.length} {t(lang, "common.results")}</span>
-          <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
-            {t(lang, "common.downloadCSV")}
-          </button>
-          <button onClick={downloadJSON} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
-            {t(lang, "common.downloadJSON")}
-          </button>
+          <div className="flex flex-col items-start sm:items-end gap-1.5 ml-auto">
+            <div className="flex gap-2">
+              <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                {t(lang, "common.downloadCSV")}
+              </button>
+              <button onClick={downloadJSON} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                {t(lang, "common.downloadJSON")}
+              </button>
+            </div>
+            <span className="text-sm text-gray-500">{filtered.length} {t(lang, "common.results")}</span>
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -567,7 +575,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
               <tr>
                 <th className="px-4 py-3 text-left">{t(lang, "questions.tableFrom")}</th>
-                <th className="px-4 py-3 text-left">{t(lang, "common.filterByParty")}</th>
+                <th className="px-4 py-3 text-left">{t(lang, "common.party")}</th>
                 <th className="px-4 py-3 text-left">{t(lang, "questions.tableTo")}</th>
                 <th className="px-4 py-3 text-left">{t(lang, "questions.tableQuestion")}</th>
                 <th className="px-4 py-3 text-left">{t(lang, "questions.tableDate")}</th>

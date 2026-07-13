@@ -174,7 +174,7 @@ export default function MPProfileExplorer({ profiles, lang, qi18n = {} }: Props)
             {SORT_KEYS.map(k => <option key={k} value={k}>{t(lang, `profile.sort.${k}`)}</option>)}
           </select>
         </div>
-        <span className="text-sm text-gray-400 ml-auto">{filtered.length} {t(lang, "common.mpsLower")}</span>
+        <span className="text-sm text-gray-400">{filtered.length} {t(lang, "common.mpsLower")}</span>
       </div>
 
       {/* Grid */}

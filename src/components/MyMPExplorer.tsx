@@ -326,14 +326,14 @@ export default function MyMPExplorer({ mps, lang }: Props) {
             placeholder={t(lang, "common.search")}
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-56 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
+          <span className="text-sm text-gray-400">{filtered.length} {t(lang, "common.mpsLower")}</span>
           <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
             <input type="checkbox" checked={showZeroOnly} onChange={e => setShowZeroOnly(e.target.checked)} className="rounded" />
             {t(lang, "mymp.onlyZero")}
           </label>
-          <span className="text-sm text-gray-400 ml-auto">{filtered.length} {t(lang, "common.mpsLower")}</span>
-          <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50">
+          <button onClick={downloadCSV} className="text-sm px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 ml-auto">
             {t(lang, "common.downloadCSV")}
           </button>
         </div>
