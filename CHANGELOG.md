@@ -1,3 +1,9 @@
+## 2026-07-13 10:51 — IDSCS
+> QA: allow Cloudflare Insights beacon in CSP; cache images/fonts 30d
+
+## 2026-07-13 10:36 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 10:36 — IDSCS
 > Netlify config → staging mirror (noindex + CSP synced with prod)
 
