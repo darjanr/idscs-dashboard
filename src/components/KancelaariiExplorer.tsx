@@ -156,7 +156,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
         <select
           value={filterParty}
           onChange={e => { setFilterParty(e.target.value); setFilterMP("all"); setMpPage(0); }}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
           aria-label={t(lang, "common.filterByParty")}
         >
           <option value="all">{t(lang, "common.allParties")}</option>
@@ -165,7 +165,7 @@ export default function KancelaariiExplorer({ rows, profiles, lang }: Props) {
         <select
           value={filterMP}
           onChange={e => { setFilterMP(e.target.value); setMpPage(0); }}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
           aria-label={t(lang, "common.filterByMP")}
         >
           <option value="all">{t(lang, "common.allMPs")}</option>

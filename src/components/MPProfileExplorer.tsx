@@ -154,12 +154,12 @@ export default function MPProfileExplorer({ profiles, lang, qi18n = {} }: Props)
           placeholder={t(lang, "common.search")}
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-48 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
         <select
           value={filterParty}
           onChange={e => setFilterParty(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           <option value="all">{t(lang, "common.allParties")}</option>
           {parties.slice(1).map(p => <option key={p} value={p}>{tParty(lang, p)}</option>)}
@@ -169,7 +169,7 @@ export default function MPProfileExplorer({ profiles, lang, qi18n = {} }: Props)
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value as SortKey)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             {SORT_KEYS.map(k => <option key={k} value={k}>{t(lang, `profile.sort.${k}`)}</option>)}
           </select>

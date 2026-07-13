@@ -472,8 +472,8 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
                 const d = sessionDate.get(payload.value);
                 return (
                   <g transform={`translate(${x},${y})`}>
-                    <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#374151">
-                      {`${t(lang, "questions.sessionFull")} ${payload.value}`}
+                    <text x={0} y={0} dy={12} textAnchor="middle" fontSize={11} fill="#374151">
+                      {payload.value}
                     </text>
                     {d && (
                       <text x={0} y={0} dy={25} textAnchor="middle" fontSize={9} fill="#9ca3af">
@@ -520,13 +520,13 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             placeholder={t(lang, "common.search")}
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(0); }}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-52 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-52 focus:outline-none focus:ring-2 focus:ring-teal-500"
             aria-label={t(lang, "common.search")}
           />
           <select
             value={filterMP}
             onChange={e => { setFilterMP(e.target.value); setPage(0); }}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
             aria-label={t(lang, "common.filterByMP")}
           >
             <option value="all">{t(lang, "common.allMPs")}</option>
@@ -536,7 +536,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             <select
               value={filterParty}
               onChange={e => { setFilterParty(e.target.value); setPage(0); }}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
               aria-label={t(lang, "common.filterByParty")}
             >
               <option value="all">{t(lang, "common.allParties")}</option>
@@ -546,7 +546,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
           <select
             value={filterStatus}
             onChange={e => { setFilterStatus(e.target.value); setPage(0); }}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto sm:max-w-[14rem] min-w-0 focus:outline-none focus:ring-2 focus:ring-teal-500"
             aria-label={t(lang, "common.filterByStatus")}
           >
             <option value="all">{t(lang, "common.filterByStatus")}</option>

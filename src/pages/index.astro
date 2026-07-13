@@ -78,11 +78,11 @@ const modules = [
         {t(lang, "home.heroSubtitle")}
       </p>
 
-      <!-- KPI strip -->
-      <div class="inline-grid grid-cols-3 divide-x divide-white/10 rounded-2xl overflow-hidden"
+      <!-- KPI strip: stacked (1-col) on mobile, 3-col on desktop -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 w-fit mx-auto divide-y sm:divide-y-0 sm:divide-x divide-white/10 rounded-2xl overflow-hidden"
            style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);">
         {kpis.map(k => (
-          <div class="px-8 py-5 text-center">
+          <div class="px-8 py-4 sm:py-5 text-center">
             <p class="text-3xl font-bold text-white">{k.value}</p>
             <p class="text-sm font-medium text-white/80 mt-0.5">{k.label}</p>
             <p class="text-xs text-white/40 mt-0.5">{k.note}</p>
