@@ -1,3 +1,9 @@
+## 2026-07-13 12:26 — IDSCS
+> UI refinements: Questions KPI %, timeline dates, tidier filter rows
+
+## 2026-07-13 12:05 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 12:05 — IDSCS
 > Mobile/responsive fixes: filters, KPI strip, timeline, consent banner
 
