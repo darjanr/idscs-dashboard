@@ -1,4 +1,7 @@
-# Netlify deployment + security configuration for the IDSCS dashboard.
+# Netlify config — used ONLY for the STAGING mirror of pratenici.mk.
+# Production is the cPanel server (headers come from public/.htaccess). Netlify
+# builds the `staging` branch for preview; every response here is marked noindex
+# so this copy never competes with the real site in search.
 # Static Astro build; no server, no secrets. Data is baked in at build time
 # (public/data/*.json) and refreshed manually via the Python pipeline.
 
@@ -15,6 +18,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Keep this staging copy out of search results entirely.
+    X-Robots-Tag = "noindex, nofollow"
     # Clickjacking protection
     X-Frame-Options = "DENY"
     # Block MIME-type sniffing
@@ -31,7 +36,7 @@
     #     blocked. Can be tightened to hashes later via Astro experimental CSP.
     #   img-src: MP photos + party logos are now self-hosted; only OSM map tiles
     #   remain external. blob:/data: cover canvas/PNG chart export.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.tile.openstreetmap.org; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
 
 # ---------------------------------------------------------------------------
 # Caching — content-hashed Astro assets are immutable; HTML/data revalidated
