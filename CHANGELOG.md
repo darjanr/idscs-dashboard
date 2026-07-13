@@ -1,3 +1,9 @@
+## 2026-07-13 10:25 — IDSCS
+> GDPR: gate GA behind an opt-in cookie-consent banner (MK/AL/EN)
+
+## 2026-07-11 14:25 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-11 14:25 — IDSCS
 > Social share: client share image + custom og/twitter title & description
 
