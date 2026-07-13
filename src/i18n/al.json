@@ -3,6 +3,11 @@
     "siteName": "Të dhënat e hapura të Kuvendit",
     "description": "Paraqitje interaktive publike e të dhënave të hapura të Kuvendit — pyetjet e deputetëve, platforma „Deputeti im“ dhe zyrat e kontaktit me qytetarët."
   },
+  "consent": {
+    "text": "Përdorim cookie për statistika anonime të vizitave (Google Analytics).",
+    "accept": "Pranoj",
+    "decline": "Refuzoj"
+  },
   "nav": {
     "questions": "Pyetjet e deputetëve",
     "mymp": "Aktiviteti i deputetit",

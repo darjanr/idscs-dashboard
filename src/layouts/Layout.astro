@@ -34,8 +34,10 @@ const shareDescription = "Интерактивен панел на отворе�
 
 // Google Analytics 4 — set the Measurement ID (G-XXXXXXXXXX) to enable tracking.
 // Empty = disabled (no scripts load). Google's domains are allowlisted in the CSP
-// (public/.htaccess). Note: GA4 sets cookies — add a consent banner for GDPR.
+// (public/.htaccess). GA loads ONLY after the visitor accepts the consent banner
+// (GDPR opt-in); the choice is remembered in localStorage under `ga-consent`.
 const GA_ID = "G-K0NYDK258L";
+const gaConsentScript = GA_ID ? `(function(){var K='ga-consent';function load(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA_ID}';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments);}g('js',new Date());g('config','${GA_ID}');}var c=null;try{c=localStorage.getItem(K);}catch(e){}if(c==='granted'){load();return;}if(c==='denied'){return;}var b=document.getElementById('cookie-consent');if(!b)return;b.hidden=false;var a=document.getElementById('cookie-accept'),d=document.getElementById('cookie-decline');a&&a.addEventListener('click',function(){try{localStorage.setItem(K,'granted');}catch(e){}b.hidden=true;load();});d&&d.addEventListener('click',function(){try{localStorage.setItem(K,'denied');}catch(e){}b.hidden=true;});})();` : "";
 const alternates = [
   { hreflang: "mk", href: new URL(langHref("mk"), Astro.site).href },
   { hreflang: "sq", href: new URL(langHref("al"), Astro.site).href },
@@ -90,13 +92,6 @@ const partnerLogos = [
     <meta name="twitter:title" content={shareTitle} />
     <meta name="twitter:description" content={shareDescription} />
     <meta name="twitter:image" content={ogImage.href} />
-
-    {GA_ID && (
-      <>
-        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}></script>
-      </>
-    )}
   </head>
   <body class="bg-gray-50 text-gray-900 min-h-screen">
     <a href="#main" class="skip-link">{t(lang, "common.skipToContent")}</a>
@@ -134,5 +129,55 @@ const partnerLogos = [
         </p>
       </div>
     </footer>
+
+    {GA_ID && (
+      <div id="cookie-consent" class="cookie-consent" hidden>
+        <p class="cookie-consent__text">{t(lang, "consent.text")}</p>
+        <div class="cookie-consent__actions">
+          <button id="cookie-accept" type="button" class="cookie-consent__btn cookie-consent__btn--accept">{t(lang, "consent.accept")}</button>
+          <button id="cookie-decline" type="button" class="cookie-consent__btn cookie-consent__btn--decline">{t(lang, "consent.decline")}</button>
+        </div>
+      </div>
+      <script is:inline set:html={gaConsentScript}></script>
+    )}
+
+    <style is:global>
+      .cookie-consent {
+        position: fixed;
+        inset: auto 0 0 0;
+        z-index: 60;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem 1.25rem;
+        padding: 0.85rem 1rem;
+        background: #1a2e5a;
+        color: #fff;
+        font-size: 0.875rem;
+        box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.18);
+      }
+      .cookie-consent[hidden] { display: none; }
+      .cookie-consent__text { margin: 0; max-width: 60ch; line-height: 1.45; }
+      .cookie-consent__actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+      .cookie-consent__btn {
+        border: 0;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1.1rem;
+        font: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.15s;
+      }
+      .cookie-consent__btn--accept { background: #0d9488; color: #fff; }
+      .cookie-consent__btn--accept:hover { background: #0b8177; }
+      .cookie-consent__btn--decline {
+        background: transparent;
+        color: #cbd5e1;
+        border: 1px solid #475569;
+      }
+      .cookie-consent__btn--decline:hover { background: rgba(255, 255, 255, 0.08); }
+    </style>
   </body>
 </html>

@@ -3,6 +3,11 @@
     "siteName": "Assembly Open Data",
     "description": "A public interactive dashboard of the Assembly's open data — parliamentary questions, the “My MP” platform and the citizen contact offices."
   },
+  "consent": {
+    "text": "We use cookies for anonymous visitor analytics (Google Analytics).",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
   "nav": {
     "questions": "Parliamentary questions",
     "mymp": "MP activity",
