@@ -179,7 +179,7 @@ export default function MyMPExplorer({ mps, lang }: Props) {
           <p className="text-sm text-gray-500 font-medium">{t(lang, "mymp.kpiMPs")}</p>
           <p className="text-3xl font-bold text-gray-900 mt-1">{mps.length}</p>
           {newlySeated > 0 && (
-            <p className="text-xs text-gray-400 mt-1">{newlySeated} {t(lang, "mymp.newlySeatedNote")}</p>
+            <p className="text-xs text-gray-400 mt-1 leading-snug">{newlySeated} {t(lang, "mymp.newlySeatedNote")}</p>
           )}
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
