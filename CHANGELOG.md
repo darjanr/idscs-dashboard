@@ -1,3 +1,9 @@
+## 2026-07-13 10:36 — IDSCS
+> Netlify config → staging mirror (noindex + CSP synced with prod)
+
+## 2026-07-13 10:25 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 10:25 — IDSCS
 > GDPR: gate GA behind an opt-in cookie-consent banner (MK/AL/EN)
 
