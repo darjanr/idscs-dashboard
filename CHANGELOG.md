@@ -1,3 +1,9 @@
+## 2026-07-13 14:46 — IDSCS
+> MyMP: shorten 'newly seated' note (2-3 rows) so the KPI cards are shorter
+
+## 2026-07-13 12:26 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 12:26 — IDSCS
 > UI refinements: Questions KPI %, timeline dates, tidier filter rows
 
