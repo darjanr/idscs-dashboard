@@ -384,11 +384,11 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={200} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="answered" name={t(lang, "common.answered")} stackId="a" fill={ANSWERED_COLOR}>
+            <Bar dataKey="answered" name={t(lang, "common.answered")} stackId="a" fill={ANSWERED_COLOR} isAnimationActive={false}>
               <LabelList dataKey="answered" position="center" fill="#fff" fontSize={11}
                 formatter={(v: number) => (v > 0 ? v : "")} />
             </Bar>
-            <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]}>
+            <Bar dataKey="pending" name={t(lang, "common.pending")} stackId="a" fill={PENDING_COLOR} radius={[0, 4, 4, 0]} isAnimationActive={false}>
               <LabelList dataKey="pending" position="center" fill="#fff" fontSize={11}
                 formatter={(v: number) => (v > 0 ? v : "")} />
             </Bar>
@@ -503,7 +503,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
                 );
               }}
             />
-            <Line type="monotone" dataKey="count" stroke={NAVY} strokeWidth={2} dot={{ r: 3, fill: NAVY }} />
+            <Line type="monotone" dataKey="count" stroke={NAVY} strokeWidth={2} dot={{ r: 3, fill: NAVY }} isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
