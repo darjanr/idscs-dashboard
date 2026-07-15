@@ -1,3 +1,9 @@
+## 2026-07-15 11:37 — IDSCS
+> Homepage/methodology: derive question counts from data (no more stale hardcoded numbers)
+
+## 2026-07-15 11:21 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-15 11:21 — IDSCS
 > Data refresh: questions 657->736 (+79 new, hand-translated AL/EN)
 
