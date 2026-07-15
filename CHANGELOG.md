@@ -1,3 +1,9 @@
+## 2026-07-15 11:53 — IDSCS
+> Questions: disable chart entry animation (deterministic render + reliable PNG export)
+
+## 2026-07-15 11:37 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-15 11:37 — IDSCS
 > Homepage/methodology: derive question counts from data (no more stale hardcoded numbers)
 
