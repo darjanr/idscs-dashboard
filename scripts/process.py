@@ -246,9 +246,11 @@ def process_questions() -> list[dict]:
         raw = json.load(f)
 
     def _norm_qa(s: str) -> str:
-        # Collapse whitespace and drop trailing punctuation so near-identical
-        # copies (e.g. answer ends with '.' where question ends with '?') match.
-        s = re.sub(r"\s+", " ", s or "").strip()
+        # Collapse whitespace, drop trailing punctuation and fold case so
+        # near-identical copies match (e.g. answer ends with '.' where the
+        # question ends with '?', or repeats the question with a lowercased
+        # first letter — both are the source pasting the question back).
+        s = re.sub(r"\s+", " ", s or "").strip().casefold()
         return re.sub(r"[\s\.\?\!,;:]+$", "", s)
 
     records = []

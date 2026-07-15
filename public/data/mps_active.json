@@ -269,8 +269,8 @@
     "name": "Садула Дураки",
     "nameAl": "Sadulla Duraki",
     "nameEn": "Sadulla Duraki",
-    "party": "Демократска унија за интеграција",
-    "partyLogo": "/mp-media/party-logos/party_1742744538466.png",
+    "party": "",
+    "partyLogo": null,
     "photo": "/mp-media/photos/mp_picture_1741630739704.png",
     "officeId": 27
   },
@@ -577,8 +577,8 @@
     "name": "Сали Мурати",
     "nameAl": "Sali Murati",
     "nameEn": "Sali Murati",
-    "party": "Движење на Турците на Македонија за правда и демократија",
-    "partyLogo": "/mp-media/party-logos/party_1742756002802.png",
+    "party": "",
+    "partyLogo": null,
     "photo": "/mp-media/photos/mp_picture_1741631189339.png",
     "officeId": 37
   },
@@ -712,7 +712,7 @@
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "/mp-media/party-logos/party_1742744428872.png",
     "photo": "/mp-media/photos/mp_picture_1741631372276.png",
-    "officeId": 34
+    "officeId": 89
   },
   {
     "uuid": "2751e637-1d69-47a0-ac88-33d7db5ff407",
@@ -778,7 +778,7 @@
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "/mp-media/party-logos/party_1742744428872.png",
     "photo": "/mp-media/photos/mp_picture_1741631452557.png",
-    "officeId": 34
+    "officeId": 89
   },
   {
     "uuid": "214ce1eb-b2d2-43f4-b473-7a39737529cc",
@@ -1218,7 +1218,7 @@
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "/mp-media/party-logos/party_1742744428872.png",
     "photo": "/mp-media/photos/mp_picture_1741631945817.png",
-    "officeId": 34
+    "officeId": 89
   },
   {
     "uuid": "fbaa186c-c6c8-4cd9-b6eb-adf825eb618e",

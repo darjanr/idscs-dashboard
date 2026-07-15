@@ -2498,7 +2498,7 @@
   {
     "uuid": "3a2fda36-963d-499c-8725-912374fe3117",
     "name": "Садула Дураки",
-    "party": "Демократска унија за интеграција",
+    "party": "",
     "photo": "/mp-media/photos/mp_picture_1741630739704.png",
     "hasData": true,
     "attendance": 15,
@@ -2522,7 +2522,7 @@
   {
     "uuid": "14023e2e-7f68-4dfc-979b-58d04dec9280",
     "name": "Сали Мурати",
-    "party": "Движење на Турците на Македонија за правда и демократија",
+    "party": "",
     "photo": "/mp-media/photos/mp_picture_1741631189339.png",
     "hasData": true,
     "attendance": 53,

@@ -35,40 +35,38 @@ from pathlib import Path
 
 import requests
 
+# The Sobranie portal ROTATES resource (and sometimes package) UUIDs — hardcoded
+# download URLs silently 404 after a refresh. So each dataset is identified by its
+# stable CKAN *name slug* ("package") and the download URL is resolved at runtime
+# from package_show. `match` optionally pins selection to a specific resource
+# (substring of its name/url) so a dataset with several report editions stays on
+# the intended one until we deliberately switch. `url` is only a last-resort
+# fallback if the API can't be reached.
 DATASETS = [
     {
         "slug": "pratenicki_prasanja_2024-2028",
         "name": "Parliamentary questions 2024-2028",
-        "url": (
-            "https://opendata.sobranie.mk/dataset/"
-            "9fe4f2b1-4a13-4db3-ae2b-45dea63d5a6c/resource/"
-            "08807be2-300b-468f-b062-cf2074a22b10/download/"
-            "pratenicki_prasanja_2024-2028.json"
-        ),
+        "package": "pratenicki_prasanja_2024-2028",
+        "match": ".json",  # the JSON resource (auto-refreshed nightly by the portal)
         "filename": "pratenicki_prasanja_2024-2028.json",
         "format": "json",
     },
     {
         "slug": "moj_pratenik",
-        "name": "MyMP periodic report (Jan-Jun 2025, report #32)",
-        "url": (
-            "https://opendata.sobranie.mk/dataset/"
-            "d218754b-c28d-4ec7-b1ed-65845e4ed377/resource/"
-            "1fca31cf-c8e8-488b-b411-523c962b7a6f/download/"
-            "moj-pratenik-jan-juni-2025.xlsx"
-        ),
+        "name": "MyMP periodic report",
+        "package": "ttepnodnheh-n3bewtaj-mojot-npatehnk",  # CKAN slug (transliterated, but stable)
+        # Pinned to the Jan-Jun 2025 edition (report #32). When a newer report
+        # (#33 Jul-Dec 2025, ...) is published, update `match` deliberately after
+        # confirming the parser still fits the new sheet.
+        "match": "jan-juni-2025",
         "filename": "moj-pratenik-jan-juni-2025.xlsx",
         "format": "xlsx",
     },
     {
         "slug": "kancelarii_kontakt_gragjani",
         "name": "Citizen contact offices",
-        "url": (
-            "https://opendata.sobranie.mk/dataset/"
-            "1b110b47-823b-4cc7-9ca4-028acb1795b2/resource/"
-            "2b4116eb-a2c0-47d6-b026-ec94a8ff1d53/download/"
-            "kancelarii.xlsx"
-        ),
+        "package": "kancelarii_kontakt_gragjani",
+        "match": None,  # single resource
         "filename": "kancelarii.xlsx",
         "format": "xlsx",
     },
@@ -92,11 +90,43 @@ def parse_dotnet_date(value: str | None) -> str | None:
     return datetime.utcfromtimestamp(ms / 1000).isoformat() + "Z"
 
 
+def resolve_download_url(dataset: dict) -> str:
+    """Resolve the current download URL for a dataset from CKAN package_show.
+
+    Selection order: a resource whose name/url contains `match` (if given), else
+    a resource whose format/url matches `format`, else the most recently modified
+    resource. Falls back to a hardcoded `url` if the API is unreachable.
+    """
+    pkg = dataset.get("package")
+    if pkg:
+        meta = fetch_ckan_metadata(pkg)
+        if meta:
+            resources = meta.get("resources", [])
+            match = dataset.get("match")
+            fmt = (dataset.get("format") or "").lower()
+
+            def ok(r: dict) -> bool:
+                blob = f"{r.get('name','')} {r.get('url','')}".lower()
+                if match:
+                    return match.lower() in blob
+                return fmt in (r.get("format", "").lower(), "") or blob.endswith(f".{fmt}")
+
+            cands = [r for r in resources if ok(r)] or resources
+            cands.sort(key=lambda r: r.get("last_modified") or r.get("created") or "", reverse=True)
+            if cands and cands[0].get("url"):
+                return cands[0]["url"]
+    if dataset.get("url"):
+        print("    ! could not resolve via API — using fallback URL")
+        return dataset["url"]
+    raise RuntimeError(f"No download URL resolvable for {dataset['slug']}")
+
+
 def fetch_one(dataset: dict, raw_dir: Path) -> None:
     out = raw_dir / dataset["filename"]
     print(f"  → fetching {dataset['name']}")
-    print(f"    URL: {dataset['url']}")
-    resp = requests.get(dataset["url"], headers=HEADERS, timeout=60)
+    url = resolve_download_url(dataset)
+    print(f"    URL: {url}")
+    resp = requests.get(url, headers=HEADERS, timeout=60)
     resp.raise_for_status()
     out.write_bytes(resp.content)
     size_kb = len(resp.content) / 1024
@@ -159,13 +189,15 @@ def main() -> int:
     print("\n" + "=" * 70)
     print("CKAN metadata check (for cron detection of new resources)")
     print("=" * 70)
-    for slug in ("pratenicki_prasanja_2024-2028", "ttepnodnheh-n3bewtaj-mojot-npatehnk", "kancelarii_kontakt_gragjani"):
+    for ds in DATASETS:
+        slug = ds.get("package") or ds["slug"]
         meta = fetch_ckan_metadata(slug)
         if meta:
             resources = meta.get("resources", [])
-            print(f"  {slug}: {len(resources)} resource(s), modified {meta.get('metadata_modified')}")
+            names = ", ".join(sorted(r.get("name", "?").strip() for r in resources))
+            print(f"  {ds['slug']}: {len(resources)} resource(s) [{names}], modified {meta.get('metadata_modified')}")
         else:
-            print(f"  {slug}: metadata not fetched")
+            print(f"  {ds['slug']}: metadata not fetched")
 
     print("\nDone. Inspect raw/ folder for downloaded files.")
     print("Next steps: write a parser for each format and emit clean JSON into /public/data/.")
