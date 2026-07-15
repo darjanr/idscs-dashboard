@@ -1,3 +1,9 @@
+## 2026-07-15 12:06 — IDSCS
+> Questions: restore Сали Мурати party affiliation + add 'Писмен одговор' status filter
+
+## 2026-07-15 11:53 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-15 11:53 — IDSCS
 > Questions: disable chart entry animation (deterministic render + reliable PNG export)
 
