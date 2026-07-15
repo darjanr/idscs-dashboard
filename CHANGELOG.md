@@ -1,3 +1,9 @@
+## 2026-07-15 11:21 — IDSCS
+> Data refresh: questions 657->736 (+79 new, hand-translated AL/EN)
+
+## 2026-07-13 14:46 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-13 14:46 — IDSCS
 > MyMP: shorten 'newly seated' note (2-3 rows) so the KPI cards are shorter
 
