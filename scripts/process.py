@@ -98,6 +98,13 @@ NAME_OVERRIDES: dict[str, str] = {
     "АЗИРИ ЕЉМИ/ AZIRI ELMI": "Елми Азири",
 }
 
+# Upstream roster gaps: active MPs whose partyId the /api/mps endpoint returns as
+# null even though their affiliation is known and the party still exists in
+# /api/parties. Keyed by full name → partyId. Restores them to the party charts.
+PARTY_ID_OVERRIDES: dict[str, int] = {
+    "Сали Мурати": 17,  # Движење на Турците на Македонија за правда и демократија
+}
+
 
 class RosterMatcher:
     """Resolves an arbitrary MP name string to an active-roster UUID."""
@@ -165,7 +172,8 @@ def fetch_active_roster(parties: dict[int, dict]) -> list[dict]:
         if not uuid:
             continue
         pic = m.get("picturePath") or ""
-        party = parties.get(m.get("partyId") or -1, {})
+        party_id = m.get("partyId") or PARTY_ID_OVERRIDES.get((m.get("fullName") or "").strip())
+        party = parties.get(party_id or -1, {})
         roster.append({
             "uuid": uuid,
             "id": m.get("id"),

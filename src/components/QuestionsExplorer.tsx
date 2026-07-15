@@ -556,6 +556,7 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             <option value="all">{t(lang, "common.filterByStatus")}</option>
             <option value="Одговорено">{t(lang, "common.answered")}</option>
             <option value="Доставено">{t(lang, "common.pending")}</option>
+            <option value="Писмен одговор">{t(lang, "common.writtenAnswer")}</option>
           </select>
           <div className="flex flex-col items-start sm:items-end gap-1.5 ml-auto">
             <div className="flex gap-2">
