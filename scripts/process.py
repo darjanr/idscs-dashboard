@@ -579,7 +579,9 @@ def main() -> None:
         "lastProcessed": datetime.now(tz=timezone.utc).isoformat(),
         "activeAssembly": len(roster),
         "sources": {
-            "questions": {"lastPortalUpdate": "2026-05-10", "records": len(questions)},
+            # Questions are refreshed on the portal daily, so the "last update"
+            # is effectively the day we last pulled them.
+            "questions": {"lastPortalUpdate": datetime.now(timezone.utc).date().isoformat(), "records": len(questions)},
             "mymp": {"lastPortalUpdate": "2025-11-11", "records": with_data,
                      "period": "Jan–Jun 2025"},
             "kancelarii": {"lastPortalUpdate": "2026-01-08", "records": len(kancelarii_records)},

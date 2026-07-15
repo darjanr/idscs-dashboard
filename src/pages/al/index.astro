@@ -1,12 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { t, type Lang } from "../../i18n";
+import meta from "../../../public/data/meta.json";
+import questions from "../../../public/data/questions.json";
 
 const lang: Lang = "al";
 const base = "/al";
 
+const totalQuestions = meta.sources.questions.records;
+const answeredQuestions = questions.filter((q: any) => q.status === "Одговорено").length;
+
 const kpis = [
-  { value: "657", label: t(lang, "home.kpiQuestions"), note: t(lang, "home.kpiQuestionsNote") },
+  { value: String(totalQuestions), label: t(lang, "home.kpiQuestions"), note: `${answeredQuestions} ${t(lang, "home.kpiQuestionsNote")}` },
   { value: "120", label: t(lang, "home.kpiMPs"),       note: t(lang, "home.kpiMPsNote") },
   { value: "46",  label: t(lang, "home.kpiOffices"),   note: t(lang, "home.kpiOfficesNote") },
 ];

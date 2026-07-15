@@ -64,7 +64,7 @@ const dateLocale = lang === "al" ? "sq-AL" : lang === "en" ? "en-GB" : "mk-MK";
     <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
       <h2 class="font-semibold text-gray-900 text-lg mb-4">{t(lang, "methodology.activeAssemblyTitle")}</h2>
       <p class="text-sm text-gray-600 mb-3">{t(lang, "methodology.activeAssemblyP1")}</p>
-      <p class="text-sm text-gray-600">{t(lang, "methodology.activeAssemblyP2")}</p>
+      <p class="text-sm text-gray-600">{t(lang, "methodology.activeAssemblyP2").replace("{{total}}", String(meta.sources.questions.records))}</p>
     </div>
 
     <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
