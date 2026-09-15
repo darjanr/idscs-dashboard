@@ -269,8 +269,8 @@
     "name": "Садула Дураки",
     "nameAl": "Sadulla Duraki",
     "nameEn": "Sadulla Duraki",
-    "party": "",
-    "partyLogo": null,
+    "party": "Демократска унија за интеграција",
+    "partyLogo": "/mp-media/party-logos/party_1742744538466.png",
     "photo": "/mp-media/photos/mp_picture_1741630739704.png",
     "officeId": 27
   },
@@ -558,7 +558,7 @@
     "party": "ВМРО-ДПМНЕ",
     "partyLogo": "/mp-media/party-logos/party_1742744428872.png",
     "photo": "/mp-media/photos/mp_picture_1741631173546.png",
-    "officeId": null
+    "officeId": 90
   },
   {
     "uuid": "b23493ea-f5cb-4448-bb79-0f93d718bf67",
@@ -1262,7 +1262,7 @@
     "party": "Движење БЕСА",
     "partyLogo": "/mp-media/party-logos/party_1742744900778.png",
     "photo": "/mp-media/photos/mp_picture_1766335237895.png",
-    "officeId": null
+    "officeId": 91
   },
   {
     "uuid": "8f8e1f43-656d-48e5-90fe-0a65fa9e1d68",

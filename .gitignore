@@ -35,3 +35,6 @@ new resources/
 
 # jetbrains setting folder
 .idea/
+
+# local data backups (never commit)
+backups/

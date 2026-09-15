@@ -500,6 +500,51 @@ def build_profiles(
 # Main
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Portal (CKAN) resource modification dates → meta.json "lastPortalUpdate"
+# ---------------------------------------------------------------------------
+
+CKAN_BASE = "https://opendata.sobranie.mk/api/3/action"
+
+# Mirrors DATASETS in fetch_data.py: CKAN package name-slug + optional resource
+# `match` (MyMP is pinned to one report edition). Fallback dates are the last
+# known-good values, used only if the portal API is unreachable.
+PORTAL_SOURCES = {
+    "questions": {"package": "pratenicki_prasanja_2024-2028", "match": ".json",
+                  "fallback": "2026-08-31"},
+    "mymp": {"package": "ttepnodnheh-n3bewtaj-mojot-npatehnk", "match": "jan-juni-2025",
+             "fallback": "2025-11-11"},
+    "kancelarii": {"package": "kancelarii_kontakt_gragjani", "match": None,
+                   "fallback": "2026-01-08"},
+}
+
+
+def fetch_portal_update_dates() -> dict[str, str]:
+    """Return {source: 'YYYY-MM-DD'} = CKAN `last_modified` of the resource we consume."""
+    out: dict[str, str] = {}
+    for key, cfg in PORTAL_SOURCES.items():
+        date = None
+        try:
+            r = requests.get(f"{CKAN_BASE}/package_show", params={"id": cfg["package"]},
+                             headers=HEADERS, timeout=30)
+            r.raise_for_status()
+            resources = r.json()["result"].get("resources", [])
+            match = cfg["match"]
+            cands = [x for x in resources
+                     if not match or match.lower() in f"{x.get('name','')} {x.get('url','')}".lower()]
+            stamps = [x.get("last_modified") or x.get("created") for x in (cands or resources)]
+            stamps = [s for s in stamps if s]
+            if stamps:
+                date = max(stamps)[:10]
+        except Exception as e:  # network / API hiccup → keep last known date
+            print(f"  ! portal date lookup failed for {key}: {e}")
+        if not date:
+            print(f"  ! using fallback portal date for {key}: {cfg['fallback']}")
+            date = cfg["fallback"]
+        out[key] = date
+    return out
+
+
 def main() -> None:
     print("Fetching party data...")
     parties = fetch_parties()
@@ -583,18 +628,20 @@ def main() -> None:
         json.dumps(profiles, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"  ✓ {len(profiles)} profiles → mp_profiles.json")
 
+    # "Last portal update" = the date the resource was actually modified on the
+    # open-data portal (CKAN `last_modified`), NOT the day we ran this script.
+    portal_dates = fetch_portal_update_dates()
     meta = {
         "lastProcessed": datetime.now(tz=timezone.utc).isoformat(),
         "activeAssembly": len(roster),
         "sources": {
-            # Questions are refreshed on the portal daily, so the "last update"
-            # is effectively the day we last pulled them.
-            "questions": {"lastPortalUpdate": datetime.now(timezone.utc).date().isoformat(), "records": len(questions)},
-            "mymp": {"lastPortalUpdate": "2025-11-11", "records": with_data,
+            "questions": {"lastPortalUpdate": portal_dates["questions"], "records": len(questions)},
+            "mymp": {"lastPortalUpdate": portal_dates["mymp"], "records": with_data,
                      "period": "Jan–Jun 2025"},
-            "kancelarii": {"lastPortalUpdate": "2026-01-08", "records": len(kancelarii_records)},
+            "kancelarii": {"lastPortalUpdate": portal_dates["kancelarii"], "records": len(kancelarii_records)},
         },
     }
+    print("  portal update dates:", portal_dates)
     (PUBLIC_DATA / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print("  ✓ meta.json\n\nDone.")
