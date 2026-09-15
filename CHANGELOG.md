@@ -1,3 +1,9 @@
+## 2026-09-15 09:52 — IDSCS
+> Questions page: show the portal's last data update date (MK/AL/EN)
+
+## 2026-09-15 09:44 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-09-15 09:44 — IDSCS
 > Data refresh: questions 736->760 (+24 new, hand-translated AL/EN); portal dates from CKAN
 
