@@ -204,6 +204,14 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
       .map(([session, v]) => ({ sessionNum: Number(session), session: `С${session}`, count: v.count, date: v.date }));
   }, [questions]);
 
+  // Timeline axis: label EVERY sitting when there is room (~26px per tick),
+  // otherwise skip ticks evenly; dates are shown on every 3rd visible label.
+  const [tlWidth, setTlWidth] = useState(0);
+  const tlInterval = useMemo(() => {
+    if (!tlWidth || !bySession.length) return 0;
+    const fit = Math.max(1, Math.floor((tlWidth - 60) / 26));
+    return Math.max(0, Math.ceil(bySession.length / fit) - 1);
+  }, [tlWidth, bySession.length]);
   const sessionDate = useMemo(() => {
     const m = new Map<number, string | null>();
     bySession.forEach(s => m.set(s.sessionNum, s.date));
@@ -460,23 +468,28 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
             lang={lang}
           />
         </div>
-        <ResponsiveContainer width="100%" height={260}>
+        <ResponsiveContainer width="100%" height={260} onResize={(w) => setTlWidth(w)}>
           <LineChart data={bySession} margin={{ left: 0, right: 14, top: 4, bottom: 30 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="sessionNum"
-              interval={2}
+              interval={tlInterval}
               height={54}
               tickMargin={6}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               tick={(props: any) => {
                 const { x, y, payload, index } = props;
-                const d = sessionDate.get(payload.value);
-                // stagger dates on alternating ticks so they don't overlap
-                const dateDy = index % 2 === 0 ? 24 : 37;
+                // `index` = position among the VISIBLE ticks. Show the sitting
+                // number on every visible tick; show its date on every 3rd one
+                // (every 2nd when ticks are already thinned), staggered so
+                // neighbouring dates never overlap.
+                const dateEvery = tlInterval === 0 ? 3 : 2;
+                const showDate = index % dateEvery === 0;
+                const d = showDate ? sessionDate.get(payload.value) : null;
+                const dateDy = Math.floor(index / dateEvery) % 2 === 0 ? 24 : 37;
                 return (
                   <g transform={`translate(${x},${y})`}>
-                    <text x={0} y={0} dy={12} textAnchor="middle" fontSize={11} fill="#374151">
+                    <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#374151">
                       {payload.value}
                     </text>
                     {d && (
