@@ -92,7 +92,8 @@
     "openDetailAria": "Open question details from",
     "session": "Session",
     "autoTranslated": "Machine-translated",
-    "aiTranslationNotice": "The English translation of the parliamentary questions was prepared using artificial intelligence (AI) tools, based on the materials available in Macedonian on the Assembly Open Data Portal. As of the date of publication, the materials on the portal were available only in Macedonian."
+    "aiTranslationNotice": "The English translation of the parliamentary questions was prepared using artificial intelligence (AI) tools, based on the materials available in Macedonian on the Assembly Open Data Portal. As of the date of publication, the materials on the portal were available only in Macedonian.",
+    "lastUpdate": "Data last updated on the portal:"
   },
   "mymp": {
     "title": "MP activity",

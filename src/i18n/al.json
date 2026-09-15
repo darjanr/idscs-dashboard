@@ -92,7 +92,8 @@
     "openDetailAria": "Hap detajet e pyetjes nga",
     "session": "Seanca",
     "autoTranslated": "Përkthim automatik",
-    "aiTranslationNotice": "Përkthimi në gjuhën shqipe i pyetjeve parlamentare është përgatitur me ndihmën e mjeteve të inteligjencës artificiale (AI), duke u bazuar në materialet e disponueshme në gjuhën maqedonase në Portalin e të Dhënave të Hapura të Kuvendit. Deri në ditën e publikimit, materialet në portal ishin të disponueshme vetëm në gjuhën maqedonase."
+    "aiTranslationNotice": "Përkthimi në gjuhën shqipe i pyetjeve parlamentare është përgatitur me ndihmën e mjeteve të inteligjencës artificiale (AI), duke u bazuar në materialet e disponueshme në gjuhën maqedonase në Portalin e të Dhënave të Hapura të Kuvendit. Deri në ditën e publikimit, materialet në portal ishin të disponueshme vetëm në gjuhën maqedonase.",
+    "lastUpdate": "Përditësimi i fundit i të dhënave në portal:"
   },
   "mymp": {
     "title": "Aktiviteti i deputetit",
