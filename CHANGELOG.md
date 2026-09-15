@@ -1,3 +1,9 @@
+## 2026-09-15 10:11 — IDSCS
+> Questions timeline: drop per-tick dates, mark the year under each year's first sitting
+
+## 2026-09-15 10:04 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-09-15 10:04 — IDSCS
 > Questions timeline: label every sitting on the x-axis (responsive thinning)
 
