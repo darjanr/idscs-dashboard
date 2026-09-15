@@ -1,3 +1,9 @@
+## 2026-09-15 10:04 — IDSCS
+> Questions timeline: label every sitting on the x-axis (responsive thinning)
+
+## 2026-09-15 09:52 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-09-15 09:52 — IDSCS
 > Questions page: show the portal's last data update date (MK/AL/EN)
 
