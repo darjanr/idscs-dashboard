@@ -39,12 +39,6 @@ const NAVY = "#1a2e5a";
 const ANSWERED_COLOR = "#0d9488";
 const PENDING_COLOR = "#f59e0b";
 
-// "YYYY-MM-DD" → "DD.MM.YY" (compact, for axis ticks)
-function fmtDateShort(d: string | null): string {
-  if (!d) return "";
-  const [y, m, day] = d.split("-");
-  return `${day}.${m}.${y.slice(2)}`;
-}
 // "YYYY-MM-DD" → "DD.MM.YYYY" (full, for tooltip)
 function fmtDateFull(d: string | null): string {
   if (!d) return "";
@@ -212,6 +206,11 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
     const fit = Math.max(1, Math.floor((tlWidth - 60) / 26));
     return Math.max(0, Math.ceil(bySession.length / fit) - 1);
   }, [tlWidth, bySession.length]);
+  const sessionIndex = useMemo(() => {
+    const m = new Map<number, number>();
+    bySession.forEach((s, i) => m.set(s.sessionNum, i));
+    return m;
+  }, [bySession]);
   const sessionDate = useMemo(() => {
     const m = new Map<number, string | null>();
     bySession.forEach(s => m.set(s.sessionNum, s.date));
@@ -469,32 +468,32 @@ export default function QuestionsExplorer({ questions, lang, qi18n = {} }: Props
           />
         </div>
         <ResponsiveContainer width="100%" height={260} onResize={(w) => setTlWidth(w)}>
-          <LineChart data={bySession} margin={{ left: 0, right: 14, top: 4, bottom: 30 }}>
+          <LineChart data={bySession} margin={{ left: 0, right: 14, top: 4, bottom: 16 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="sessionNum"
               interval={tlInterval}
-              height={54}
+              height={40}
               tickMargin={6}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               tick={(props: any) => {
-                const { x, y, payload, index } = props;
-                // `index` = position among the VISIBLE ticks. Show the sitting
-                // number on every visible tick; show its date on every 3rd one
-                // (every 2nd when ticks are already thinned), staggered so
-                // neighbouring dates never overlap.
-                const dateEvery = tlInterval === 0 ? 3 : 2;
-                const showDate = index % dateEvery === 0;
-                const d = showDate ? sessionDate.get(payload.value) : null;
-                const dateDy = Math.floor(index / dateEvery) % 2 === 0 ? 24 : 37;
+                const { x, y, payload } = props;
+                // Sitting number on every visible tick. Full dates live in the
+                // tooltip; the axis only marks the YEAR under the first visible
+                // sitting of each year (compared with the previous visible tick).
+                const idx = sessionIndex.get(payload.value) ?? 0;
+                const prev = bySession[idx - (tlInterval + 1)];
+                const year = (sessionDate.get(payload.value) || "").slice(0, 4);
+                const prevYear = (prev?.date || "").slice(0, 4);
+                const showYear = !!year && (!prev || prevYear !== year);
                 return (
                   <g transform={`translate(${x},${y})`}>
                     <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#374151">
                       {payload.value}
                     </text>
-                    {d && (
-                      <text x={0} y={0} dy={dateDy} textAnchor="middle" fontSize={9} fill="#9ca3af">
-                        {fmtDateShort(d)}
+                    {showYear && (
+                      <text x={0} y={0} dy={26} textAnchor="middle" fontSize={10} fontWeight={600} fill="#9ca3af">
+                        {year}
                       </text>
                     )}
                   </g>
