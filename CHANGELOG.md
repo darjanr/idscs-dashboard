@@ -1,3 +1,9 @@
+## 2026-09-15 09:44 — IDSCS
+> Data refresh: questions 736->760 (+24 new, hand-translated AL/EN); portal dates from CKAN
+
+## 2026-07-15 12:06 — IDSCS
+> chore: update CHANGELOG [auto]
+
 ## 2026-07-15 12:06 — IDSCS
 > Questions: restore Сали Мурати party affiliation + add 'Писмен одговор' status filter
 
